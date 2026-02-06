@@ -1,15 +1,18 @@
-import { Text, View } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import Apresentation from "./components/Apresentation/Apresentation";
+import CRUD from "./pages/CRUD/CRUD";
 
-export default function Index() {
+const Stack = createStackNavigator();
+
+function Stacked() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CRUD" component={CRUD} />
+    </Stack.Navigator>
   );
+}
+
+export default function App() {
+  return <Stacked />;
 }
