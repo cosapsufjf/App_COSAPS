@@ -13,7 +13,7 @@ const CRUD: React.FC = () => {
   const inactive_color = colors.Cor_5;
   const [showApresentation, setShowApresentation] = useState(false);
   const [LoginRegister, setLoginRegister] = useState<{
-    page: React.FC;
+    page: any;
     show: boolean;
   }>({
     page: Registro,
@@ -25,7 +25,7 @@ const CRUD: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setShowApresentation(false);
-      selectScreen(Registro);
+      selectScreen(Registro as React.FC);
     }, 2000);
   }, []);
 
@@ -37,6 +37,7 @@ const CRUD: React.FC = () => {
       borderRadius: 30,
     };
   };
+  
   const card_selector = () => {
     return (
       <View style={styles.card_selector}>
@@ -44,11 +45,11 @@ const CRUD: React.FC = () => {
           style={style_btn(btnsColors[0])}
           onPress={() => selectScreen(Registro)}
         >
-          <Text>Register</Text>
+          <Text>Registrar</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={style_btn(btnsColors[1])}
-          onPress={() => selectScreen(Login)}
+          onPress={() => selectScreen(Login as React.FC)}
         >
           <Text>Login</Text>
         </TouchableOpacity>

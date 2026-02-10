@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     Inputs:{
         width:"100%",
-        minHeight:"40%",
+        minHeight:"60%",
         height:"auto",
         flexDirection:"column",
         alignItems:"center",
@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
         color:"#fff", 
         fontWeight:"bold", 
         margin:0,
+    },
+    forgotPassword:{
+      fontSize:14,
+      fontWeight:"bold",
+      color:"#0003c9ff"  
     },
     btn:{
         width:250,
