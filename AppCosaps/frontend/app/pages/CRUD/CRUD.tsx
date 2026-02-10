@@ -22,13 +22,6 @@ const CRUD: React.FC = () => {
 
   const [btnsColors, setBtnsColors] = useState([active_color, inactive_color]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowApresentation(false);
-      selectScreen(Registro as React.FC);
-    }, 2000);
-  }, []);
-
   const style_btn = (color: string) => {
     return {
       marginLeft: 10,
