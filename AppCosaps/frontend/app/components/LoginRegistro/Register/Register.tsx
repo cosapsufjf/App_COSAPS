@@ -4,11 +4,18 @@ import InputContainer from "../../InputContainer/InputContainer";
 import BB from "../../Big_Button/BB";
 import styles from "../styles";
 
+import api from "@/app/api/api";
+import { requestInterface } from "@/app/interfaces/routesInterface";
+
 const register: React.FC = () => {
 const FormST= FormState(["Nome", "Email", "CPF", "Senha", "ConfSenha"] as const) ;
 
-  const enviar = () => {
-    console.log(FormST.Form);
+  const enviar = async() => {
+    console.log("Rodando agora: ");
+    await api.cadastrar({
+        body:{nome:FormST.Form.Nome,email:FormST.Form.Email,cpf:FormST.Form.CPF,senha:FormST.Form.Senha}
+      }).then(res => console.log("Foi criado o usuário: "+res));
+    
   };
 
   return (

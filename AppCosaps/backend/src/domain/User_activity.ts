@@ -3,12 +3,11 @@ class User_Activity{
     protected name : string;
     constructor(id : Number, name : string){
         this.id = id;
-        this.name = name
-    }
+        this.name = name;
+    };
 
-    protected markAsComplete(){}
-    protected GenerateFeedback(){}
-}
-
+    protected markAsComplete(){};
+    protected GenerateFeedback(){};
+};
 
 export default User_Activity
