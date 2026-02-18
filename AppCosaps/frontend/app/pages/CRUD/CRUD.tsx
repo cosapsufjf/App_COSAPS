@@ -11,13 +11,13 @@ import styles from "./style";
 const CRUD: React.FC = () => {
   const active_color = colors.Cor_2;
   const inactive_color = colors.Cor_5;
-  const [showApresentation, setShowApresentation] = useState(false);
+  const [showApresentation, setShowApresentation] = useState(true);
   const [LoginRegister, setLoginRegister] = useState<{
     page: any;
     show: boolean;
   }>({
-    page: Registro,
-    show: true,
+    page: Apresentation,
+    show: false,
   });
 
   const [btnsColors, setBtnsColors] = useState([active_color, inactive_color]);
@@ -61,6 +61,14 @@ const CRUD: React.FC = () => {
       setBtnsColors([inactive_color, active_color]);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowApresentation(false);
+      setLoginRegister({ page:Registro, show: true });
+    }, 2000);
+  }, [setShowApresentation]);
+
   const content = () => {
     return (
       <View style={styles.content}>

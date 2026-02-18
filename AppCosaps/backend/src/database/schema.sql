@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS Routine(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     user_id INT,
-    scheduled_date TIMESTAMP NOT NULL
-    FOREIGN KEY (user_id) REFERENCES User(id),
+    scheduled_date TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User(id)
 );
 
 CREATE TABLE IF NOT EXISTS Diet(
@@ -46,5 +46,5 @@ CREATE TABLE IF NOT EXISTS Feedback(
     crated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (routine_id) REFERENCES Routine(id),
     FOREIGN KEY (diet_id) REFERENCES Diet(id),
-    FOREIGN KEY (exercise_id) REFERENCES Exercise(id),
+    FOREIGN KEY (exercise_id) REFERENCES Exercise(id)
 );

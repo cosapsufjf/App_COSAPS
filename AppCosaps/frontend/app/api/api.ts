@@ -1,5 +1,5 @@
-import { ApiError, requestInterface } from "../interfaces/routesInterface";
-const API_BASE_URL = "http://10.0.2.2:3000";
+import { requestInterface } from "../interfaces/routesInterface";
+const API_BASE_URL = "http://10.0.3.2:8801"//"http://10.0.2.2:8801";
 
 
 class ApiService {
@@ -27,8 +27,8 @@ class ApiService {
 
         if(!res.ok)
         {
-            const error = data as ApiError;
-            throw new Error(error.message || error.erro || "Erro na requisição");
+            console.log("data ficou assim: "+JSON.stringify(data)+" "+data);
+            throw new Error(data.message || data.error || "Erro na requisição");
         }
 
         return data;

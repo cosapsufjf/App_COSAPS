@@ -34,16 +34,12 @@ const ForgotPassword: React.FC = () => {
       <View style={styles_comp.content}>
         <View style={styles_comp.Inputs}>
           <InputContainer
-            setFormField={Form1.setField}
-            text="Insira o email vinculado a conta"
-            field="Email"
+            form={Form1.FormProp("Email", "email")}
             placeholder="Email da sua conta"
             extraComponent={Button1}
           />
           <InputContainer
-            setFormField={Form1.setField}
-            text="Insira o código enviado para o seu email"
-            field="Code"
+            form={Form1.FormProp("Code", "min", undefined, 6)}
             placeholder="xxx-xxx-xxx-xxx"
             extraComponent={Button2}
           />
@@ -53,23 +49,18 @@ const ForgotPassword: React.FC = () => {
   };
 
   const ForgotPassword_validate: React.FC = () => {
-    const Form = FormState(["newPswd", "ConfNewPswd"]);
+    const FormST = FormState(["newPswd", "ConfNewPswd"]);
 
     return (
       <View style={styles_comp.content}>
         <View style={styles_comp.Inputs}>
           <InputContainer
-            setFormField={Form.setField}
-            field="newPswd"
-            text="Nova senha:"
-            
+            form={FormST.FormProp("newPswd", "min", undefined, 8)}
             placeholder="Pelo menos 8 dígitos"
             height={"20%"}
           />
           <InputContainer
-            setFormField={Form.setField}
-            field="ConfNewPswd"
-            text="Confirme nova senha:"
+            form={FormST.FormProp("ConfNewPswd", "equal", FormST.Form.newPswd)}
             placeholder="As senhas devem coincidir"
             height={"20%"}
           />
