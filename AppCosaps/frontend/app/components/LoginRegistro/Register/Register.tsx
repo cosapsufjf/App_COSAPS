@@ -14,16 +14,24 @@ const register: React.FC = () => {
   const [messageTxt, setMessageTxt] = useState("");
   const FormST= FormState(["Nome", "Email", "CPF", "Senha", "ConfSenha"] as const) ;
   const navigation = useNavigation<NavigationProp>();
-
+  
   const enviar = async() => {
-    console.log("Rodando agora: ");
-    await api.cadastrar({
+    if(!FormST.FormValidated())
+      return;
+
+    try{
+      await api.cadastrar({
         body:{nome:FormST.Form.Nome,email:FormST.Form.Email,CPF:FormST.Form.CPF,senha:FormST.Form.Senha}
       }).then(res => {
         console.log(res);
         setShowMessage(true);
         setMessageTxt("Cadastro realizado com sucesso!");
       });
+    }
+    catch(err)
+    {
+
+    }
     
   };
 
@@ -41,39 +49,37 @@ const register: React.FC = () => {
     )
   }
 
-  const CRUD_Content = (FormST:any)=>{
-    return(
-      <View style={styles.content}>
+  return (
+    <>
+    {showMessage ? message("Cadastro realizado com sucesso") 
+    : 
+    <View style={styles.content}>
         <View style={styles.Inputs}>
           <InputContainer
-            form={FormST.FormProp("Nome","required")}
+            form={FormST.FormProp("Nome",["required"])}
             placeholder="Nome Completo"
           />
           <InputContainer
-            form={FormST.FormProp("Email","email")}
+            form={FormST.FormProp("Email",["email","required"])}
             placeholder="xxx@xxx.com"
           />
           <InputContainer
-            form={FormST.FormProp("CPF","CPF")}
+            form={FormST.FormProp("CPF",["CPF","required"])}
             placeholder="xxx.xxx.xxx-xx"
           />
           <InputContainer
-            form={FormST.FormProp("Senha","min",undefined,8)}
+            form={FormST.FormProp("Senha",["min","required"],undefined,8)}
             placeholder="Pelo menos 8 dígitos"
           />
           <InputContainer
-            form={FormST.FormProp("ConfSenha","equal",FormST.Form.Senha)}
+            form={FormST.FormProp("ConfSenha",["equal","required"],FormST.Form.Senha)}
+            ElText="Confirmar Senha"
             placeholder="As senhas devem coincidir"
           />
         </View>
       <BB text="Registrar" margin={15} action={enviar}/>
     </View>
-    )
-  }
-
-  return (
-    <>
-    {showMessage ? message("Cadastro realizado com sucesso") : CRUD_Content(FormST)}
+    }
     </>
   );
 };

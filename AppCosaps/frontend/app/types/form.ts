@@ -14,9 +14,9 @@ export type Validation_Methods = {
 export type FormProps = {
     setFormField:(field:string, value:string)=>void,
     field : string,
-    ValidateField?:((method: ValidationMethodKey, params: { value: string[]; param?: number | RegExp; }) => { result: boolean; error: string; message: string;}) | null,
-    method:keyof Validation_Methods,
-    param?:number | RegExp,
+    ValidateField?:((methods: ValidationMethodKey[],field: string, params: { value: string[]; param?: number | RegExp; }) => { result: boolean; message: string;}) | null,
+    method:ValidationMethodKey[],
+    param?:number | RegExp ,
     valueC?:string,
 }
 

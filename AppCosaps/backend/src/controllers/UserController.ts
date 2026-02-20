@@ -30,7 +30,7 @@ export const UserController = {
             const {CPF,senha} = req.body;
             const user = await UserServices.login(CPF,senha);
             return res.status(200).json({
-                message:"Usuário logado com sucesso",
+                message:user ? "Usuário logado com sucesso" : "Usuário ou senha incorretos",
                 userID: await UserServices.get_user_info("CPF",CPF,"id"),
                 result:user
             });
@@ -42,11 +42,11 @@ export const UserController = {
     },
     async update_password(req:requestInterface,res:any){
         try{
-            const {CPF,novaSenha} = req.body;
-            const user = await UserServices.update_password("CPF",CPF,novaSenha);
+            const {email,novaSenha} = req.body;
+            const user = await UserServices.update_password("email",email,novaSenha);
             return res.status(200).json({
                 message:"Senha alterada com sucesso!",
-                userID: await UserServices.get_user_info("CPF",CPF,"id"),
+                userID: await UserServices.get_user_info("email",email,"id"),
                 result:user
             })
         }

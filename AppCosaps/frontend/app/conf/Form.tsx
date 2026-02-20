@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormFields } from "@/app/types/form";
-import { Validation_Methods, ValidationMethodKey, FormProps } from "@/app/types/form";
+import { Validation_Methods, ValidationMethodKey,FormProps } from "@/app/types/form";
 
 import { CpfRegex, emailRegex } from "../utils/regex";
 import validateCPF from "../utils/cpfValidator";
@@ -15,6 +15,8 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
 
   type Fields = T[number];
   const [Form, SetForm] = useState<FormFields>(InitialState);
+  const [Validated, SetValidated] = useState<{[key:string]:boolean}>({});
+
   const setField = (campo: string, valor: string) => {
     SetForm({
       ...Form,
@@ -33,7 +35,7 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
     CPF      : {func:(value: string) => CpfRegex.test(value) && validateCPF(value),error:"CPF inválido"},
   };
 
-  const ValidateMethod = (method: ValidationMethodKey, params : {value:string[], param?: number | RegExp | string | null})=>{    
+  const ValidateMethod = (method: keyof Validation_Methods, params : {value:string[], param?: number | RegExp | string | null})=>{    
     if(method == "equal")
       return Methods[method].func(params.value[0], params.value[1]);
 
@@ -43,19 +45,52 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
     return Methods[method].func(params.value[0], params.param as any);
   }
 
-  const ValidateField = (method: ValidationMethodKey, params : {value:string[], param?: number | RegExp})=>{
-    const result = ValidateMethod(method, params);
-    if (result) 
-      return {result:true, error:"",message:console.log(method+" Válido!!") };
-    else
-      return {result:false, error: Methods[method].error,message:"" };
-  }
+  const ValidateField = (methods: ValidationMethodKey[],field:string, params : {value:string[], param?: number | RegExp})=>{
+
+    const results : {result: boolean, message: string}[] = [];
+    let errors : string = "";
+    let final : boolean = true;
+
+    for(let i of methods)
+    {
+      let method = i as keyof Validation_Methods;
+      const res = ValidateMethod(method, params);
+
+      if (res)
+        results.push({result:true,message:"Método válidado!"});
+      else
+        results.push({result:false, message: Methods[method].error});
+    }
+    
+    for(let i in results)
+    {
+      if(!results[i].result)
+      {
+        errors+=results[i].message+" ";
+        final = false;
+      }
+    }
+
+    SetValidated(prev=>({...prev, [field]:final}));
+    console.log("Validated: ",Validated);
+    
+    return {result:final,message:errors };
+    }
 
   const resetForm = () => {
     SetForm(InitialState);
   };
 
-  const FormProp = (field:Fields ,method:keyof Validation_Methods,valueC?:string,param?:number | RegExp)=> {
+  const FormValidated = () => {
+      const keys = Object.keys(Validated);
+      const formKeys = Object.keys(Form);
+      if (formKeys.length === 0) return false;
+      console.log("Validated: ",Validated);
+      if (keys.length === 0) return false;
+      return formKeys.every((key) => Validated[key] === true);
+  };
+
+  const FormProp = (field:Fields ,method:ValidationMethodKey[],valueC?:string,param?:number | RegExp)=> {
     return {
         setFormField : setField,
         field : field,
@@ -65,8 +100,10 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
         param : param
     } as FormProps
   }
+
   return {
     Form,
+    FormValidated,
     Methods,
     setField,
     ValidateMethod,

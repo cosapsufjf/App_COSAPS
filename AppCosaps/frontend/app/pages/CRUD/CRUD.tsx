@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View, Button } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Apresentation from "@/app/components/Apresentation/Apresentation";
@@ -7,6 +7,8 @@ import Login from "@/app/components/LoginRegistro/Login/login";
 import Registro from "@/app/components/LoginRegistro/Register/Register";
 import colors from "@/app/conf/colors";
 import styles from "./style";
+
+import RandomCode from "@/app/utils/RCG";
 
 const CRUD: React.FC = () => {
   const active_color = colors.Cor_2;
