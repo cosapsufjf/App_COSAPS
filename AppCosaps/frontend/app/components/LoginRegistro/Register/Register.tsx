@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import {NavigationProp} from "@/app/types/navigation";
 
+import { cpf_replace_regex,cpf_replace } from "@/app/utils/regex";
 import {FormState} from "@/app/conf/Form";
 import { View, Text } from "react-native";
 import InputContainer from "../../InputContainer/InputContainer";
@@ -16,23 +17,23 @@ const register: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
   
   const enviar = async() => {
-    if(!FormST.FormValidated())
-      return;
+    // if(!FormST.FormValidated())
+    //   return;
 
-    try{
-      await api.cadastrar({
-        body:{nome:FormST.Form.Nome,email:FormST.Form.Email,CPF:FormST.Form.CPF,senha:FormST.Form.Senha}
-      }).then(res => {
-        console.log(res);
-        setShowMessage(true);
-        setMessageTxt("Cadastro realizado com sucesso!");
-      });
-    }
-    catch(err)
-    {
+    // try{
+    //   await api.cadastrar({
+    //     body:{nome:FormST.Form.Nome,email:FormST.Form.Email,CPF:FormST.Form.CPF,senha:FormST.Form.Senha}
+    //   }).then(res => {
+    //     console.log(res);
+    //     setShowMessage(true);
+    //     setMessageTxt("Cadastro realizado com sucesso!");
+    //   });
+    // }
+    // catch(err)
+    // {
 
-    }
-    
+    // }
+    console.log(FormST.Form);
   };
 
   const message = (txt:string) => {
@@ -62,10 +63,13 @@ const register: React.FC = () => {
           <InputContainer
             form={FormST.FormProp("Email",["email","required"])}
             placeholder="xxx@xxx.com"
+            keyboard_type="email-address"
           />
           <InputContainer
             form={FormST.FormProp("CPF",["CPF","required"])}
             placeholder="xxx.xxx.xxx-xx"
+            keyboard_type="numeric"
+            format_regex={{regex:cpf_replace_regex,replace:cpf_replace}}
           />
           <InputContainer
             form={FormST.FormProp("Senha",["min","required"],undefined,8)}
@@ -73,7 +77,7 @@ const register: React.FC = () => {
           />
           <InputContainer
             form={FormST.FormProp("ConfSenha",["equal","required"],FormST.Form.Senha)}
-            ElText="Confirmar Senha"
+            el_text="Confirmar Senha"
             placeholder="As senhas devem coincidir"
           />
         </View>

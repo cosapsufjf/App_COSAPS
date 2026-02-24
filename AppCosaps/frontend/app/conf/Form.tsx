@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormFields } from "@/app/types/form";
 import { Validation_Methods, ValidationMethodKey,FormProps } from "@/app/types/form";
 
-import { CpfRegex, emailRegex } from "../utils/regex";
+import { cpf_regex, emailRegex } from "../utils/regex";
 import validateCPF from "../utils/cpfValidator";
 import { PhoneRegex } from "../utils/regex";
 //TODO: REESTRUTURAR COM REACT HOOK FORM
@@ -32,7 +32,7 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
     regex    : {func:(value: string, regex: RegExp) => regex.test(value),error:"Formato inválido"},
     email    : {func:(value: string) => emailRegex.test(value),error:"Email inválido"},
     tel      : {func:(value: string) => PhoneRegex.test(value),error:"Telefone inválido"},
-    CPF      : {func:(value: string) => CpfRegex.test(value) && validateCPF(value),error:"CPF inválido"},
+    CPF      : {func:(value: string) => cpf_regex.test(value) && validateCPF(value),error:"CPF inválido"},
   };
 
   const ValidateMethod = (method: keyof Validation_Methods, params : {value:string[], param?: number | RegExp | string | null})=>{    
@@ -72,7 +72,7 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
     }
 
     SetValidated(prev=>({...prev, [field]:final}));
-    console.log("Validated: ",Validated);
+    //console.log("Validated: ",Validated);
     
     return {result:final,message:errors };
     }
@@ -85,14 +85,14 @@ export const FormState = <T extends readonly string[]>(initialStateFields: T) =>
       const keys = Object.keys(Validated);
       const formKeys = Object.keys(Form);
       if (formKeys.length === 0) return false;
-      console.log("Validated: ",Validated);
+      //console.log("Validated: ",Validated);
       if (keys.length === 0) return false;
       return formKeys.every((key) => Validated[key] === true);
   };
 
   const FormProp = (field:Fields ,method:ValidationMethodKey[],valueC?:string,param?:number | RegExp)=> {
     return {
-        setFormField : setField,
+        setFormField : setField.bind(this),
         field : field,
         ValidateField : ValidateField,
         method : method,

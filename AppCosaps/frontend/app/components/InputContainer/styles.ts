@@ -1,7 +1,7 @@
 import { StyleSheet, DimensionValue } from "react-native";
 import colors from "@/app/conf/colors";
 
-const styles = (width : number | string,height:number | string,margin:number | string,approved:boolean,ok:boolean)=> StyleSheet.create({
+const styles = (width : number | string,height:number | string,margin:number | string,background_color:string,approved:boolean,ok:boolean)=> StyleSheet.create({
         container:{
             flex:1,
             width:"90%",
@@ -12,7 +12,7 @@ const styles = (width : number | string,height:number | string,margin:number | s
             margin:0,
         },
         TextInput:{
-            backgroundColor: colors.Fundo_Claro_1,
+            backgroundColor: background_color,
             width: width as DimensionValue,
             minHeight:height as DimensionValue,
             height:"auto",
