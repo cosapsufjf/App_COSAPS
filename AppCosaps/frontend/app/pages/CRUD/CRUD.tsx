@@ -4,17 +4,18 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Apresentation from "@/app/components/Apresentation/Apresentation";
 import Login from "@/app/components/LoginRegistro/Login/login";
-import Registro from "@/app/components/LoginRegistro/Register/Register";
+import Registro_pacient from "@/app/components/LoginRegistro/Register_pacient/Register_pacient";
+import register_medic from "@/app/components/LoginRegistro/register_medic/register_medic";
+import Select from "@/app/components/LoginRegistro/SelectLR/select";
 import colors from "@/app/conf/colors";
 import styles from "./style";
-
-import RandomCode from "@/app/utils/RCG";
 
 const CRUD: React.FC = () => {
   const active_color = colors.Cor_2;
   const inactive_color = colors.Cor_5;
   const [showApresentation, setShowApresentation] = useState(true);
-  const [LoginRegister, setLoginRegister] = useState<{
+  const [show_card_selector, setShowCardSelector] = useState(false);
+  const [Page, setPage] = useState<{
     page: any;
     show: boolean;
   }>({
@@ -33,31 +34,31 @@ const CRUD: React.FC = () => {
     };
   };
   
-  const card_selector = () => {
-    return (
-      <View style={styles.card_selector}>
-        <TouchableOpacity
-          style={style_btn(btnsColors[0])}
-          onPress={() => selectScreen(Registro)}
-        >
-          <Text>Registrar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={style_btn(btnsColors[1])}
-          onPress={() => selectScreen(Login as React.FC)}
-        >
-          <Text>Login</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // const card_selector = () => {
+  //   return (
+  //     <View style={styles.card_selector}>
+  //       <TouchableOpacity
+  //         style={style_btn(btnsColors[0])}
+  //         onPress={() => selectScreen(Registro_pacient)}
+  //       >
+  //         <Text>Registrar</Text>
+  //       </TouchableOpacity>
+  //       <TouchableOpacity
+  //         style={style_btn(btnsColors[1])}
+  //         onPress={() => selectScreen(Login as React.FC)}
+  //       >
+  //         <Text>Login</Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
   const selectScreen = (page: React.FC) => {
-    setLoginRegister({
+    setPage({
       page: page,
       show: true,
     });
 
-    if (page == Registro) {
+    if (page == Registro_pacient) {
       setBtnsColors([active_color, inactive_color]);
     } else {
       setBtnsColors([inactive_color, active_color]);
@@ -67,15 +68,15 @@ const CRUD: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setShowApresentation(false);
-      setLoginRegister({ page:Registro, show: true });
+      setPage({ page:Select, show: true });
     }, 2000);
   }, [setShowApresentation]);
 
   const content = () => {
     return (
       <View style={styles.content}>
-        {card_selector()}
-        {<LoginRegister.page />}
+        {/* {show_card_selector && card_selector()} */}
+        {<Page.page set={selectScreen}/>}
       </View>
     );
   };
@@ -87,7 +88,7 @@ const CRUD: React.FC = () => {
           source={require("../../../assets/img/UFJF_extension_log_transparent.png")}
         />
         {showApresentation && <Apresentation />}
-        {LoginRegister.show && content()}
+        {Page.show && content()}
       </SafeAreaView>
     </SafeAreaProvider>
   );

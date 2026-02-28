@@ -16,6 +16,7 @@ interface InputContainerProps {
     width?:number | string,
     height?:number | string,
     margin?:number | string,
+    margin_top?:number | string,
     background_color?:string
 }
 
@@ -30,14 +31,15 @@ const InputContainer : React.FC<InputContainerProps> = (
         height="10%",
         keyboard_type="default",
         background_color=colors.Fundo_Claro_1,
-        margin=0
+        margin=0,
+        margin_top=0
     }
     )=>{
     const [approved, setApproved] = useState(false);
     const [ok, setOk] = useState(false);
     const [ErrorTxt, setErrorTxt] = useState("");
     const [attValue, setAttValue] = useState("");
-    const styles = style(width,height,margin,background_color,approved,ok);
+    const styles = style(width,height,margin,margin_top,background_color,approved,ok);
     const changeText = (text:string) => {
         if(form != undefined)
         {

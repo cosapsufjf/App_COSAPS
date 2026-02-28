@@ -1,7 +1,8 @@
 import { StyleSheet, DimensionValue } from "react-native";
 import colors from "@/app/conf/colors";
 
-const styles = (width : number | string,height:number | string,margin:number | string,background_color:string,approved:boolean,ok:boolean)=> StyleSheet.create({
+const styles = (width : number | string,height:number | string,margin:number | string,
+    marginTop:number | string, background_color:string,approved:boolean,ok:boolean)=> StyleSheet.create({
         container:{
             flex:1,
             width:"90%",
@@ -9,7 +10,8 @@ const styles = (width : number | string,height:number | string,margin:number | s
             flexDirection:"column",
             alignItems:"flex-start",
             textAlign:"left",
-            margin:0,
+            margin:margin as DimensionValue,
+            marginTop:marginTop as DimensionValue
         },
         TextInput:{
             backgroundColor: background_color,

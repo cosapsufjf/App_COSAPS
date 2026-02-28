@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "80%",
         height:"100%",
+        margin:0,
         borderRadius:30,
     }
 });

@@ -73,12 +73,12 @@ const ForgotPassword: React.FC = () => {
           <InputContainer
             form={FormST.FormProp("Email", ["email","required"])}
             placeholder="Email da sua conta"
-            extraComponent={Button1}
+            extra_component={Button1}
           />
           <InputContainer
             form={FormST.FormProp("Code", ["min"], undefined, 6)}
             placeholder="xxx-xxx-xxx-xxx"
-            extraComponent={Button2}
+            extra_component={Button2}
           />
         </View>
       </View>
@@ -93,13 +93,13 @@ const ForgotPassword: React.FC = () => {
         <View style={styles_comp.Inputs}>
           <InputContainer
             form={FormST.FormProp("newPswd", ["required","min"], undefined, 8)}
-            ElText="Nova Senha"
+            el_text="Nova Senha"
             placeholder="Pelo menos 8 dígitos"
             height={"20%"}
           />
           <InputContainer
             form={FormST.FormProp("ConfNewPswd", ["equal"], FormST.Form.newPswd)}
-            ElText="Confirmar Senha"
+            el_text="Confirmar Senha"
             placeholder="As senhas devem coincidir"
             height={"20%"}
           />

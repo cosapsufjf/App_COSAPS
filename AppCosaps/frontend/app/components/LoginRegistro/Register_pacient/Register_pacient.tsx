@@ -1,39 +1,44 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import {NavigationProp} from "@/app/types/navigation";
+import { View, Text } from "react-native";
 
+
+import LR_Props from "../props";
+import Select from "../SelectLR/select";
 import { cpf_replace_regex,cpf_replace } from "@/app/utils/regex";
 import {FormState} from "@/app/conf/Form";
-import { View, Text } from "react-native";
 import InputContainer from "../../InputContainer/InputContainer";
 import BB from "../../Big_Button/BB";
 import styles from "../styles";
 import api from "@/app/api/api";
 
-const register: React.FC = () => {
+const register:  React.FC<LR_Props> = (
+  {
+  set=null
+}) => {
   const [showMessage, setShowMessage] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
   const FormST= FormState(["Nome", "Email", "CPF", "Senha", "ConfSenha"] as const) ;
   const navigation = useNavigation<NavigationProp>();
   
   const enviar = async() => {
-    // if(!FormST.FormValidated())
-    //   return;
+    if(!FormST.FormValidated())
+      return;
 
-    // try{
-    //   await api.cadastrar({
-    //     body:{nome:FormST.Form.Nome,email:FormST.Form.Email,CPF:FormST.Form.CPF,senha:FormST.Form.Senha}
-    //   }).then(res => {
-    //     console.log(res);
-    //     setShowMessage(true);
-    //     setMessageTxt("Cadastro realizado com sucesso!");
-    //   });
-    // }
-    // catch(err)
-    // {
+    try{
+      await api.cadastrar({
+        body:{nome:FormST.Form.Nome,email:FormST.Form.Email,CPF:FormST.Form.CPF,senha:FormST.Form.Senha}
+      }).then(res => {
+        console.log(res);
+        setShowMessage(true);
+        setMessageTxt("Cadastro realizado com sucesso!");
+      });
+    }
+    catch(err)
+    {
 
-    // }
-    console.log(FormST.Form);
+    }
   };
 
   const message = (txt:string) => {
@@ -59,6 +64,7 @@ const register: React.FC = () => {
           <InputContainer
             form={FormST.FormProp("Nome",["required"])}
             placeholder="Nome Completo"
+            margin_top={"10%"}
           />
           <InputContainer
             form={FormST.FormProp("Email",["email","required"])}
@@ -81,7 +87,10 @@ const register: React.FC = () => {
             placeholder="As senhas devem coincidir"
           />
         </View>
-      <BB text="Registrar" margin={15} action={enviar}/>
+        <View style={{width:"100%",flexDirection:"row",justifyContent:"space-between"}}>
+          <BB text="Voltar" width={150} action={()=>set(Select)}/>
+          <BB text="Login"  width={150}  action={enviar} />
+        </View>
     </View>
     }
     </>

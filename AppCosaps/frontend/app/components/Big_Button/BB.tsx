@@ -33,6 +33,7 @@ const BB : React.FC<BB_Props> = (
             borderRadius:borderad,
             margin:margin as DimensionValue,
             alignItems:"center",
+            justifyContent:"center",
             padding:"5%"
         },
         Text:{

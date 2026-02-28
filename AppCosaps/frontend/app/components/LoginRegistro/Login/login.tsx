@@ -10,8 +10,12 @@ import BB from "../../Big_Button/BB";
 import api from "@/app/api/api";
 
 import styles from "../styles";
-
-const login: React.FC = () => {
+import LR_Props from "../props";
+import Select from "../SelectLR/select";
+const login: React.FC<LR_Props> = (
+  {
+  set=null
+}) => {
   const Form = FormState(["CPF", "Senha"] as const);
  
   const navigation = useNavigation<NavigationProp>();
@@ -44,7 +48,6 @@ const login: React.FC = () => {
     return(
       <View style={styles.content}>
         <View style={styles.Inputs}>
-
           <InputContainer
             form={Form.FormProp("CPF",["CPF"])}
             placeholder="xxx.xxx.xxx-xx"
@@ -54,10 +57,13 @@ const login: React.FC = () => {
               form={Form.FormProp("Senha",["min"],undefined,8)}
               placeholder="Senha da sua conta"
               height={"15%"}
-              extraComponent={forgotPassword}
+              extra_component={forgotPassword}
             />
         </View>
-        <BB text="Login" action={enviar} />
+        <View style={{width:"100%",flexDirection:"row",justifyContent:"space-between"}}>
+          <BB text="Voltar" width={150} action={()=>set(Select)}/>
+          <BB text="Login"  width={150}  action={enviar} />
+        </View>
       </View>
     )
 }
