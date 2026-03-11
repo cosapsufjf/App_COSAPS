@@ -37,27 +37,27 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
       setMessageTxt("Preencha todos os campos!");
       return;
     }
-    else{
-      try {
-        await api
-            .cadastrar({
-              body: {
-                nome: Form_content.Nome.field,
-                email: Form_content.Email.field,
-                CPF: Form_content.CPF.field,
-                senha: Form_content.Senha.field,
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              FormST.resetForm();
-              setShowMessage(true);
-              setNav(true);
-              setMessageTxt("Cadastro realizado com sucesso!");
-            });
-            } 
-      catch (err) {}
-    }
+    // else{
+    //   try {
+    //     await api
+    //         .cadastrar({
+    //           body: {
+    //             nome: Form_content.Nome.field,
+    //             email: Form_content.Email.field,
+    //             CPF: Form_content.CPF.field,
+    //             senha: Form_content.Senha.field,
+    //           },
+    //         })
+    //         .then((res) => {
+    //           console.log(res);
+    //           FormST.resetForm();
+    //           setShowMessage(true);
+    //           setNav(true);
+    //           setMessageTxt("Cadastro realizado com sucesso!");
+    //         });
+    //         } 
+    //   catch (err) {}
+    // }
   };
 
   const message = (txt: string, navigate_to?: boolean) => {

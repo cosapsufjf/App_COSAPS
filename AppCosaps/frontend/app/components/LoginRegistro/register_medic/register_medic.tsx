@@ -33,22 +33,22 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
     console.log("Formulário validado: ", FormST.FormValidated());
     if (!FormST.FormValidated()) return;
 
-    try {
-      await api
-        .cadastrar({
-          body: {
-            nome: Form_content.Nome.field,
-            email: Form_content.Email.field,
-            CPF: Form_content.CPF.field,
-            senha: Form_content.Senha.field,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setShowMessage(true);
-          setMessageTxt("Cadastro realizado com sucesso!");
-        });
-    } catch (err) {}
+    // try {
+    //   await api
+    //     .cadastrar({
+    //       body: {
+    //         nome: Form_content.Nome.field,
+    //         email: Form_content.Email.field,
+    //         CPF: Form_content.CPF.field,
+    //         senha: Form_content.Senha.field,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //       setShowMessage(true);
+    //       setMessageTxt("Cadastro realizado com sucesso!");
+    //     });
+    // } catch (err) {}
   };
 
   const message = (txt: string) => {

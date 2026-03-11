@@ -1,20 +1,20 @@
-import React, { use } from "react";
-import {View,Text, Image} from "react-native";
+import React from "react";
+import { Image, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./style";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
-const Apresentation : React.FC = () => {
-    return (
-            <SafeAreaView style={styles.container}>
-                <View>
-                    <Text style={styles.Title}>Projeto Cosaps</Text>
-                </View>
-            <Image
-                style={styles.imgLogo}
-                source={require("../../../assets/img/Cosaps_logo_transparent.png")}
-                />
-            </SafeAreaView>
-    );
+const Apresentation: React.FC = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.Title}>Projeto Cosaps</Text>
+      </View>
+      <Image
+        style={styles.imgLogo}
+        source={require("../../../assets/images/android-icon-foreground.png")}
+      />
+    </SafeAreaView>
+  );
 };
 
 export default Apresentation;

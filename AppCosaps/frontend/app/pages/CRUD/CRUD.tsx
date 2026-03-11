@@ -85,7 +85,7 @@ const CRUD: React.FC = () => {
       <SafeAreaView style={styles.container}>
         <Image
           style={styles.imgHeader}
-          source={require("../../../assets/img/UFJF_extension_log_transparent.png")}
+          source={require("../../../assets/images/UFJF_extension_log_transparent.png")}
         />
         {showApresentation && <Apresentation />}
         {Page.show && content()}

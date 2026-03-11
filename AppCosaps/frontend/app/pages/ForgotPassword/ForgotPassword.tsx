@@ -1,30 +1,31 @@
-import { useState } from "react";
 import { FormState } from "@/app/conf/Form";
+import { useState } from "react";
 import { Image, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@/app/types/navigation";
+import { useNavigation } from "@react-navigation/native";
 
+import api from "@/app/api/api";
 import BB from "@/app/components/Big_Button/BB";
 import InputContainer from "@/app/components/InputContainer/InputContainer";
-import styles from "./style";
 import styles_comp from "@/app/components/LoginRegistro/styles";
-import RandomCode from "@/app/utils/RCG";
-import { sendEmail } from "@/app/utils/EmailSender";
-import api from "@/app/api/api";
-import { Validation_Methods, ValidationMethodKey } from "@/app/types/form";
+import styles from "./style";
 
 const ForgotPassword: React.FC = () => {
   const [FP_Page, setFP_Page] = useState(0);
   const [code, setCode] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp>();
   const ForgotPassword_insert: React.FC = () => {
-    const FormST = FormState([{field:"Email",validate:true}, {field:"Code",validate:true}]);
+    const FormST = FormState([
+      { field: "Email", validate: true },
+      { field: "Code", validate: true },
+    ]);
 
     const sendCode = async () => {
-      if(FormST.Form.Email.field === "" || FormST.Validated.Email === false)  return;
-      
+      if (FormST.Form.Email.field === "" || FormST.Validated.Email === false)
+        return;
+
       console.log("Foi");
       // try{
       //   await sendEmail(
@@ -39,14 +40,11 @@ const ForgotPassword: React.FC = () => {
       setCode("1234567");
     };
 
-    const confirmCode = (entry: string)=>{
-      if(FormST.FormValidated() && entry == code)
-        setFP_Page(1);
-    }
+    const confirmCode = (entry: string) => {
+      if (FormST.FormValidated() && entry == code) setFP_Page(1);
+    };
 
-    const Button1 = () => (
-      <BB text="Enviar" margin={10} action={sendCode}/>
-    );
+    const Button1 = () => <BB text="Enviar" margin={10} action={sendCode} />;
     const Button2 = () => (
       <BB
         text="Confirmar código"
@@ -59,12 +57,12 @@ const ForgotPassword: React.FC = () => {
       <View style={styles_comp.content}>
         <View style={styles_comp.Inputs}>
           <InputContainer
-            form={FormST.FormProp("Email", ["email","required"])}
+            form={FormST.FormProp("Email", ["email", "required"])}
             placeholder="Email da sua conta"
             extra_component={Button1}
           />
           <InputContainer
-            form={FormST.FormProp("Code", ["min","equal"], code as string, 7)}
+            form={FormST.FormProp("Code", ["min", "equal"], code as string, 7)}
             placeholder="xxx-xxx-xxx-xxx"
             extra_component={Button2}
           />
@@ -74,39 +72,56 @@ const ForgotPassword: React.FC = () => {
   };
 
   const ForgotPassword_validate: React.FC = () => {
-    const FormPST = FormState([{field:"newPswd",validate:true}, {field:"ConfNewPswd",validate:true}]);
+    const FormPST = FormState([
+      { field: "newPswd", validate: true },
+      { field: "ConfNewPswd", validate: true },
+    ]);
 
     const update_password = () => {
-      console.log("Formulário validado: ",FormPST.FormValidated());
-      
+      console.log("Formulário validado: ", FormPST.FormValidated());
+
       if (!FormPST.FormValidated()) return;
 
-      api.alterar_senha({
-        body:{email:FormPST.Form.Email.field, novaSenha:FormPST.Form.newPswd.field}
-      }).then(res => {
-        console.log(res);
-      })
+      api
+        .alterar_senha({
+          body: {
+            email: FormPST.Form.Email.field,
+            novaSenha: FormPST.Form.newPswd.field,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
 
       navigation.navigate("CRUD");
-    }
+    };
 
     return (
       <View style={styles_comp.content}>
         <View style={styles_comp.Inputs}>
           <InputContainer
-            form={FormPST.FormProp("newPswd", ["required","min"], undefined, 8)}
+            form={FormPST.FormProp(
+              "newPswd",
+              ["required", "min"],
+              undefined,
+              8,
+            )}
             el_text="Nova Senha"
             placeholder="Pelo menos 8 dígitos"
             height={"20%"}
           />
           <InputContainer
-            form={FormPST.FormProp("ConfNewPswd", ["equal"], FormPST.Form.newPswd.field)}
+            form={FormPST.FormProp(
+              "ConfNewPswd",
+              ["equal"],
+              FormPST.Form.newPswd.field,
+            )}
             el_text="Confirmar Senha"
             placeholder="As senhas devem coincidir"
             height={"20%"}
           />
         </View>
-        <BB text="Alterar Senha" margin={10} action={update_password}/>
+        <BB text="Alterar Senha" margin={10} action={update_password} />
       </View>
     );
   };
@@ -115,11 +130,12 @@ const ForgotPassword: React.FC = () => {
     <SafeAreaProvider style={styles.container}>
       <SafeAreaView style={styles.container}>
         <Image
-          style = {styles.imgHeader}
-          source= {require("../../../assets/img/UFJF_extension_log_transparent.png")}/>
-        
-        {FP_Page === 0 && <ForgotPassword_insert/>}
-        {FP_Page === 1 && <ForgotPassword_validate/>}
+          style={styles.imgHeader}
+          source={require("../../../assets/images/UFJF_extension_log_transparent.png")}
+        />
+
+        {FP_Page === 0 && <ForgotPassword_insert />}
+        {FP_Page === 1 && <ForgotPassword_validate />}
       </SafeAreaView>
     </SafeAreaProvider>
   );

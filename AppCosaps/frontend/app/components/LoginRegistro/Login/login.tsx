@@ -30,18 +30,18 @@ const login: React.FC<LR_Props> = (
       if(!Form.FormValidated())
         return;
       
-      try{
-          api.login({
-          body:{CPF:Form_content.CPF.field,senha:Form_content.Senha.field}
-        }).then(res => {
-          console.log(res);
-          navigation.navigate("MainPage");
-        });
-        }
-      catch(err)
-      {
+      // try{
+      //     api.login({
+      //     body:{CPF:Form_content.CPF.field,senha:Form_content.Senha.field}
+      //   }).then(res => {
+      //     console.log(res);
+      //     navigation.navigate("MainPage");
+      //   });
+      //   }
+      // catch(err)
+      // {
 
-      }
+      // }
       
     }
     
