@@ -24,6 +24,7 @@ const register:  React.FC<LR_Props> = (
   const navigation = useNavigation<NavigationProp>();
   
   const enviar = async() => {
+    console.log("Formulário validado: ",FormST.FormValidated());
     if(!FormST.FormValidated())
       return;
 

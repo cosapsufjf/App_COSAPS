@@ -22,42 +22,30 @@ const ForgotPassword: React.FC = () => {
   const ForgotPassword_insert: React.FC = () => {
     const FormST = FormState(["Email", "Code"]);
 
-    const update_password = () => {
-      api.alterar_senha({
-        body:{email:FormST.Form.Email,novaSenha:FormST.Form.newPswd}
-      }).then(res => {
-        console.log(res);
-      })
-    }
-
     const sendCode = async () => {
-      setCode(RandomCode());
-      try{
-        await sendEmail(
-        FormST.Form.Email,
-        "Recuperação de senha",
-        `O seu codigo de verificação é: ${code}`,
-      );
-      }
-      catch(err)
-      {
-
-      }
+      if(FormST.Form.Email === "" || FormST.Validated.Email === false)  return;
       
+      console.log("Foi");
+      // try{
+      //   await sendEmail(
+      //   FormST.Form.Email,
+      //   "Recuperação de senha",
+      //   `O seu codigo de verificação é: ${code}`,
+      // );
+      // }
+      // catch(err)
+      // {
+      // }
+      setCode("1234567");
     };
 
     const confirmCode = (entry: string)=>{
-      console.log("????",FormST.FormValidated());
-      if(FormST.FormValidated())
-      {
-        if(entry === code)
-          setFP_Page(1);
-      }
-      console.log("rodou!!, entry: "+entry);
-      }
+      if(FormST.FormValidated() && entry == code)
+        setFP_Page(1);
+    }
 
     const Button1 = () => (
-      <BB text="Enviar" margin={10} action={()=>setCode("12345678")}/>
+      <BB text="Enviar" margin={10} action={sendCode}/>
     );
     const Button2 = () => (
       <BB
@@ -76,7 +64,7 @@ const ForgotPassword: React.FC = () => {
             extra_component={Button1}
           />
           <InputContainer
-            form={FormST.FormProp("Code", ["min"], undefined, 6)}
+            form={FormST.FormProp("Code", ["min","equal"], code as string, 7)}
             placeholder="xxx-xxx-xxx-xxx"
             extra_component={Button2}
           />
@@ -86,25 +74,39 @@ const ForgotPassword: React.FC = () => {
   };
 
   const ForgotPassword_validate: React.FC = () => {
-    const FormST = FormState(["newPswd", "ConfNewPswd"]);
+    const FormPST = FormState(["newPswd", "ConfNewPswd"]);
+
+    const update_password = () => {
+      console.log("Formulário validado: ",FormPST.FormValidated());
+      
+      if (!FormPST.FormValidated()) return;
+
+      api.alterar_senha({
+        body:{email:FormPST.Form.Email,novaSenha:FormPST.Form.newPswd}
+      }).then(res => {
+        console.log(res);
+      })
+
+      navigation.navigate("CRUD");
+    }
 
     return (
       <View style={styles_comp.content}>
         <View style={styles_comp.Inputs}>
           <InputContainer
-            form={FormST.FormProp("newPswd", ["required","min"], undefined, 8)}
+            form={FormPST.FormProp("newPswd", ["required","min"], undefined, 8)}
             el_text="Nova Senha"
             placeholder="Pelo menos 8 dígitos"
             height={"20%"}
           />
           <InputContainer
-            form={FormST.FormProp("ConfNewPswd", ["equal"], FormST.Form.newPswd)}
+            form={FormPST.FormProp("ConfNewPswd", ["equal"], FormPST.Form.newPswd)}
             el_text="Confirmar Senha"
             placeholder="As senhas devem coincidir"
             height={"20%"}
           />
         </View>
-        <BB text="Alterar Senha" margin={10} action={() => navigation.navigate("CRUD")}/>
+        <BB text="Alterar Senha" margin={10} action={update_password}/>
       </View>
     );
   };

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, DimensionValue, KeyboardTypeOptions } from "react-native";
+import { View, Text, KeyboardTypeOptions } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { FormProps } from "@/app/types/form";
 import { useState } from "react";
@@ -40,6 +40,7 @@ const InputContainer : React.FC<InputContainerProps> = (
     const [ErrorTxt, setErrorTxt] = useState("");
     const [attValue, setAttValue] = useState("");
     const styles = style(width,height,margin,margin_top,background_color,approved,ok);
+
     const changeText = (text:string) => {
         if(form != undefined)
         {

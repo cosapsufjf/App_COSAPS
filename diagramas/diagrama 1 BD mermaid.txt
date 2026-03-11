@@ -1,0 +1,56 @@
+---
+config:
+  theme: redux-dark
+  look: neo
+---
+erDiagram
+	direction TB
+	User {
+		int id PK
+		int tipo
+		VARCHAR CPF
+		VARCHAR name
+		VARCHAR email
+		VARCHAR password
+	}
+
+	Routine {
+		int id PK ""
+		int user_id FK ""
+		VARCHAR name  ""
+		TIMESTAMP scheduled_date  ""
+	}
+
+	Diet {
+		int id PK ""
+		int routine_id FK ""
+		VARCHAR food  ""
+		VARCHAR quantity  ""
+		VARCHAR meal_time  ""
+	}
+
+	Exercise {
+		int id PK ""
+		int routine_id FK ""
+		VARCHAR name  ""
+		int sets  ""
+		int reps  ""
+		DECIMAL load  ""
+	}
+
+	Feedback {
+		int id PK ""
+		int routine_id FK "nullable"
+		int diet_id FK "nullable"
+		int exercise_id FK "nullable"
+		int rating  ""
+		TEXT comment  ""
+		TIMESTAMP created_at  ""
+	}
+
+	User||--o{Routine:"has"
+	Routine||--o{Diet:"contains"
+	Routine||--o{Exercise:"contains"
+	Routine||--o{Feedback:"receives"
+	Diet||--o{Feedback:"receives"
+	Exercise||--o{Feedback:"receives"

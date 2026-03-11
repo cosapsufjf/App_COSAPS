@@ -1,4 +1,5 @@
 export type FormFields = { [key: string]: string };
+export type FormValidation = { [key: string]: boolean };
 
 export type Validation_Methods = {
     required : {func:(value: string) => boolean,error:string}
@@ -13,8 +14,8 @@ export type Validation_Methods = {
 
 export type FormProps = {
     setFormField:(field:string, value:string)=>void,
-    field : string,
     ValidateField?:((methods: ValidationMethodKey[],field: string, params: { value: string[]; param?: number | RegExp; }) => { result: boolean; message: string;}) | null,
+    field : string,
     method:ValidationMethodKey[],
     param?:number | RegExp ,
     valueC?:string,
