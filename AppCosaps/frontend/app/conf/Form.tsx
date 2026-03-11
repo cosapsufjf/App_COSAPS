@@ -1,7 +1,7 @@
 import {
   FormFields,
+  ValidatedFields,
   FormProps,
-  FormValidation,
   Validation_Methods,
   ValidationMethodKey,
 } from "@/app/types/form";
@@ -11,28 +11,31 @@ import validateCPF from "../utils/cpfValidator";
 import { cpf_regex, emailRegex, PhoneRegex } from "../utils/regex";
 //TODO: REESTRUTURAR COM REACT HOOK FORM
 
-export const FormState = <T extends readonly string[]>(
+export const FormState = <T extends readonly {field: string, validate: boolean}[]>(
   initialStateFields: T,
 ) => {
-  const InitialState = initialStateFields.reduce((acc, field) => {
-    acc[field] = "";
+  const InitialState = initialStateFields.reduce((acc, Field) => {
+    acc[Field.field] = {field:"",validate: Field.validate};
     return acc;
   }, {} as FormFields);
 
-  const InitialValidate = initialStateFields.reduce((acc, field) => {
-    acc[field] = false;
+  const InitialValidated = initialStateFields.reduce((acc, Field) => {
+    acc[Field.field] = !Field.validate;
     return acc;
-  }, {} as FormValidation);
+  }, {} as ValidatedFields);
 
-  type Fields = T[number];
+  type Fields = T[number]["field"];
   const [Form, SetForm] = useState<FormFields>(InitialState);
-  const [Validated, SetValidated] = useState<FormValidation>(InitialValidate);
+  const [Validated, SetValidated] = useState<ValidatedFields>(InitialValidated);
 
   const setField = (campo: string, valor: string) => {
     SetForm({
       ...Form,
-      [campo]: valor,
+      [campo]: {field:valor,validate:Form[campo].validate},
     });
+  };
+  const setValidateField = (campo: string, valor: boolean) => {
+    SetValidated(prev=>({...prev,[campo]:valor}));
   };
 
   const Methods: Validation_Methods = {
@@ -92,8 +95,9 @@ export const FormState = <T extends readonly string[]>(
     let errors: string = "";
     let final: boolean = true;
 
-    if (methods != undefined) {
-      for (let i of methods) {
+    if(Form[field].validate)
+    {
+        for (let i of methods) {
         let method = i as keyof Validation_Methods;
         const res = ValidateMethod(method, params);
 
@@ -108,27 +112,20 @@ export const FormState = <T extends readonly string[]>(
         }
       }
 
-      SetValidated((prev) => ({ ...prev, [field]: final }));
-
+      setValidateField(field, final);
       return { result: final, message: errors };
-    } else {
-      console.log("essa porra tá rodando??");
-      SetValidated((prev) => ({ ...prev, [field]: true }));
-      return { result: true, message: "" };
     }
   };
 
   const resetForm = () => {
     SetForm(InitialState);
-    SetValidated(InitialValidate);
   };
 
   const FormValidated = () => {
+    console.log("Campos:",Validated);
     const keys = Object.keys(Validated);
-    console.log("Validated: ", Validated);
-    if (keys.length === 0) return false;
-
-    return keys.every((key) => Validated[key] === true);
+   
+    return keys.every((key)=>Validated[key] === true);
   };
 
   const FormProp = (
@@ -139,9 +136,11 @@ export const FormState = <T extends readonly string[]>(
   ) => {
     return {
       setFormField: setField.bind(this),
+      setValidateField: setValidateField.bind(this),
       ValidateField: ValidateField,
       field: field,
       method: method,
+      need_validation: Form[field].validate,
       valueC: valueC,
       param: param,
     } as FormProps;
@@ -149,8 +148,8 @@ export const FormState = <T extends readonly string[]>(
 
   return {
     Form,
-    FormValidated,
     Validated,
+    FormValidated,
     Methods,
     setField,
     ValidateMethod,

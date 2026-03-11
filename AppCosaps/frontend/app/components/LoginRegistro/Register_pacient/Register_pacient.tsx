@@ -14,14 +14,17 @@ import styles from "../styles";
 
 const register: React.FC<LR_Props> = ({ set = null }) => {
   const [showMessage, setShowMessage] = useState(false);
+  const [nav, setNav] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
   const FormST = FormState([
-    "Nome",
-    "Email",
-    "CPF",
-    "Senha",
-    "ConfSenha",
+    {field:"Nome",validate:false},
+    {field:"Email",validate:true},
+    {field:"CPF",validate:true},
+    {field:"Senha",validate:true},
+    {field:"ConfSenha",validate:true},
   ] as const);
+
+  const Form_content = FormST.Form;
   const navigation = useNavigation<NavigationProp>();
 
   const enviar = async () => {
@@ -30,6 +33,7 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
     if (!FormST.FormValidated()) {
       console.log("uai?");
       setShowMessage(true);
+      setNav(false);
       setMessageTxt("Preencha todos os campos!");
       return;
     }
@@ -38,16 +42,17 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
         await api
             .cadastrar({
               body: {
-                nome: FormST.Form.Nome,
-                email: FormST.Form.Email,
-                CPF: FormST.Form.CPF,
-                senha: FormST.Form.Senha,
+                nome: Form_content.Nome.field,
+                email: Form_content.Email.field,
+                CPF: Form_content.CPF.field,
+                senha: Form_content.Senha.field,
               },
             })
             .then((res) => {
               console.log(res);
               FormST.resetForm();
               setShowMessage(true);
+              setNav(true);
               setMessageTxt("Cadastro realizado com sucesso!");
             });
             } 
@@ -55,10 +60,11 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
     }
   };
 
-  const message = (txt: string) => {
+  const message = (txt: string, navigate_to?: boolean) => {
     setTimeout(() => {
       setShowMessage(false);
-      //navigation.navigate("MainPage");
+      if(navigate_to)
+        navigation.navigate("MainPage");
     }, 2000);
 
     return (
@@ -71,7 +77,7 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
   return (
     <>
       {showMessage ? (
-        message(messageTxt)
+        message(messageTxt, nav)
       ) : (
         <View style={styles.content}>
           <View style={styles.Inputs}>
@@ -99,7 +105,7 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
               form={FormST.FormProp(
                 "ConfSenha",
                 ["equal", "required"],
-                FormST.Form.Senha,
+                Form_content.Senha.field,
               )}
               el_text="Confirmar Senha"
               placeholder="As senhas devem coincidir"

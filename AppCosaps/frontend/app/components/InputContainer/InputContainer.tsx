@@ -53,7 +53,7 @@ const InputContainer : React.FC<InputContainerProps> = (
             setAttValue(text);
             form.setFormField(form.field,text);
 
-            if(form.ValidateField)
+            if(form.ValidateField && form.need_validation)
             {   
                 const res = form.valueC ? 
                     form.ValidateField(form.method,form.field,{value:[text,form.valueC],param:form.param})

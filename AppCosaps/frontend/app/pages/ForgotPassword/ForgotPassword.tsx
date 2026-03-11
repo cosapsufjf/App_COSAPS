@@ -20,10 +20,10 @@ const ForgotPassword: React.FC = () => {
   const [code, setCode] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp>();
   const ForgotPassword_insert: React.FC = () => {
-    const FormST = FormState(["Email", "Code"]);
+    const FormST = FormState([{field:"Email",validate:true}, {field:"Code",validate:true}]);
 
     const sendCode = async () => {
-      if(FormST.Form.Email === "" || FormST.Validated.Email === false)  return;
+      if(FormST.Form.Email.field === "" || FormST.Validated.Email === false)  return;
       
       console.log("Foi");
       // try{
@@ -51,7 +51,7 @@ const ForgotPassword: React.FC = () => {
       <BB
         text="Confirmar código"
         margin={10}
-        action={confirmCode.bind(this, FormST.Form.Code)}
+        action={confirmCode.bind(this, FormST.Form.Code.field)}
       />
     );
 
@@ -74,7 +74,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   const ForgotPassword_validate: React.FC = () => {
-    const FormPST = FormState(["newPswd", "ConfNewPswd"]);
+    const FormPST = FormState([{field:"newPswd",validate:true}, {field:"ConfNewPswd",validate:true}]);
 
     const update_password = () => {
       console.log("Formulário validado: ",FormPST.FormValidated());
@@ -82,7 +82,7 @@ const ForgotPassword: React.FC = () => {
       if (!FormPST.FormValidated()) return;
 
       api.alterar_senha({
-        body:{email:FormPST.Form.Email,novaSenha:FormPST.Form.newPswd}
+        body:{email:FormPST.Form.Email.field, novaSenha:FormPST.Form.newPswd.field}
       }).then(res => {
         console.log(res);
       })
@@ -100,7 +100,7 @@ const ForgotPassword: React.FC = () => {
             height={"20%"}
           />
           <InputContainer
-            form={FormPST.FormProp("ConfNewPswd", ["equal"], FormPST.Form.newPswd)}
+            form={FormPST.FormProp("ConfNewPswd", ["equal"], FormPST.Form.newPswd.field)}
             el_text="Confirmar Senha"
             placeholder="As senhas devem coincidir"
             height={"20%"}

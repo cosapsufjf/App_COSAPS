@@ -16,8 +16,8 @@ const login: React.FC<LR_Props> = (
   {
   set=null
 }) => {
-  const Form = FormState(["CPF", "Senha"] as const);
- 
+  const Form = FormState([{field:"CPF",validate:true}, {field:"Senha", validate:true}] as const);
+  const Form_content = Form.Form;
   const navigation = useNavigation<NavigationProp>();
   const forgotPassword = ()=>{
 
@@ -32,7 +32,7 @@ const login: React.FC<LR_Props> = (
       
       try{
           api.login({
-          body:{CPF:Form.Form.CPF,senha:Form.Form.Senha}
+          body:{CPF:Form_content.CPF.field,senha:Form_content.Senha.field}
         }).then(res => {
           console.log(res);
           navigation.navigate("MainPage");
