@@ -1,9 +1,11 @@
 import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "expo-router";
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 import api from "@/app/api/api";
+import {getAuth, createUserWithEmailAndPassword} from "@react-native-firebase/auth";
+
 import { FormState } from "@/app/conf/Form";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
 import BB from "../../Big_Button/BB";
@@ -36,6 +38,15 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
       setNav(false);
       setMessageTxt("Preencha todos os campos!");
       return;
+    }
+    else{
+      createUserWithEmailAndPassword(getAuth(),Form_content.Email.field, Form_content.Senha.field)
+      .then(()=>{
+        setShowMessage(true);
+        setNav(true);
+        setMessageTxt("Cadastro realizado com sucesso!");
+      })
+      .catch((err)=>console.log(err));
     }
     // else{
     //   try {

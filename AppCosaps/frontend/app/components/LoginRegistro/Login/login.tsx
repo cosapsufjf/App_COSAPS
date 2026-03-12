@@ -7,7 +7,9 @@ import { NavigationProp } from "@/app/types/navigation";
 import { Text, TouchableOpacity, View } from "react-native";
 import InputContainer from "../../InputContainer/InputContainer";
 import BB from "../../Big_Button/BB";
+
 import api from "@/app/api/api";
+import { getAuth, signInWithEmailAndPassword } from "@react-native-firebase/auth";
 
 import styles from "../styles";
 import LR_Props from "../props";
@@ -16,7 +18,7 @@ const login: React.FC<LR_Props> = (
   {
   set=null
 }) => {
-  const Form = FormState([{field:"CPF",validate:true}, {field:"Senha", validate:true}] as const);
+  const Form = FormState([{field:"Email",validate:true}, {field:"Senha", validate:true}] as const);
   const Form_content = Form.Form;
   const navigation = useNavigation<NavigationProp>();
   const forgotPassword = ()=>{
@@ -30,6 +32,14 @@ const login: React.FC<LR_Props> = (
       if(!Form.FormValidated())
         return;
       
+      signInWithEmailAndPassword(getAuth(),Form_content.Email.field, Form_content.Senha.field)
+      .then(()=>{
+        navigation.navigate("MainPage");
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+
       // try{
       //     api.login({
       //     body:{CPF:Form_content.CPF.field,senha:Form_content.Senha.field}
@@ -49,8 +59,9 @@ const login: React.FC<LR_Props> = (
       <View style={styles.content}>
         <View style={styles.Inputs}>
           <InputContainer
-            form={Form.FormProp("CPF",["CPF"])}
-            placeholder="xxx.xxx.xxx-xx"
+          //TODO: ALTERAR PARA CPF, EMAIL APENAS PARA TESTE FIREBASE 
+            form={Form.FormProp("Email",["email"])}
+            placeholder=""
             height={"15%"}
           />
           <InputContainer
