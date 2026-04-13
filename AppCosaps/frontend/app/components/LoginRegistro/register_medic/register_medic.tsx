@@ -4,6 +4,8 @@ import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
+import { enviar } from "@/app/firebase/create_user";
+
 import api from "@/app/api/api";
 import { FormState } from "@/app/conf/Form";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
@@ -16,6 +18,8 @@ import styles from "../styles";
 const register: React.FC<LR_Props> = ({ set = null }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
+  const [nav, setNav] = useState(false);
+
   const FormST = FormState([
     { field: "Nome", validate: true },
     { field: "Email", validate: true },
@@ -28,28 +32,6 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
 
   const Form_content = FormST.Form;
   const navigation = useNavigation<NavigationProp>();
-
-  const enviar = async () => {
-    console.log("Formulário validado: ", FormST.FormValidated());
-    if (!FormST.FormValidated()) return;
-
-    // try {
-    //   await api
-    //     .cadastrar({
-    //       body: {
-    //         nome: Form_content.Nome.field,
-    //         email: Form_content.Email.field,
-    //         CPF: Form_content.CPF.field,
-    //         senha: Form_content.Senha.field,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       setShowMessage(true);
-    //       setMessageTxt("Cadastro realizado com sucesso!");
-    //     });
-    // } catch (err) {}
-  };
 
   const message = (txt: string) => {
     setTimeout(() => {
@@ -138,7 +120,7 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
               }}
             >
               <BB text="Voltar" width={150} action={() => set(Select)} />
-              <BB text="Login" width={150} action={enviar} />
+              <BB text="Cadastrar" width={150} action={()=>enviar(FormST.FormValidated(),Form_content.CPF.field,Form_content.Email.field,setShowMessage,setNav,setMessageTxt)} />
             </SafeAreaView>
           </SafeAreaView>
         </SafeAreaProvider>

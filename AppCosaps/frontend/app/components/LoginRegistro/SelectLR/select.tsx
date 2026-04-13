@@ -1,9 +1,6 @@
 import {View,Text, TouchableOpacity, Image} from "react-native"
 import { useState } from "react"
 
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProp } from "@react-navigation/native";
-
 import login from "../Login/login";
 import register_pacient from "../Register_pacient/Register_pacient";
 import register_medic from "../register_medic/register_medic";

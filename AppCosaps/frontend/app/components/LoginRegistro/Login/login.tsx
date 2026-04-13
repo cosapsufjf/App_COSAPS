@@ -39,20 +39,6 @@ const login: React.FC<LR_Props> = (
       .catch((err)=>{
         console.log(err);
       })
-
-      // try{
-      //     api.login({
-      //     body:{CPF:Form_content.CPF.field,senha:Form_content.Senha.field}
-      //   }).then(res => {
-      //     console.log(res);
-      //     navigation.navigate("MainPage");
-      //   });
-      //   }
-      // catch(err)
-      // {
-
-      // }
-      
     }
     
     return(

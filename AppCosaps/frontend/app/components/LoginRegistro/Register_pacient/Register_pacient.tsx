@@ -1,11 +1,9 @@
 import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "expo-router";
 import { useState } from "react";
-import { Platform, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
-import api from "@/app/api/api";
-import {getAuth, createUserWithEmailAndPassword} from "@react-native-firebase/auth";
-
+import { enviar } from "@/app/firebase/create_user";
 import { FormState } from "@/app/conf/Form";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
 import BB from "../../Big_Button/BB";
@@ -29,47 +27,27 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
   const Form_content = FormST.Form;
   const navigation = useNavigation<NavigationProp>();
 
-  const enviar = async () => {
-    console.log("Formulário validado: ", FormST.FormValidated());
-
-    if (!FormST.FormValidated()) {
-      console.log("uai?");
-      setShowMessage(true);
-      setNav(false);
-      setMessageTxt("Preencha todos os campos!");
-      return;
-    }
-    else{
-      createUserWithEmailAndPassword(getAuth(),Form_content.Email.field, Form_content.Senha.field)
-      .then(()=>{
-        setShowMessage(true);
-        setNav(true);
-        setMessageTxt("Cadastro realizado com sucesso!");
-      })
-      .catch((err)=>console.log(err));
-    }
-    // else{
-    //   try {
-    //     await api
-    //         .cadastrar({
-    //           body: {
-    //             nome: Form_content.Nome.field,
-    //             email: Form_content.Email.field,
-    //             CPF: Form_content.CPF.field,
-    //             senha: Form_content.Senha.field,
-    //           },
-    //         })
-    //         .then((res) => {
-    //           console.log(res);
-    //           FormST.resetForm();
-    //           setShowMessage(true);
-    //           setNav(true);
-    //           setMessageTxt("Cadastro realizado com sucesso!");
-    //         });
-    //         } 
-    //   catch (err) {}
-    // }
-  };
+//  const enviar = async () => {
+//    console.log("Formulário validado: ", FormST.FormValidated());
+//
+  //  if (!FormST.FormValidated()) {
+  //    setShowMessage(true);
+  //    setNav(false);
+  //    setMessageTxt("Preencha todos os campos!");
+  //    return;
+  //  }
+  //  else{
+      //TODO: REFATORAR PARA USAR LOGIN COM CUSTOM KEY
+  //    const sintex_mail = Form_content.CPF.field+"@sintex.invalid"
+  //    createUserWithEmailAndPassword(getAuth(),sintex_mail, Form_content.Senha.field)
+   //   .then(()=>{
+  //      setShowMessage(true);
+  //      setNav(true);
+  //      setMessageTxt("Cadastro realizado com sucesso!");
+  //    })
+  //    .catch((err)=>console.log(err));
+  //  }
+  //};
 
   const message = (txt: string, navigate_to?: boolean) => {
     setTimeout(() => {
@@ -130,7 +108,7 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
             }}
           >
             <BB text="Voltar" width={150} action={() => set(Select)} />
-            <BB text="Cadastrar" width={150} action={enviar} />
+            <BB text="Cadastrar" width={150} action={()=>enviar(FormST.FormValidated(),Form_content.CPF.field,Form_content.Email.field,setShowMessage,setNav,setMessageTxt)} />
           </View>
         </View>
       )}

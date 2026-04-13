@@ -11,9 +11,7 @@ export const replacer = (match:string, p1: string, p2: string, p3: string, p4: s
     };
 
 export const format_str = (value:string, regex:RegExp, replace:string)=>{
-    console.log("func format: ",value);
     const r = value.replace(regex, replace);
-    console.log("Saiu da func: ",r);
     return r;
 }
 

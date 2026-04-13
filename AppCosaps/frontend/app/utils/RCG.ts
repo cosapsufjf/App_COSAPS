@@ -1,6 +1,7 @@
 //TODO: reimplementar o sistema de geração aleatória
 //como crypto não funciona direito no react native, talvez mover essa
 //parte pro backend ou então fazer um algoritmo mais complexo na mão
+
 const fillRandom = (arr: number[]) => {
     for (let i = 0; i < arr.length; i++) 
         arr[i] = Math.floor(Math.random() * 10);
