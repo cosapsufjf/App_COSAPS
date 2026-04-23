@@ -1,5 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack";
+
 export type RootStackParamList = {
+    LayoutMainContent: undefined;
     testPage: undefined;
     CRUD: undefined;
     ForgotPassword: undefined;

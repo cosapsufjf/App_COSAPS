@@ -1,8 +1,8 @@
 import {View,Text, TouchableOpacity, Image} from "react-native"
 import { useState } from "react"
 
-import login from "../Login/login";
-import register_pacient from "../Register_pacient/Register_pacient";
+import login from "../login/login";
+import register_pacient from "../register_pacient/Register_pacient";
 import register_medic from "../register_medic/register_medic";
 
 import LR_Props from "../props";

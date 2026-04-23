@@ -6,13 +6,12 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { enviar } from "@/app/firebase/create_user";
 
-import api from "@/app/api/api";
 import { FormState } from "@/app/conf/Form";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
-import BB from "../../Big_Button/BB";
-import InputContainer from "../../InputContainer/InputContainer";
+import BB from "../../big_button/BB";
+import InputContainer from "../../input_container/InputContainer";
 import LR_Props from "../props";
-import Select from "../SelectLR/select";
+import Select from "../select_lr/select";
 import styles from "../styles";
 
 const register: React.FC<LR_Props> = ({ set = null }) => {
@@ -120,7 +119,20 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
               }}
             >
               <BB text="Voltar" width={150} action={() => set(Select)} />
-              <BB text="Cadastrar" width={150} action={()=>enviar(FormST.FormValidated(),Form_content.CPF.field,Form_content.Email.field,setShowMessage,setNav,setMessageTxt)} />
+              <BB
+                text="Cadastrar"
+                width={150}
+                action={() =>
+                  enviar(
+                    FormST.FormValidated(),
+                    Form_content.CPF.field,
+                    Form_content.Email.field,
+                    setShowMessage,
+                    setNav,
+                    setMessageTxt,
+                  )
+                }
+              />
             </SafeAreaView>
           </SafeAreaView>
         </SafeAreaProvider>

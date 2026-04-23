@@ -11,7 +11,7 @@ const Apresentation: React.FC = () => {
       </View>
       <Image
         style={styles.imgLogo}
-        source={require("../../../assets/images/android-icon-foreground.png")}
+        source={require("@/assets/images/android-icon-foreground.png")}
       />
     </SafeAreaView>
   );

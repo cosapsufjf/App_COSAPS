@@ -7,9 +7,9 @@ import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "@react-navigation/native";
 
 import api from "@/app/api/api";
-import BB from "@/app/components/Big_Button/BB";
-import InputContainer from "@/app/components/InputContainer/InputContainer";
-import styles_comp from "@/app/components/LoginRegistro/styles";
+import BB from "@/app/components/crud_components/big_button/BB";
+import InputContainer from "@/app/components/crud_components/input_container/InputContainer";
+import styles_comp from "@/app/components/crud_components/login_registro/styles";
 import styles from "./style";
 
 const ForgotPassword: React.FC = () => {

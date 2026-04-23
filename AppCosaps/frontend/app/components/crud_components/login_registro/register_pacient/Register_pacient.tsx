@@ -3,13 +3,13 @@ import { useNavigation } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
-import { enviar } from "@/app/firebase/create_user";
 import { FormState } from "@/app/conf/Form";
+import { enviar } from "@/app/firebase/create_user";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
-import BB from "../../Big_Button/BB";
-import InputContainer from "../../InputContainer/InputContainer";
+import BB from "../../big_button/BB";
+import InputContainer from "../../input_container/InputContainer";
 import LR_Props from "../props";
-import Select from "../SelectLR/select";
+import Select from "../select_lr/select";
 import styles from "../styles";
 
 const register: React.FC<LR_Props> = ({ set = null }) => {
@@ -17,43 +17,20 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
   const [nav, setNav] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
   const FormST = FormState([
-    {field:"Nome",validate:false},
-    {field:"Email",validate:true},
-    {field:"CPF",validate:true},
-    {field:"Senha",validate:true},
-    {field:"ConfSenha",validate:true},
+    { field: "Nome", validate: false },
+    { field: "Email", validate: true },
+    { field: "CPF", validate: true },
+    { field: "Senha", validate: true },
+    { field: "ConfSenha", validate: true },
   ] as const);
 
   const Form_content = FormST.Form;
   const navigation = useNavigation<NavigationProp>();
 
-//  const enviar = async () => {
-//    console.log("Formulário validado: ", FormST.FormValidated());
-//
-  //  if (!FormST.FormValidated()) {
-  //    setShowMessage(true);
-  //    setNav(false);
-  //    setMessageTxt("Preencha todos os campos!");
-  //    return;
-  //  }
-  //  else{
-      //TODO: REFATORAR PARA USAR LOGIN COM CUSTOM KEY
-  //    const sintex_mail = Form_content.CPF.field+"@sintex.invalid"
-  //    createUserWithEmailAndPassword(getAuth(),sintex_mail, Form_content.Senha.field)
-   //   .then(()=>{
-  //      setShowMessage(true);
-  //      setNav(true);
-  //      setMessageTxt("Cadastro realizado com sucesso!");
-  //    })
-  //    .catch((err)=>console.log(err));
-  //  }
-  //};
-
   const message = (txt: string, navigate_to?: boolean) => {
     setTimeout(() => {
       setShowMessage(false);
-      if(navigate_to)
-        navigation.navigate("MainPage");
+      if (navigate_to) navigation.navigate("MainPage");
     }, 2000);
 
     return (
@@ -108,7 +85,20 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
             }}
           >
             <BB text="Voltar" width={150} action={() => set(Select)} />
-            <BB text="Cadastrar" width={150} action={()=>enviar(FormST.FormValidated(),Form_content.CPF.field,Form_content.Email.field,setShowMessage,setNav,setMessageTxt)} />
+            <BB
+              text="Cadastrar"
+              width={150}
+              action={() =>
+                enviar(
+                  FormST.FormValidated(),
+                  Form_content.CPF.field,
+                  Form_content.Email.field,
+                  setShowMessage,
+                  setNav,
+                  setMessageTxt,
+                )
+              }
+            />
           </View>
         </View>
       )}

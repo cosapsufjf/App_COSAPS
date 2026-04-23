@@ -10,4 +10,5 @@ const colors = {
     Cor_5: "#616280",
     Cor_6: "#beb5e5",
 }
+
 export default colors;

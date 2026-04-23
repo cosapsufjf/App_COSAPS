@@ -1,10 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import CRUD from "./pages/CRUD/CRUD";
-import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-import MainPage from "./pages/MainPage/MainPage";
-import TestPage from "./pages/test/testPage";
-
-
+import CRUD from "./pages/crud/CRUD";
+import ForgotPassword from "./pages/forgot_password/ForgotPassword";
+import MainPage from "./pages/main_page/MainPage";
+import LayoutMainContent from "./pages/layout_main_content";
+import { NavigationContainer } from "@react-navigation/native";
 import { RootStackParamList } from "./types/navigation";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -12,9 +11,10 @@ const Stack = createStackNavigator<RootStackParamList>();
 function Stacked() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="LayoutMainContent" component={LayoutMainContent} />
+      <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="CRUD" component={CRUD} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen name="MainPage" component={MainPage} />
     </Stack.Navigator>
   );
 }
