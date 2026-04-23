@@ -14,7 +14,7 @@ import styles from "./style";
 
 const ForgotPassword: React.FC = () => {
   const [FP_Page, setFP_Page] = useState(0);
-  const [code, setCode] = useState<string | null>(null);
+  const [code, setCode] = useState<string | null>("1234567");
   const navigation = useNavigation<NavigationProp>();
   const ForgotPassword_insert: React.FC = () => {
     const FormST = FormState([
@@ -26,17 +26,6 @@ const ForgotPassword: React.FC = () => {
       if (FormST.Form.Email.field === "" || FormST.Validated.Email === false)
         return;
 
-      console.log("Foi");
-      // try{
-      //   await sendEmail(
-      //   FormST.Form.Email,
-      //   "Recuperação de senha",
-      //   `O seu codigo de verificação é: ${code}`,
-      // );
-      // }
-      // catch(err)
-      // {
-      // }
       setCode("1234567");
     };
 
@@ -65,6 +54,7 @@ const ForgotPassword: React.FC = () => {
             form={FormST.FormProp("Code", ["min", "equal"], code as string, 7)}
             placeholder="xxx-xxx-xxx-xxx"
             extra_component={Button2}
+            show_errors={false}
           />
         </View>
       </View>

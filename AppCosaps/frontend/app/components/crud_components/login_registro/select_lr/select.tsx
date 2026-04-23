@@ -11,7 +11,7 @@ import styles from "./styles";
 
 const Select :  React.FC<LR_Props> = (
   {
-  set=null
+    set=null
 }) => {
     const [show_reg, setShowReg] = useState(false);
     const style = styles();

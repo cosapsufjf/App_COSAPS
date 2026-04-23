@@ -17,7 +17,8 @@ interface InputContainerProps {
     height?:number | string,
     margin?:number | string,
     margin_top?:number | string,
-    background_color?:string
+    background_color?:string,
+    show_errors?:boolean
 }
 
 const InputContainer : React.FC<InputContainerProps> = (
@@ -32,7 +33,8 @@ const InputContainer : React.FC<InputContainerProps> = (
         keyboard_type="default",
         background_color=colors.Fundo_Claro_1,
         margin=0,
-        margin_top=0
+        margin_top=0,
+        show_errors=true
     }
     )=>{
     const [approved, setApproved] = useState(false);
@@ -60,7 +62,9 @@ const InputContainer : React.FC<InputContainerProps> = (
                     : 
                     form.ValidateField(form.method,form.field,{value:[text],param:form.param});
 
-                setErrorTxt(res.message);
+                if(show_errors)
+                    setErrorTxt(res.message);
+                
                 setOk(!res.result);
                 setApproved(res.result);
             }

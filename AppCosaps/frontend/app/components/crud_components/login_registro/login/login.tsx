@@ -21,6 +21,7 @@ const login: React.FC<LR_Props> = ({ set = null }) => {
     { field: "Email", validate: true },
     { field: "Senha", validate: true },
   ] as const);
+  
   const Form_content = Form.Form;
   const navigation = useNavigation<NavigationProp>();
   const forgotPassword = () => {
