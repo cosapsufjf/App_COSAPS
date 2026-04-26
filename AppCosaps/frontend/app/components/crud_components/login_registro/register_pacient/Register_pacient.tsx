@@ -91,8 +91,8 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
               action={() =>
                 enviar(
                   FormST.FormValidated(),
-                  Form_content.CPF.field,
                   Form_content.Email.field,
+                  Form_content.Senha.field,
                   setShowMessage,
                   setNav,
                   setMessageTxt,

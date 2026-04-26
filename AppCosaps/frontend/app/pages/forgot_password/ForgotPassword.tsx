@@ -1,117 +1,168 @@
-import { FormState } from "@/app/conf/Form";
-import { useState } from "react";
-import { Image, View } from "react-native";
+import { Image, View, Text, Animated} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
+import { FormState } from "@/app/conf/Form";
+import { useRef,useEffect, useState } from "react";
 
 import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "@react-navigation/native";
 
-import api from "@/app/api/api";
+import { getAuth, sendPasswordResetEmail } from "@react-native-firebase/auth";
+
 import BB from "@/app/components/crud_components/big_button/BB";
 import InputContainer from "@/app/components/crud_components/input_container/InputContainer";
 import styles_comp from "@/app/components/crud_components/login_registro/styles";
 import styles from "./style";
 
 const ForgotPassword: React.FC = () => {
-  const [FP_Page, setFP_Page] = useState(0);
-  const [code, setCode] = useState<string | null>("1234567");
+  const [EmailSent, setEmailSent] = useState(false);
+  const [inputErr, setInputErr] = useState(false);
+  const [messageTxt, setMessageTxt] = useState("Não foi possível enviar o código de redefinição para o email informado, verifique suas informações, ou tente novamente mais tarde");
+
+  const value_pop_up = useRef(new Animated.Value(-500)).current;
+  const value_pop_up_err = useRef(new Animated.Value(-500)).current;
+  const value_progress_bar = useRef(new Animated.Value(0)).current;
+  const value_fade_input= useRef(new Animated.Value(1)).current;
+
+  const transition_time = 2000;
+  const navigate_time = 3500;
+  const show_pop_up_response = ()=>{
+      Animated.timing(value_pop_up,{
+          toValue: 0,
+          duration: transition_time/2,
+          useNativeDriver: false
+      }).start();
+    }
+
+  const show_pop_up_err = ()=>{
+      Animated.timing(value_pop_up_err,{
+          toValue: 0,
+          duration: transition_time/2,
+          useNativeDriver: false
+      }).start();
+    }
+  const resetPopUpErr = () => {
+    Animated.timing(value_pop_up_err, {
+      toValue: -500,
+      duration: transition_time/4,
+      useNativeDriver: false
+    }).start();
+  };
+
+  const show_progress_bar = ()=>{
+      Animated.timing(value_progress_bar,{
+      toValue: 100,
+      duration: transition_time,
+      useNativeDriver: false
+    }).start();
+  }
+  const fadeOut = () => {
+    Animated.timing(value_fade_input, {
+      toValue: 0,
+      duration: transition_time/2,
+      useNativeDriver: true,
+    }).start();
+  };
+
   const navigation = useNavigation<NavigationProp>();
+
+  useEffect(() => {
+    if (EmailSent) {
+      show_pop_up_response();
+      show_progress_bar();
+      fadeOut();
+
+      setTimeout(() => {
+        navigation.navigate("CRUD");
+      }, navigate_time);
+    }
+  }, [EmailSent,inputErr]);
+
   const ForgotPassword_insert: React.FC = () => {
     const FormST = FormState([
       { field: "Email", validate: true },
-      { field: "Code", validate: true },
     ]);
 
     const sendCode = async () => {
-      if (FormST.Form.Email.field === "" || FormST.Validated.Email === false)
+      console.log("Formulário validado: ", FormST.FormValidated());
+      
+      if (!FormST.FormValidated()){
+        setMessageTxt("Email inválido");
+        setInputErr(true);
+        show_pop_up_err();
+        setTimeout(() => {
+          resetPopUpErr();
+        }, 1500);
         return;
-
-      setCode("1234567");
-    };
-
-    const confirmCode = (entry: string) => {
-      if (FormST.FormValidated() && entry == code) setFP_Page(1);
+      }
+      else
+      {
+        setInputErr(false);
+        sendPasswordResetEmail(getAuth(), FormST.Form.Email.field)
+        .then(()=>{
+          setMessageTxt("Um código de redefinição de senha foi enviado para o email informado com sucesso");
+          setEmailSent(true);
+        })
+        .catch(()=>{
+          setMessageTxt("Não foi possível enviar o código de redefinição de senha para o email informado, verifique suas informações, ou tente novamente mais tarde");
+          setInputErr(true);
+        })
+      }
     };
 
     const Button1 = () => <BB text="Enviar" margin={10} action={sendCode} />;
-    const Button2 = () => (
-      <BB
-        text="Confirmar código"
-        margin={10}
-        action={confirmCode.bind(this, FormST.Form.Code.field)}
-      />
-    );
 
-    return (
-      <View style={styles_comp.content}>
-        <View style={styles_comp.Inputs}>
-          <InputContainer
-            form={FormST.FormProp("Email", ["email", "required"])}
-            placeholder="Email da sua conta"
-            extra_component={Button1}
-          />
-          <InputContainer
-            form={FormST.FormProp("Code", ["min", "equal"], code as string, 7)}
-            placeholder="xxx-xxx-xxx-xxx"
-            extra_component={Button2}
-            show_errors={false}
-          />
-        </View>
-      </View>
-    );
-  };
-
-  const ForgotPassword_validate: React.FC = () => {
-    const FormPST = FormState([
-      { field: "newPswd", validate: true },
-      { field: "ConfNewPswd", validate: true },
-    ]);
-
-    const update_password = () => {
-      console.log("Formulário validado: ", FormPST.FormValidated());
-
-      if (!FormPST.FormValidated()) return;
-
-      api
-        .alterar_senha({
-          body: {
-            email: FormPST.Form.Email.field,
-            novaSenha: FormPST.Form.newPswd.field,
-          },
+    const pop_up = () =>{
+      const pop_up_style = {
+        top:value_pop_up.interpolate({
+          inputRange:[-300,0],
+          outputRange:[-300,100]
         })
-        .then((res) => {
-          console.log(res);
-        });
-
-      navigation.navigate("CRUD");
-    };
+      }
+        return <Animated.View style={[styles.MessageContainer, pop_up_style]}>
+                  <Text style={styles.Text}>{messageTxt}</Text>
+                </Animated.View>
+    }
+    const pop_up_err = () =>{
+      const pop_up_style_err = {
+        top:value_pop_up_err.interpolate({
+          inputRange:[-300,0],
+          outputRange:[-300,-70]
+        })
+      }
+        return <Animated.View style={[styles.MessageContainer, pop_up_style_err]}>
+                  <Text style={styles.Text}>{messageTxt}</Text>
+                </Animated.View>
+    }
+    const Progress_bar = () => <Animated.View style={[styles.Progress_bar,
+      {
+        width: value_progress_bar.interpolate({
+          inputRange: [0, 100],
+          outputRange: ['0%', '100%']
+        })
+      }
+    ]}/>
 
     return (
       <View style={styles_comp.content}>
         <View style={styles_comp.Inputs}>
-          <InputContainer
-            form={FormPST.FormProp(
-              "newPswd",
-              ["required", "min"],
-              undefined,
-              8,
-            )}
-            el_text="Nova Senha"
-            placeholder="Pelo menos 8 dígitos"
-            height={"20%"}
-          />
-          <InputContainer
-            form={FormPST.FormProp(
-              "ConfNewPswd",
-              ["equal"],
-              FormPST.Form.newPswd.field,
-            )}
-            el_text="Confirmar Senha"
-            placeholder="As senhas devem coincidir"
-            height={"20%"}
-          />
+          {EmailSent && pop_up()}
+          {inputErr && pop_up_err()}
+
+          <Animated.View style={[styles_comp.Inputs, {opacity: value_fade_input}]}>
+            <InputContainer
+                form={FormST.FormProp("Email", ["email", "required"])}
+                placeholder="Email da sua conta"
+                show_errors={false}
+              />
+            <View style={styles.Buttons}>
+              {Button1()}
+              <BB action={() => navigation.navigate("CRUD")} text="Voltar" width={100} height={50}/>
+            </View>
+          </Animated.View>
+
+          {EmailSent && Progress_bar()}
         </View>
-        <BB text="Alterar Senha" margin={10} action={update_password} />
       </View>
     );
   };
@@ -124,8 +175,7 @@ const ForgotPassword: React.FC = () => {
           source={require("../../../assets/images/UFJF_extension_log_transparent.png")}
         />
 
-        {FP_Page === 0 && <ForgotPassword_insert />}
-        {FP_Page === 1 && <ForgotPassword_validate />}
+        <ForgotPassword_insert />
       </SafeAreaView>
     </SafeAreaProvider>
   );

@@ -18,11 +18,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center"
     },
-    Text:{
-        color:"#fff", 
-        fontWeight:"bold", 
-        margin:0,
-    },
     forgotPassword:{
       fontSize:14,
       fontWeight:"bold",
