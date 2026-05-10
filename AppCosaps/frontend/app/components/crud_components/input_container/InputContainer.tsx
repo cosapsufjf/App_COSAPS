@@ -18,7 +18,8 @@ interface InputContainerProps {
     margin?:number | string,
     margin_top?:number | string,
     background_color?:string,
-    show_errors?:boolean
+    show_errors?: boolean,
+    text_state_setter?: React.Dispatch<React.SetStateAction<string>> | null,
 }
 
 const InputContainer : React.FC<InputContainerProps> = (
@@ -34,15 +35,17 @@ const InputContainer : React.FC<InputContainerProps> = (
         background_color=colors.Fundo_Claro_1,
         margin=0,
         margin_top=0,
-        show_errors=true
+        show_errors=true,
+        text_state_setter=null,
     }
     )=>{
     const [approved, setApproved] = useState(false);
     const [ok, setOk] = useState(false);
     const [ErrorTxt, setErrorTxt] = useState("");
-    const [attValue, setAttValue] = useState("");
     const styles = style(width,height,margin,margin_top,background_color,approved,ok);
 
+    const [attValue, setAttValue] = useState("");
+  
     const changeText = (text:string) => {
         if(form != undefined)
         {
@@ -52,7 +55,6 @@ const InputContainer : React.FC<InputContainerProps> = (
                 text = format_str(text,format_regex.regex,format_regex.replace);
                 console.log("formatado: ",text)
             }
-            setAttValue(text);
             form.setFormField(form.field,text);
 
             if(form.ValidateField && form.need_validation)
@@ -69,6 +71,11 @@ const InputContainer : React.FC<InputContainerProps> = (
                 setApproved(res.result);
             }
         }
+
+        if (text_state_setter != null)
+            text_state_setter(text);
+        
+      setAttValue(text);
     }
     return (
             <View style={styles.container}>

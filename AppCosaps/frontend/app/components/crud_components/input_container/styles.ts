@@ -10,7 +10,7 @@ const styles = (
             width:"90%",
             height:"10%",
             flexDirection:"column",
-            alignItems:"flex-start",
+            alignItems:"center",
             textAlign:"left",
             margin:margin as DimensionValue,
             marginTop:marginTop as DimensionValue

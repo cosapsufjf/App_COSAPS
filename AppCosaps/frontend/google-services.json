@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "763611275515",
+    "project_id": "app-cosaps",
+    "storage_bucket": "app-cosaps.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763611275515:android:179f0b3a57ec54aea2505e",
+        "android_client_info": {
+          "package_name": "com.cosaps.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwAoFzliSuwFYDvC65OrsDWAuTtP2--Ys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

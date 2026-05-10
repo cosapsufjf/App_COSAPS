@@ -43,6 +43,4 @@ app-example
 /android
 
 
-#keys
-google-services.json
-GoogleService-Info.plist
+
