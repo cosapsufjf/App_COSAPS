@@ -7,6 +7,7 @@ export type RootStackParamList = {
     CRUD: undefined;
     ForgotPassword: undefined;
     MainPage: undefined;
+    FoodSearch:undefined;
 };
 
 export type NavigationProp = StackNavigationProp<RootStackParamList>;

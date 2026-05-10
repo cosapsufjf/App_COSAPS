@@ -3,9 +3,9 @@ import Apresentation from "./pages/apresentation/Apresentation";
 import CRUD from "./pages/crud/CRUD";
 import ForgotPassword from "./pages/forgot_password/ForgotPassword";
 import MainPage from "./pages/main_page/MainPage";
-import LayoutMainContent from "./pages/layout_main_content";
 import { NavigationContainer } from "@react-navigation/native";
 import { RootStackParamList } from "./types/navigation";
+import FoodSearchScreen from "./pages/food_calories/FoodCalories";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -16,6 +16,7 @@ function Stacked() {
       <Stack.Screen name="CRUD" component={CRUD} />
       <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="FoodSearch" component={FoodSearchScreen} />
     </Stack.Navigator>
   );
 }

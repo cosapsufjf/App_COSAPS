@@ -1,5 +1,8 @@
 import { View,Text,Image, TouchableOpacity } from "react-native";
 import styles from "./styles";
+import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@/app/types/navigation";
 
 const PacientArea : React.FC = () => {
 
@@ -10,11 +13,13 @@ const PacientArea : React.FC = () => {
         calory: require("@/assets/images/calory_icon.png"),
         messages: require("@/assets/images/messages_icon.png"),
     };
+    
+    const navigation = useNavigation<NavigationProp>();
 
-    const Icon: React.FC<{ iconName: string }> = ({ iconName }) => {
+    const Icon: React.FC<{ iconName: string, onPress?: () => void}> = ({ iconName, onPress }) => {
         return (
-            <TouchableOpacity>
-            <Image source={iconMap[iconName]} style={styles.img} />
+            <TouchableOpacity onPress={onPress}>
+                <Image source={iconMap[iconName]} style={styles.img} />
             </TouchableOpacity>
         );
     };
@@ -25,7 +30,7 @@ const PacientArea : React.FC = () => {
                 <Icon iconName="activity"/>
                 <Icon iconName="diet"/>
                 <Icon iconName="routine"/>
-                <Icon iconName="calory"/>
+                <Icon iconName="calory" onPress={()=>navigation.navigate("FoodSearch")}/>
                 <Icon iconName="messages"/>
             </View>
         )

@@ -137,10 +137,10 @@ export default function LayoutMainContent() {
           getTabBarIcon(route.name, focused, color, size),
       })}
     >
-      <Tab.Screen name="Home" component={MainPage} />
-      <Tab.Screen name="Menu" component={Menu} />
+      <Tab.Screen name="Home"   component={MainPage} />
+      <Tab.Screen name="Menu"   component={Menu} />
       <Tab.Screen name="Rotina" component={Routine} />
-      <Tab.Screen name="Chat" component={Chat_pg} />
+      <Tab.Screen name="Chat"   component={Chat_pg} />
       <Tab.Screen name="Perfil" component={Profile} />
     </Tab.Navigator>
   );

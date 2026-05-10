@@ -31,8 +31,8 @@ const Select :  React.FC<LR_Props> = (
         )
     }
 
-    return(
-        <View style={style.container.st}>
+    const select_login_register = () => {
+        return(
             <View style={style.center.st}>
                 <Text style={style.text("#fff",30).st}>Selecione o que deseja fazer:</Text>
                 <View style={style.row.st}>
@@ -43,8 +43,14 @@ const Select :  React.FC<LR_Props> = (
                         <Text style={style.text("#fff").st}>Cadastro</Text>
                     </TouchableOpacity>
                 </View>
-                {show_reg && selected_register()}
             </View>
+        )
+    }
+
+    return(
+        <View style={style.container.st}>
+            {!show_reg && select_login_register()}
+            {show_reg && selected_register()}
         </View>
     )
 }

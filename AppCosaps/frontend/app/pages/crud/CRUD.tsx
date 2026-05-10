@@ -30,6 +30,7 @@ const CRUD: React.FC = () => {
         {Page.show && <Page.page set={selectScreen}/>}
       </SafeAreaView>
     </SafeAreaProvider>
+    
   );
 };
 

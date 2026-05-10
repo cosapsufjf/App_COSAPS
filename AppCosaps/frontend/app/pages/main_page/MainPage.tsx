@@ -7,22 +7,21 @@ import Line from "@/app/components/main_page_components/line/Line";
 import PacientInfo from "@/app/components/main_page_components/Pacient/pacient_info/PacientInfo";
 import Pacient_Overview from "@/app/components/main_page_components/Pacient/pacient_overview/Pacient_overview";
 
-const MainPage : React.FC = ()=>{
-    return(
-        <SafeAreaProvider>
-            <SafeAreaView edges={["top"]} style={styles.container}>
-                <MainHeader/>
-                <PacientArea/>
-                <Line/>
-                <Line/>
-
-                <PacientInfo/>
-                <Line/>
-                <Line/>
-                <Pacient_Overview/>
-            </SafeAreaView>
-        </SafeAreaProvider>
-    )
+const MainPage: React.FC = () => {
+  return(
+    <SafeAreaProvider>
+      <SafeAreaView edges={["top"]} style={styles.container}>
+        <MainHeader/>
+        <PacientArea/>
+        <Line/>
+        <Line/>
+        <PacientInfo/>
+        <Line/>
+        <Line/>
+        <Pacient_Overview/>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  )
 }
 
 export default MainPage;

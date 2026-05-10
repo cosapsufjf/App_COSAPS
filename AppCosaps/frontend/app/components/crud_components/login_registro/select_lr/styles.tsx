@@ -8,19 +8,23 @@ const styles = ()=> {
             backgroundColor:colors.Fundo_3,
             alignItems:"center",
             justifyContent:"center",
-            borderRadius:30
+            borderRadius:30,
+            width:"100%"
             }
         }),
         center : StyleSheet.create({
             st:{
-            alignItems:"center",
-            justifyContent:"center",
+                alignItems:"center",
+                justifyContent:"center",
+                width:"100%"
             }
     }),
         row : StyleSheet.create({
             st:{
             flexDirection:"row",
             width:"100%",
+            alignItems:"center",
+            justifyContent:"center"
             }
     }),
         tou_op : (background_color?:string)=>StyleSheet.create({

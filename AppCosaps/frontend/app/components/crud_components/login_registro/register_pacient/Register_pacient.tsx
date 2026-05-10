@@ -12,7 +12,7 @@ import LR_Props from "../props";
 import Select from "../select_lr/select";
 import styles from "../styles";
 
-const register: React.FC<LR_Props> = ({ set = null }) => {
+const Register: React.FC<LR_Props> = ({ set = null }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [nav, setNav] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
@@ -106,4 +106,4 @@ const register: React.FC<LR_Props> = ({ set = null }) => {
   );
 };
 
-export default register;
+export default Register;

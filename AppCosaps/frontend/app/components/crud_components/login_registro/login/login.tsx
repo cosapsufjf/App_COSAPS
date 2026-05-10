@@ -16,7 +16,7 @@ import {
 import LR_Props from "../props";
 import Select from "../select_lr/select";
 import styles from "../styles";
-const login: React.FC<LR_Props> = ({ set = null }) => {
+const Login: React.FC<LR_Props> = ({ set = null }) => {
   const Form = FormState([
     { field: "Email", validate: true },
     { field: "Senha", validate: true },
@@ -78,4 +78,4 @@ const login: React.FC<LR_Props> = ({ set = null }) => {
   );
 };
 
-export default login;
+export default Login;
