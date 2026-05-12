@@ -1,9 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { RootStackParamList } from "./types/navigation";
+import { NavigationContainer } from "@react-navigation/native";
+
 import Apresentation from "./pages/apresentation/Apresentation";
 import CRUD from "./pages/crud/CRUD";
 import ForgotPassword from "./pages/forgot_password/ForgotPassword";
 import MainPage from "./pages/main_page/MainPage";
-import { RootStackParamList } from "./types/navigation";
 import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -21,5 +23,9 @@ function Stacked() {
 }
 
 export default function App() {
-  return <Stacked />;
+  return (
+    <NavigationContainer>
+      <Stacked/>      
+    </NavigationContainer>
+  )
 }

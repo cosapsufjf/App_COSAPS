@@ -25,6 +25,7 @@ const FatSecretAPI = {
 
   async searchFood(searchExpression: string) {
     try {
+      
       const response = await axios.post(`${this.baseUrl}/server.api`, null, {
         params: {
           method: "foods.search",
