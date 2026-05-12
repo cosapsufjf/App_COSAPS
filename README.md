@@ -1,26 +1,28 @@
 # App_COSAPS
-Mobile app for project COSAPS from FACFISIO /UFJF, made with react native and mysql
+Mobile app for project COSAPS from FACFISIO /UFJF, made with react native
 
-## Instruções para build de desenvolvimento
+## Instructions for development build
 ### Frontend
-A implementação atual do frontend do projeto usa React Native com o expo, para executar o projeto é necessário carregar as dependências e fazer o build do projeto usando o expo:
+The actual implementation uses react native with expo, for execute the project is necessary to install de dependencies and build with expo:
 
 ```
-git clone 
+git clone "https://github.com/cosapsufjf/App_COSAPS.git"
 cd AppCosaps/frontend
 npm i
 yarn 
 npx prebuild
 npx expo run:android
 ```
-
-- A dependência do build é o Java JDK 17:
+- The main build dependencie is java JDK 17 (for gradle):
     - https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-    - ``` sudo {gerenciador de pacotes da distro} install openjdk-17-jdk ``` em ambientes linux
-- A execução do projeto depende de um emulador de android SDK compatível sendo executado na máquina (como Android Studio, Genymotion, etc)
+    - ``` sudo {system package manager} install openjdk-17-jdk ``` in linux enviroments
+      
+- The execution of the project depends on a android SDK compatible emulator being executed on your machine (Android Studio, Genymotion, etc)
+  
+Other dependencies:
+- Autenticantion Service:
+    - Saas firebase
+- APIs:
+    - Fatsecret (For search nutritional information of food)
 
-
-
-
-### Backend
-A implementação do back está sendo estruturada, atualmente usa firebase para login e armazenamento
+All the critical credentials (API Keys, Google Services jsons, and etc) must be collected with the project responsibles
