@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
         backgroundColor:colors.Fundo_3,
         height:"100%",
         width: "100%",
-        borderRadius:30,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
     },
     Inputs:{
         width:"100%",

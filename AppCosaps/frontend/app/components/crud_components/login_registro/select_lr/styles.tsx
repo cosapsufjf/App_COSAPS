@@ -8,7 +8,8 @@ const styles = ()=> {
             backgroundColor:colors.Fundo_3,
             alignItems:"center",
             justifyContent:"center",
-            borderRadius:30,
+            borderTopRightRadius: 30,
+            borderTopLeftRadius: 30,
             width:"100%"
             }
         }),

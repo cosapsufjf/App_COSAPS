@@ -7,15 +7,20 @@ import { FormState } from "@/app/conf/Form";
 import { enviar } from "@/app/firebase/create_user";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
 import BB from "../../big_button/BB";
+
 import InputContainer from "../../input_container/InputContainer";
-import LR_Props from "../props";
-import Select from "../select_lr/select";
 import styles from "../styles";
 
-const Register: React.FC<LR_Props> = ({ set = null }) => {
+import LR_Props from "../../../../types/crud";
+
+const Register: React.FC<LR_Props> = ({
+  set = null,
+  elements = null,
+}) => {
   const [showMessage, setShowMessage] = useState(false);
   const [nav, setNav] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
+  
   const FormST = FormState([
     { field: "Nome", validate: false },
     { field: "Email", validate: true },
@@ -84,7 +89,7 @@ const Register: React.FC<LR_Props> = ({ set = null }) => {
               justifyContent: "space-between",
             }}
           >
-            <BB text="Voltar" width={150} action={() => set(Select)} />
+            <BB text="Voltar" width={150} action={() => set(elements.Select)} />
             <BB
               text="Cadastrar"
               width={150}

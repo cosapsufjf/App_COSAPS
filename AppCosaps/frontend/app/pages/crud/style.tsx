@@ -14,23 +14,23 @@ const styles = StyleSheet.create({
     margin:20,
   },
   card_selector:{
-        flexDirection: "row",
-        alignItems: "center",
-        height:"7%",
-        borderRadius:30,
-        margin:0,
-        padding:0
-    },
-  content:{
-        flex:1,
-        flexDirection: "column",
-        backgroundColor: "#f1f0f7",
-        alignItems: "center",
-        width: "80%",
-        height:"100%",
-        margin:0,
-        borderRadius:30,
-    }
+    flexDirection: "row",
+    alignItems: "center",
+    height: "7%",
+    borderRadius: 30,
+    margin: 0,
+    padding: 0,
+  },
+  content: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#f1f0f7",
+    alignItems: "center",
+    width: "80%",
+    height: "100%",
+    margin: 0,
+    borderRadius: 30,
+  }
 });
 
 export default styles;

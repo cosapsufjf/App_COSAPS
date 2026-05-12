@@ -13,10 +13,14 @@ import {
     signInWithEmailAndPassword,
 } from "@react-native-firebase/auth";
 
-import LR_Props from "../props";
-import Select from "../select_lr/select";
+import LR_Props from "../../../../types/crud";
+
 import styles from "../styles";
-const Login: React.FC<LR_Props> = ({ set = null }) => {
+
+const Login: React.FC<LR_Props> = ({
+  set = null,
+  elements = null,
+}) => {
   const Form = FormState([
     { field: "Email", validate: true },
     { field: "Senha", validate: true },
@@ -71,7 +75,7 @@ const Login: React.FC<LR_Props> = ({ set = null }) => {
           justifyContent: "space-between",
         }}
       >
-        <BB text="Voltar" width={150} action={() => set(Select)} />
+        <BB text="Voltar" width={150} action={() => set(elements.Select)} />
         <BB text="Login" width={150} action={enviar} />
       </View>
     </View>

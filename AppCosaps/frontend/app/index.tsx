@@ -13,9 +13,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 function Stacked() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, animation: "fade" }}>
-      <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="Apresentation" component={Apresentation} />
       <Stack.Screen name="CRUD" component={CRUD} />
+      <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="FoodSearch" component={FoodSearchScreen} />
     </Stack.Navigator>
