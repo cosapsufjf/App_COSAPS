@@ -32,7 +32,7 @@ const Food_Item = ({ food, recent_searches, set_function }: food_item_interface)
   const show_full_description = async () => {
     setShowFullContent(!show_full_content);
     try {
-      await ManageStorage.Save_In_Async_Storage(recent_searches, 'recent_searches', set_function, {
+      await ManageStorage.Save_List_In_Async_Storage(recent_searches, 'recent_searches', set_function, {
         food_id: food.food_id,
         food_name: food.food_name,
         food_brand: food.brand_name,

@@ -1,5 +1,5 @@
 import { NavigationProp } from "@/app/types/navigation";
-import { useNavigation } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, View } from "react-native";
 

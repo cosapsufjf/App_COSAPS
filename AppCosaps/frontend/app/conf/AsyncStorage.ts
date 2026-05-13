@@ -8,7 +8,26 @@ export interface AsyncModel{
 }
 
 const ManageStorage = {
-  Save_In_Async_Storage: async (Item_vector: AsyncModel[],item_name:string,set_function: React.Dispatch<any[]>, search: any) => {    
+  get_Parsed_Async_Storage: async (item_name: string) => {
+    try {
+      const value = await AsyncStorage.getItem(item_name);
+      return value ? JSON.parse(value) : null;
+    }
+    catch
+    {
+      console.log("Falha ao recuperar do async storage\n");
+    }
+  },
+  Save_In_Async_Storage: async (item_name: string, Item: any) => {
+    try {
+      await AsyncStorage.setItem(item_name, Item);
+    }
+    catch
+    {
+      console.log("Falha ao salvar no async storage\n");
+    }
+  },
+  Save_List_In_Async_Storage: async (Item_vector: AsyncModel[],item_name:string,set_function: React.Dispatch<any[]>, search: any) => {    
     if (Item_vector.map(item => item.food_id).includes(search.food_id))
     {
       console.log("Bloqueado, já na lista")

@@ -1,13 +1,15 @@
 import { View, Text, KeyboardTypeOptions } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { FormProps } from "@/app/types/form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format_str } from "@/app/utils/regex";
 import style from "./styles";
 import colors from "@/app/conf/colors";
+import ManageStorage  from "@/app/conf/AsyncStorage";
 
 interface InputContainerProps {
-    form ?: FormProps,
+    form?: FormProps,
+    get_value_from_storage?: {get: boolean, item: string, field: string},
     el_text?:string,
     placeholder?:string,
     extra_component?:any,
@@ -25,6 +27,7 @@ interface InputContainerProps {
 const InputContainer : React.FC<InputContainerProps> = (
     {
         form,
+        get_value_from_storage=null,
         el_text=null, 
         placeholder="",
         extra_component=null,
@@ -38,16 +41,34 @@ const InputContainer : React.FC<InputContainerProps> = (
         show_errors=true,
         text_state_setter=null,
     }
-    )=>{
+) => {
+  
     const [approved, setApproved] = useState(false);
     const [ok, setOk] = useState(false);
     const [ErrorTxt, setErrorTxt] = useState("");
     const styles = style(width,height,margin,margin_top,background_color,approved,ok);
-
-    const [attValue, setAttValue] = useState("");
+    const [attValue, setAttValue] = useState<string>("");
+  
+    useEffect(() => {
+      let mounted = true;
+    
+      async function load() {
+        if (!get_value_from_storage?.get) return;
+        try {
+          const parsed = await ManageStorage.get_Parsed_Async_Storage(get_value_from_storage.item);
+          const fieldValue = parsed?.[get_value_from_storage.field] ?? "";
+          if (mounted) setAttValue(fieldValue);
+        } catch{
+          if (mounted) setAttValue("");
+        }
+      }
+    
+      load();
+      return () => { mounted = false; };
+    }, [get_value_from_storage]);
   
     const changeText = (text:string) => {
-        if(form != undefined)
+        if(form !== undefined)
         {
             if(format_regex != null)
             {
@@ -74,9 +95,11 @@ const InputContainer : React.FC<InputContainerProps> = (
 
         if (text_state_setter != null)
             text_state_setter(text);
-        
+
+      
       setAttValue(text);
     }
+  
     return (
             <View style={styles.container}>
                 <Text style={styles.Text}>{el_text??form?.field}</Text>
