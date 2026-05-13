@@ -54,8 +54,7 @@ const Register: React.FC<LR_Props> = ({
       {showMessage ? (
         message("Cadastro realizado com sucesso")
       ) : (
-        <SafeAreaProvider>
-          <SafeAreaView style={styles.content}>
+          <View style={styles.content}>
             <SafeAreaView style={styles.Inputs}>
               <ScrollView>
                 <InputContainer
@@ -115,12 +114,8 @@ const Register: React.FC<LR_Props> = ({
                 />
               </ScrollView>
             </SafeAreaView>
-            <SafeAreaView
-              style={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
+            <View
+                style={styles.btnContainer}
             >
               <BB text="Voltar" width={150} action={() => set(elements.Select)} />
               <BB
@@ -137,9 +132,8 @@ const Register: React.FC<LR_Props> = ({
                   )
                 }
               />
-            </SafeAreaView>
-          </SafeAreaView>
-        </SafeAreaProvider>
+            </View>
+          </View>
       )}
     </>
   );

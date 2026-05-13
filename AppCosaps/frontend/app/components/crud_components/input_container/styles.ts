@@ -15,15 +15,15 @@ const styles = (
             margin:margin as DimensionValue,
             marginTop:marginTop as DimensionValue
         },
-        TextInput:{
-            backgroundColor: background_color,
-            width: width as DimensionValue,
-            minHeight:height as DimensionValue,
-            height:"auto",
-            borderRadius:30,
-            margin:margin as DimensionValue,
-            borderWidth:3,
-            borderColor:approved ? "green" : colors.Fundo_Claro_1,
+      TextInput: {
+          backgroundColor: background_color,
+          width: width as DimensionValue,
+          minHeight:height as DimensionValue,
+          height:"auto",
+          borderRadius:30,
+          margin:margin as DimensionValue,
+          borderWidth:3,
+          borderColor:approved ? "green" : colors.Fundo_Claro_1,
         },
         Text:{
             color:"#fff", 

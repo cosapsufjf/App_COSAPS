@@ -100,11 +100,7 @@ const Login: React.FC<LR_Props> = ({
         <Checkbox txt="Salvar informações" StorageItem="StoreInfo" checked={checked} setChecked={setChecked} />
       </View>
       <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
+          style={styles.btnContainer}
       >
         <BB text="Voltar" width={150} action={() => set(elements.Select)} />
         <BB text="Login" width={150} action={enviar} />

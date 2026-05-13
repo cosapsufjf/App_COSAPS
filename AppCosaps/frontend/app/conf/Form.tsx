@@ -9,7 +9,6 @@ import { useState } from "react";
 
 import validateCPF from "../utils/cpfValidator";
 import { cpf_regex, emailRegex, PhoneRegex } from "../utils/regex";
-//TODO: REESTRUTURAR COM REACT HOOK FORM
 
 export const FormState = <T extends readonly {field: string, validate: boolean}[]>(
   initialStateFields: T,
@@ -77,10 +76,10 @@ export const FormState = <T extends readonly {field: string, validate: boolean}[
     method: keyof Validation_Methods,
     params: { value: string[]; param?: number | RegExp | string | null },
   ) => {
-    if (method == "equal")
+    if (method === "equal")
       return Methods[method].func(params.value[0], params.value[1]);
 
-    if (method != "min" && method != "max" && method != "regex")
+    if (method !== "min" && method !== "max" && method !== "regex")
       return Methods[method].func(params.value[0]);
 
     return Methods[method].func(params.value[0], params.param as any);

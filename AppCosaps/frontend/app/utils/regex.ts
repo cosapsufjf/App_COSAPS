@@ -3,6 +3,12 @@ export const cpf_replace_regex   = /([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})/g;
 export const cpf_regex = /[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}/;
 export const emailRegex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
 
+export const MmN8d   = () => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+export const MmNCE8d = () => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+export const MmNCE12d = () => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/;
+export const MmNCE16d = () => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{16,}$/;
+
+
 export const cpf_replace = "$1.$2.$3-$4";
 
 export const replacer = (match:string, p1: string, p2: string, p3: string, p4: string) => 

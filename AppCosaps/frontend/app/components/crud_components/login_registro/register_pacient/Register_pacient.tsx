@@ -5,7 +5,7 @@ import { Text, View } from "react-native";
 
 import { FormState } from "@/app/conf/Form";
 import { enviar } from "@/app/firebase/create_user";
-import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
+import { cpf_replace, cpf_replace_regex, MmN8d, MmNCE8d, MmNCE12d, MmNCE16d } from "@/app/utils/regex";
 import BB from "../../big_button/BB";
 
 import InputContainer from "../../input_container/InputContainer";
@@ -20,7 +20,7 @@ const Register: React.FC<LR_Props> = ({
   const [showMessage, setShowMessage] = useState(false);
   const [nav, setNav] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
-  
+
   const FormST = FormState([
     { field: "Nome", validate: false },
     { field: "Email", validate: true },
@@ -45,6 +45,22 @@ const Register: React.FC<LR_Props> = ({
     );
   };
 
+  const passwordStrength = (password: string) => {
+    if (MmNCE16d().test(password))
+      return <View style={styles.passwordStrength}>
+                <Text style={{ color: "darkgreen", fontSize:18, alignSelf: "center"}}>Forte</Text>
+              </View>
+    if (MmNCE12d().test(password))
+      return <View style={styles.passwordStrength}>
+                <Text style={{ color: "yellow", fontSize:18, alignSelf: "center"}}>Média</Text>
+              </View>
+    if (MmN8d().test(password))
+      return <View style={styles.passwordStrength}>
+                <Text style={{ color: "darkred", fontSize:18, alignSelf: "center"}}>Fraca</Text>
+              </View>
+
+  };
+  
   return (
     <>
       {showMessage ? (
@@ -69,8 +85,8 @@ const Register: React.FC<LR_Props> = ({
               format_regex={{ regex: cpf_replace_regex, replace: cpf_replace }}
             />
             <InputContainer
-              form={FormST.FormProp("Senha", ["min", "required"], undefined, 8)}
-              placeholder="Pelo menos 8 dígitos"
+              form={FormST.FormProp("Senha", ["regex", "required"], undefined, MmN8d())}
+              placeholder="8 dígitos, letras minúsculas, maiúsculas e números"
             />
             <InputContainer
               form={FormST.FormProp(
@@ -80,14 +96,11 @@ const Register: React.FC<LR_Props> = ({
               )}
               el_text="Confirmar Senha"
               placeholder="As senhas devem coincidir"
-            />
+              />
+              {passwordStrength(Form_content.Senha.field)}
           </View>
           <View
-            style={{
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
+              style={styles.btnContainer}
           >
             <BB text="Voltar" width={150} action={() => set(elements.Select)} />
             <BB
