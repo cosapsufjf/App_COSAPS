@@ -7,12 +7,14 @@ import CRUD from "./pages/crud/CRUD";
 import ForgotPassword from "./pages/forgot_password/ForgotPassword";
 import MainPage from "./pages/main_page/MainPage";
 import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
+import Test from "./pages/test/Test";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function Stacked() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, animation: "fade" }}>
+      <Stack.Screen name="testPage" component={Test} />
       <Stack.Screen name="Apresentation" component={Apresentation} />
       <Stack.Screen name="CRUD" component={CRUD} />
       <Stack.Screen name="MainPage" component={MainPage} />

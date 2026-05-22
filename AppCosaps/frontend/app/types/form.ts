@@ -1,4 +1,8 @@
-export type FormFields = { [key: string]: {field:string, validate:boolean} };
+export type validate = {method: ValidationMethodKey, param?: any};
+export type Fields = Record<string, string>;
+
+
+export type FormFields = { [key: string]: { field: string, validate: boolean } };
 export type ValidatedFields = { [key: string]: boolean};
 
 export type Validation_Methods = {
@@ -10,17 +14,6 @@ export type Validation_Methods = {
     tel      : {func:(value: string) => boolean,error:string}
     CPF      : {func:(value: string) => boolean,error:string}
     regex    : {func:(value: string, regex: RegExp) => boolean,error:string}
-}
-
-export type FormProps = {
-    setFormField:(field:string, value:string)=>void,
-    setValidateField:(field:string, value:boolean)=>void,
-    ValidateField?:((methods: ValidationMethodKey[],field: string, params: { value: string[]; param?: number | RegExp; }) => { result: boolean; message: string;}) | null,
-    field : string,
-    method:ValidationMethodKey[],
-    need_validation:boolean,
-    param?:number | RegExp ,
-    valueC?:string,
 }
 
 export const ValidationMethodKeys = [
@@ -35,3 +28,15 @@ export const ValidationMethodKeys = [
 ] as const;
 
 export type ValidationMethodKey = typeof ValidationMethodKeys[number];
+
+export type FormProps = {
+    setFormField:(field:string, value:string)=>void,
+    setValidateField:(field:string, value:boolean)=>void,
+    ValidateField?:((methods: ValidationMethodKey[],field: string, params: { value: string[]; param?: number | RegExp; }) => { result: boolean; message: string;}) | null,
+    field : string,
+    method:ValidationMethodKey[],
+    need_validation:boolean,
+    param?:number | RegExp ,
+    valueC?:string,
+}
+
