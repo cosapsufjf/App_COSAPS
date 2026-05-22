@@ -4,8 +4,8 @@ import { FormProps } from "@/app/types/form";
 import { useState, useEffect } from "react";
 import { format_str } from "@/app/utils/regex";
 import style from "./styles";
-import colors from "@/app/conf/colors";
-import ManageStorage  from "@/app/conf/AsyncStorage";
+import { Colors as colors } from "../../../MainStyle";
+import ManageStorage from "@/app/conf/AsyncStorage";
 
 interface InputContainerProps {
     form?: FormProps,

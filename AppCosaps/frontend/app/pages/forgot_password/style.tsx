@@ -1,7 +1,5 @@
-import { StyleSheet, useAnimatedValue } from "react-native";
-import { Animated } from "react-native";
-import { BaseStyles } from "@/app/MainStyle";
-import colors from "@/app/conf/colors";
+import { StyleSheet } from "react-native";
+import { BaseStyles, Colors as colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
   container: {

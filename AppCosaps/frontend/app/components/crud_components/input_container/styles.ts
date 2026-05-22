@@ -1,5 +1,6 @@
 import { StyleSheet, DimensionValue } from "react-native";
-import colors from "@/app/conf/colors";
+import { Colors as colors } from "../../../MainStyle";
+
 
 const styles = (
         width : number | string,height:number | string,margin:number | string,

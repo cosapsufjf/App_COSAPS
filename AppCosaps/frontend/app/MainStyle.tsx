@@ -1,5 +1,4 @@
 import {DimensionValue, StyleSheet } from "react-native";
-import colors from "./conf/colors";
 
 export const Colors = {
     Fundo_1: "#8d83b6",
