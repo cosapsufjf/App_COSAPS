@@ -22,7 +22,7 @@ const CRUD: React.FC = () => {
   };
 
   return (
-    <SafeAreaProvider style={styles.container}>
+    <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <Image
           style={styles.imgHeader}

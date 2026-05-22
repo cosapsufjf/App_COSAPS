@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import colors from "@/app/conf/colors";
+import { BaseStyles } from "@/app/MainStyle";
+
 const styles = StyleSheet.create({
     container:{
         backgroundColor: colors.Cor_2,
-        width:"100%",
-        minHeight:"100%",
-        flexDirection:"column",
-        alignItems:"center",
-        justifyContent:"flex-start",
+        ...BaseStyles.fullScreen,
+        ...BaseStyles.column,
+        ...BaseStyles.centerContent,
         margin:0
     },
     Input_txt:{

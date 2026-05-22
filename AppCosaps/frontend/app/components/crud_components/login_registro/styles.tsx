@@ -1,13 +1,12 @@
 import { StyleSheet } from "react-native"
+import { BaseStyles } from "@/app/MainStyle";
+
 import colors from "@/app/conf/colors";
 
 const styles = StyleSheet.create({
   content: {
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor:colors.Fundo_3,
-        height:"100%",
-        width: "100%",
+        ...BaseStyles.centerContent,
+        ...BaseStyles.fullScreenContainer,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
     },

@@ -58,6 +58,8 @@ const InputContainer : React.FC<InputContainerProps> = (
           const parsed = await ManageStorage.get_Parsed_Async_Storage(get_value_from_storage.item);
           const fieldValue = parsed?.[get_value_from_storage.field] ?? "";
           if (mounted) setAttValue(fieldValue);
+          changeText(fieldValue);
+          form?.setFormField(form.field, fieldValue);
         } catch{
           if (mounted) setAttValue("");
         }
@@ -65,7 +67,7 @@ const InputContainer : React.FC<InputContainerProps> = (
     
       load();
       return () => { mounted = false; };
-    }, [get_value_from_storage]);
+    }, [get_value_from_storage, form]);
   
     const changeText = (text:string) => {
         if(form !== undefined)

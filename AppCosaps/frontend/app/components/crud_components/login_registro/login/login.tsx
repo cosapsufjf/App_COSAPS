@@ -36,7 +36,6 @@ const Login: React.FC<LR_Props> = ({
     AsyncStorage.getItem("LoginInfo").then((value) => {
       if (value !== null) {
         setLoginInfo(JSON.parse(value));
-        console.log("value: ",value)
       }
     });
     AsyncStorage.getItem("StoreInfo").then((value) => {

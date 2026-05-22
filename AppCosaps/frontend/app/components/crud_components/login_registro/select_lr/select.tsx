@@ -2,6 +2,7 @@ import {View,Text, TouchableOpacity} from "react-native"
 import { useState } from "react"
 
 import styles from "./styles";
+import {Colors, BaseStyles} from "@/app/MainStyle";
 import LR_Props from "../../../../types/crud";
 
 const Select :  React.FC<LR_Props> = (
@@ -13,14 +14,14 @@ const Select :  React.FC<LR_Props> = (
     const style = styles();
     const selected_register= ()=>{
         return(
-            <View style={style.center.st}>
-            <Text style={style.text("#fff",30).st}>Selecione o tipo de conta que deseja criar:</Text>
-            <View style={style.row.st}>
-                <TouchableOpacity style={style.tou_op("#d3cded").st} onPress={()=>set(elements.Registro)}>
-                    <Text style={style.text().st}>Paciente</Text>
+          <View style={[BaseStyles.fullScreenContainer, BaseStyles.border_radius_medium]}>
+            <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Selecione o tipo de conta que deseja criar:</Text>
+            <View style={[BaseStyles.fullScreenContainer, BaseStyles.row]}>
+              <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_6 }]} onPress={() => set(elements.Registro)}>
+                    <Text style={[BaseStyles.whiteText,{ fontSize: 30 }]}>Paciente</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={style.tou_op("#4c3780").st} onPress={()=>set(elements.Medico)}>
-                    <Text style={style.text("#fff").st}>Médico</Text>
+                <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_4 }]} onPress={()=>set(elements.Medico)}>
+                    <Text style={[BaseStyles.whiteText,{ fontSize: 30 }]}>Médico</Text>
                 </TouchableOpacity>
             </View>
             </View>
@@ -29,14 +30,14 @@ const Select :  React.FC<LR_Props> = (
 
     const select_login_register = () => {
         return(
-            <View style={style.center.st}>
-                <Text style={style.text("#fff",30).st}>Selecione o que deseja fazer:</Text>
-                <View style={style.row.st}>
-                    <TouchableOpacity style={style.tou_op("#d3cded").st} onPress={()=>set(elements.Login)}>
-                        <Text style={style.text().st}>Login</Text>
+            <View style={[BaseStyles.fullScreenContainer, BaseStyles.border_radius_medium]}>
+                <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Selecione o que deseja fazer:</Text>
+                <View style={[BaseStyles.fullScreenContainer, BaseStyles.row]}>
+                    <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_6 }]} onPress={()=>set(elements.Login)}>
+                        <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.tou_op("#4c3780").st} onPress={()=>setShowReg(!show_reg)}>
-                        <Text style={style.text("#fff").st}>Cadastro</Text>
+                    <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_4 }]} onPress={()=>setShowReg(!show_reg)}>
+                        <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Cadastro</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -44,7 +45,7 @@ const Select :  React.FC<LR_Props> = (
     }
 
     return(
-        <View style={style.container.st}>
+        <View>
             {!show_reg && select_login_register()}
             {show_reg && selected_register()}
         </View>

@@ -7,7 +7,8 @@ const styles = ()=> {
             flex:1,
             backgroundColor:colors.Fundo_3,
             alignItems:"center",
-            justifyContent:"center",
+            justifyContent: "center",
+            alignContent: "center",
             borderTopRightRadius: 30,
             borderTopLeftRadius: 30,
             width:"100%"

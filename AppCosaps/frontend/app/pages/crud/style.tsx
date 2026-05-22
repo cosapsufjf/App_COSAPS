@@ -1,36 +1,28 @@
 import { StyleSheet } from "react-native";
+import { Colors, BaseStyles } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
+  // Container principal com SafeArea
   container: {
-    flex: 1,
-    backgroundColor: "#beb5e5",
-    alignItems: "center",
-    width: "100%",
-    height:"100%"
+    ...BaseStyles.fullScreenContainer,
+    ...BaseStyles.centerContent,
+    backgroundColor: Colors.Cor_6,
   },
-  imgHeader:{
+
+  // Header com imagem
+  imgHeader: {
     width: 350,
-    height:80,
-    margin:20,
+    height: 80,
+    margin: 20,
+    resizeMode: "contain",
   },
-  card_selector:{
-    flexDirection: "row",
-    alignItems: "center",
-    height: "7%",
-    borderRadius: 30,
-    margin: 0,
-    padding: 0,
-  },
-  content: {
+
+  // Container de conteúdo dinâmico
+  pageContainer: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#f1f0f7",
-    alignItems: "center",
-    width: "80%",
+    width: "100%",
     height: "100%",
-    margin: 0,
-    borderRadius: 30,
-  }
+  },
 });
 
 export default styles;
