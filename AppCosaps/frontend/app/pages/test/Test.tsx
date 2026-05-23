@@ -1,26 +1,37 @@
+import { useEffect } from 'react';
+
 import { useForm } from '@/app/conf/FixForm';
-import useValidateForm  from '../../conf/ValidateForm';
+import FixInput from '@/app/components/general_components/fix_Input/Fix_Input';
 import { Fields, validate } from '../../types/form';
-import { View, Text } from 'react-native';
+import { View, TextInput, Button } from 'react-native';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const Test = () => {
-  const Fields: Fields = {
-    "Nome": "Nome",
-    "Email": "teste@teste.com",
-    "CPF": "104.209.296-65",
-    "Senha": "dmasdmakssda",
-  }
+  const Fields = ["Nome", "Email", "CPF", "Senha"];
   const methods: { [key: keyof Fields]: validate[] } = {
-    "Nome": [{ method: "required"}],
-    "Email": [{ method: "email" }],
-    "CPF": [{ method: "CPF" }],
-    "Senha": [{ method: "min", param: 8 }],
+    "Nome": [{ method: "required"},{ method: "email"},{ method: "min", param: 32}],
+    "Email":[{ method: "email" }],
+    "CPF":  [{ method: "CPF" }],
+    "Senha":[{ method: "min", param: 8 }],
   };
- 
-  const { ValidateForm } = useValidateForm(Fields, methods);
-  console.log(ValidateForm());
+  
+  const Form = useForm(Fields, methods);
+
+  useEffect(() => {
+    console.log(Form.Values)
+    console.log(Form.getFormValidationState())
+  }, [Form]);
+  
   return (
-    <View>
+    <View style={{
+      backgroundColor: 'black', justifyContent: 'center',
+      alignItems: 'center', height: 850
+    }}>
+      <Button title="Submit" onPress={() => { }} />
+      
+      <FixInput form={Form.FormProp("Nome")}
+        placeholder="Nome Completo"
+        margin_top={"10%"} />
     </View>
   );
 };

@@ -1,5 +1,12 @@
 export type validate = {method: ValidationMethodKey, param?: any};
 export type Fields = Record<string, string>;
+export type ValidationState = Record<keyof Fields, Record<string, string>>;
+
+export type FixProps = {
+  field : keyof Fields,
+  setFormField:(field:string, value:string)=>void,
+  fieldValidate?: Record<string,string>;
+}
 
 
 export type FormFields = { [key: string]: { field: string, validate: boolean } };

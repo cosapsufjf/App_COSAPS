@@ -1,25 +1,52 @@
-// hooks/useForm.ts
-import { useState, useCallback } from 'react';
-import { Fields } from '../types/form';
+import { useState } from 'react';
+import { Fields, FixProps, ValidationState, validate } from '../types/form';
+import useValidateForm from './ValidateForm';
 
-// Definição simplificada de regras
-
-export const useForm = (fields: Fields) => {
-  const [Values, setValues] = useState<Fields>(fields);
-  const InitialState = fields;
+export const useForm = (fields: string[], methods?: Record<string, validate[]>) => {
+  const InitialValues: Fields = {};
+  fields.forEach((field) => {
+    InitialValues[field] = '';
+  });
+  
+  const [Values, setValues] = useState<Fields>(InitialValues);
+  
+  const { ValidateFormFields } = useValidateForm(Values, methods ?? {});
+  
   const setField = (field_name: string, value: string) => {
     setValues({
       ...Values,
       [field_name]: value
     });
   }
-  const reset_form = () => {
-    setValues(InitialState);
+  
+  const getFormValidationState = () : ValidationState => {
+    return ValidateFormFields();
   }
+  const getFieldValidationState = (field_name: string) : Record<string, string> => {
+    return getFormValidationState()[field_name] ?? {};
+  }
+  
+  const reset_form = () => {
+    setValues(InitialValues);
+  }
+
+  const FormProp = (
+    field: keyof Fields,
+  ) => {
+    
+    return {
+      setFormField: setField.bind(this),
+      field: field,
+      fieldValidate: getFieldValidationState(field),
+    } as FixProps;
+  };
 
   return {
     useForm,
+    Values,
     setField,
     reset_form,
+    FormProp,
+    getFormValidationState,
   };
 } 
