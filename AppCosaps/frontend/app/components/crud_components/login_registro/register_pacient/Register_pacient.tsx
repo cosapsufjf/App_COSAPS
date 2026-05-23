@@ -3,12 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
-import { FormState } from "@/app/conf/Form";
+import { useForm } from "@/app/conf/FixForm";
+import InputContainer from "@/app/components/general_components/fix_Input/InputContainer";
+
 import { enviar } from "@/app/firebase/create_user";
 import { cpf_replace, cpf_replace_regex, MmN8d, MmNCE8d, MmNCE12d, MmNCE16d } from "@/app/utils/regex";
 import BB from "../../big_button/BB";
 
-import InputContainer from "../../input_container/InputContainer";
 import styles from "../styles";
 
 import LR_Props from "../../../../types/crud";
@@ -20,16 +21,17 @@ const Register: React.FC<LR_Props> = ({
   const [showMessage, setShowMessage] = useState(false);
   const [nav, setNav] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
+  const [showErrors, setShowErrors] = useState(false);
 
-  const FormST = FormState([
-    { field: "Nome", validate: false },
-    { field: "Email", validate: true },
-    { field: "CPF", validate: true },
-    { field: "Senha", validate: true },
-    { field: "ConfSenha", validate: true },
-  ] as const);
-
-  const Form_content = FormST.Form;
+  const Form = useForm(["Nome", "Email", "CPF", "Senha", "ConfSenha"], {
+    Nome: [{method:"required"}],
+    Email: [{method:"required"},{method:"email"}],
+    CPF: [{method:"required"},{method:"CPF"}],
+    Senha: [{method:"required"},{method:"regex", param: MmN8d()}],
+    ConfSenha: [{method:"required"},{method:"equal", param: "Senha"}],
+  });
+  
+  const Form_content = Form.Values;
   const navigation = useNavigation<NavigationProp>();
 
   const message = (txt: string, navigate_to?: boolean) => {
@@ -54,7 +56,7 @@ const Register: React.FC<LR_Props> = ({
       return <View style={styles.passwordStrength}>
                 <Text style={{ color: "yellow", fontSize:18, alignSelf: "center"}}>Média</Text>
               </View>
-    if (MmN8d().test(password))
+    if (MmNCE8d().test(password))
       return <View style={styles.passwordStrength}>
                 <Text style={{ color: "darkred", fontSize:18, alignSelf: "center"}}>Fraca</Text>
               </View>
@@ -69,54 +71,56 @@ const Register: React.FC<LR_Props> = ({
         <View style={styles.content}>
           <View style={styles.Inputs}>
             <InputContainer
-              form={FormST.FormProp("Nome")}
+              form={Form.FormProp("Nome")}
               placeholder="Nome Completo"
               margin_top={"10%"}
+              show_errors={showErrors}
             />
             <InputContainer
-              form={FormST.FormProp("Email", ["email", "required"])}
+              form={Form.FormProp("Email")}
               placeholder="xxx@xxx.com"
-              keyboard_type="email-address"
+              show_errors={showErrors}
             />
             <InputContainer
-              form={FormST.FormProp("CPF", ["CPF", "required"])}
+              form={Form.FormProp("CPF")}
               placeholder="xxx.xxx.xxx-xx"
               keyboard_type="numeric"
               format_regex={{ regex: cpf_replace_regex, replace: cpf_replace }}
+              show_errors={showErrors}
             />
             <InputContainer
-              form={FormST.FormProp("Senha", ["regex", "required"], undefined, MmN8d())}
+              form={Form.FormProp("Senha")}
               placeholder="8 dígitos, letras minúsculas, maiúsculas e números"
+              secureTextEntry={true}
+              show_errors={showErrors}
             />
             <InputContainer
-              form={FormST.FormProp(
-                "ConfSenha",
-                ["equal", "required"],
-                Form_content.Senha.field,
-              )}
+              form={Form.FormProp("ConfSenha")}
               el_text="Confirmar Senha"
               placeholder="As senhas devem coincidir"
-              />
-              {passwordStrength(Form_content.Senha.field)}
-          </View>
-          <View
-              style={styles.btnContainer}
-          >
-            <BB text="Voltar" width={150} action={() => set(elements.Select)} />
-            <BB
-              text="Cadastrar"
-              width={150}
-              action={() =>
-                enviar(
-                  FormST.FormValidated(),
-                  Form_content.Email.field,
-                  Form_content.Senha.field,
-                  setShowMessage,
-                  setNav,
-                  setMessageTxt,
-                )
-              }
+              secureTextEntry={true}
+              show_errors={showErrors}
             />
+              {passwordStrength(Form_content.Senha)}
+              <View
+                  style={styles.btnContainer}
+              >
+                <BB text="Voltar" width={150} action={() => set(elements.Select)} />
+                <BB
+                  text="Cadastrar"
+                  width={150}
+                  action={() =>
+                    enviar(
+                      Form.getFormValidated(),
+                      Form_content.Email,
+                      Form_content.Senha,
+                      setShowMessage,
+                      setNav,
+                      setMessageTxt,
+                    )
+                  }
+                />
+              </View>
           </View>
         </View>
       )}

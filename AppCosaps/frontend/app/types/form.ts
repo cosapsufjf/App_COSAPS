@@ -2,7 +2,7 @@ export type validate = {method: ValidationMethodKey, param?: any};
 export type Fields = Record<string, string>;
 export type ValidationState = Record<keyof Fields, Record<string, string>>;
 
-export type FixProps = {
+export type FormProps = {
   field : keyof Fields,
   setFormField:(field:string, value:string)=>void,
   fieldValidate?: Record<string,string>;
@@ -35,7 +35,7 @@ export const ValidationMethodKeys = [
 ] as const;
 
 export type ValidationMethodKey = typeof ValidationMethodKeys[number];
-
+/*
 export type FormProps = {
     setFormField:(field:string, value:string)=>void,
     setValidateField:(field:string, value:boolean)=>void,
@@ -46,4 +46,6 @@ export type FormProps = {
     param?:number | RegExp ,
     valueC?:string,
 }
+
+*/
 

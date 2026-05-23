@@ -19,7 +19,9 @@ const useValidateForm = (fields: Fields, methods: { [key: keyof Fields]: validat
   const ValidateMethod = (method: ValidationMethodKey, field_name: string, param: number | RegExp | string
     ) => {
     const value_validate = fields[field_name];
-      return (method !== "min" && method !== "max" && method !== "regex" && method !== "equal")
+    if(method === "equal") return METHODS[method].func(value_validate, fields[param as string]);
+
+    return (method !== "min" && method !== "max" && method !== "regex")
         ?
         METHODS[method].func(value_validate)
         :
@@ -49,10 +51,9 @@ const useValidateForm = (fields: Fields, methods: { [key: keyof Fields]: validat
 
   const ValidateForm = () => {
     const form_validated = ValidateFormFields();
-
     for (const field in form_validated)
       for (const method in form_validated[field])
-        if (!form_validated[field][method]) return false;
+        if (form_validated[field][method] !== "") return false;
     
     return true;
   }

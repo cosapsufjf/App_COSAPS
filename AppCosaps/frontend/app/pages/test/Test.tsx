@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
+import { useState,useEffect } from 'react';
 
 import { useForm } from '@/app/conf/FixForm';
-import FixInput from '@/app/components/general_components/fix_Input/Fix_Input';
+import FixInput from '@/app/components/general_components/fix_Input/InputContainer';
 import { Fields, validate } from '../../types/form';
 import { View, TextInput, Button } from 'react-native';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-
+import BB from '@/app/components/crud_components/big_button/BB';
+import { cpf_replace, cpf_replace_regex } from '@/app/utils/regex';
 const Test = () => {
   const Fields = ["Nome", "Email", "CPF", "Senha"];
+  const [ShowErrors, setShowErrors] = useState(false);
   const methods: { [key: keyof Fields]: validate[] } = {
     "Nome": [{ method: "required"},{ method: "email"},{ method: "min", param: 32}],
     "Email":[{ method: "email" }],
@@ -21,6 +22,15 @@ const Test = () => {
     console.log(Form.Values)
     console.log(Form.getFormValidationState())
   }, [Form]);
+
+  const Enviar = () => {
+    if(Form.getFormValidated()) {
+      setShowErrors(false);
+    }
+    else {
+      setShowErrors(true);
+    }
+  }
   
   return (
     <View style={{
@@ -31,7 +41,26 @@ const Test = () => {
       
       <FixInput form={Form.FormProp("Nome")}
         placeholder="Nome Completo"
-        margin_top={"10%"} />
+        margin_top={"10%"}
+        show_errors={ShowErrors}
+      />
+      <FixInput form={Form.FormProp("Email")}
+        placeholder="Email"
+        margin_top={"10%"}
+        show_errors={ShowErrors}
+      />
+      <FixInput form={Form.FormProp("CPF")}
+        placeholder="CPF"
+        margin_top={"10%"}
+        format_regex={{ regex: cpf_replace_regex, replace: cpf_replace }}
+        show_errors={ShowErrors}
+      />
+      <FixInput form={Form.FormProp("Senha")}
+        placeholder="Senha"
+        margin_top={"10%"}
+        show_errors={ShowErrors}
+      />
+      <BB text='Enviar' action={Enviar}/>
     </View>
   );
 };

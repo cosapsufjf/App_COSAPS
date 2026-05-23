@@ -5,7 +5,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, ScrollView} from 'react-native';
 import styles from './styles';
 
-import InputContainer from '@/app/components/crud_components/input_container/InputContainer';
+import InputContainer from '@/app/components/general_components/fix_Input/InputContainer';
 import BB from '@/app/components/crud_components/big_button/BB';
 import Food_Item from '@/app/components/main_page_components/FoodSearch/Food_Item';
 

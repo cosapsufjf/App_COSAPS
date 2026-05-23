@@ -5,10 +5,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    margin: 0,
-    position: "absolute",
-    bottom: 100,
-    left: 40,
   },
   checkbox: {
     borderColor: "#fff",

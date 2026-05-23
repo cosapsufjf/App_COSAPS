@@ -7,13 +7,14 @@ const styles = StyleSheet.create({
         ...BaseStyles.fullScreenContainer,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
+        
     },
   Inputs: {
     position: "absolute",
     top: 0,
     left: "5%",
     width: "100%",
-    minHeight:"60%",
+    minHeight:"80%",
     height:"auto",
     flexDirection:"column",
   },
@@ -29,10 +30,9 @@ const styles = StyleSheet.create({
     borderRadius:30,
     padding:"5%"
   },
-  btnContainer:{
-    position: "absolute",
-    bottom: 130,
-    width: "100%",
+  btnContainer: {
+    marginTop:"10%",
+    width: "80%",
     flexDirection: "row",
     justifyContent: "space-between",
   },

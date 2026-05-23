@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Fields, FixProps, ValidationState, validate } from '../types/form';
+import { Fields, FormProps, ValidationState, validate } from '../types/form';
 import useValidateForm from './ValidateForm';
 
 export const useForm = (fields: string[], methods?: Record<string, validate[]>) => {
@@ -9,8 +9,9 @@ export const useForm = (fields: string[], methods?: Record<string, validate[]>) 
   });
   
   const [Values, setValues] = useState<Fields>(InitialValues);
+  const [showValidate, setShowValidate] = useState(false);
   
-  const { ValidateFormFields } = useValidateForm(Values, methods ?? {});
+  const { ValidateFormFields, ValidateForm } = useValidateForm(Values, methods ?? {});
   
   const setField = (field_name: string, value: string) => {
     setValues({
@@ -18,7 +19,10 @@ export const useForm = (fields: string[], methods?: Record<string, validate[]>) 
       [field_name]: value
     });
   }
-  
+
+  const getFormValidated = () => {
+    return ValidateForm();
+  }
   const getFormValidationState = () : ValidationState => {
     return ValidateFormFields();
   }
@@ -37,16 +41,20 @@ export const useForm = (fields: string[], methods?: Record<string, validate[]>) 
     return {
       setFormField: setField.bind(this),
       field: field,
+      showValidate: showValidate,
+      setShowValidate: setShowValidate.bind(this),
       fieldValidate: getFieldValidationState(field),
-    } as FixProps;
+    } as FormProps;
   };
 
   return {
     useForm,
     Values,
+    FormProp,
+    setShowValidate,
     setField,
     reset_form,
-    FormProp,
     getFormValidationState,
+    getFormValidated,
   };
 } 

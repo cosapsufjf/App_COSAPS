@@ -2,14 +2,14 @@ import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "expo-router";
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { enviar } from "@/app/firebase/create_user";
 
-import { FormState } from "@/app/conf/Form";
+import { useForm } from "@/app/conf/FixForm";
+import InputContainer from "@/app/components/general_components/fix_Input/InputContainer";
 import { cpf_replace, cpf_replace_regex } from "@/app/utils/regex";
 import BB from "../../big_button/BB";
-import InputContainer from "../../input_container/InputContainer";
 
 import LR_Props from "../../../../types/crud";
 
@@ -23,17 +23,17 @@ const Register: React.FC<LR_Props> = ({
   const [messageTxt, setMessageTxt] = useState("");
   const [nav, setNav] = useState(false);
 
-  const FormST = FormState([
-    { field: "Nome", validate: true },
-    { field: "Email", validate: true },
-    { field: "CPF", validate: true },
-    { field: "NúmeroRegistro", validate: true },
-    { field: "Credencial", validate: true },
-    { field: "Senha", validate: true },
-    { field: "ConfSenha", validate: true },
-  ] as const);
+  const Form = useForm(["Nome", "Email", "CPF", "NúmeroRegistro", "Credencial", "Senha", "ConfSenha"], {
+    Nome: [{ method: "required" }],
+    Email: [{ method: "required" }, { method: "email" }],
+    CPF: [{ method: "required" }, { method: "CPF" }],
+    NúmeroRegistro: [{ method: "required" }],
+    Credencial: [{ method: "required" }],
+    Senha: [{ method: "required" }],
+    ConfSenha: [{ method: "required" }],
+  });
 
-  const Form_content = FormST.Form;
+  const Form_content = Form.Values;
   const navigation = useNavigation<NavigationProp>();
 
   const message = (txt: string) => {
@@ -58,16 +58,16 @@ const Register: React.FC<LR_Props> = ({
             <SafeAreaView style={styles.Inputs}>
               <ScrollView>
                 <InputContainer
-                  form={FormST.FormProp("Nome", ["required"])}
+                  form={Form.FormProp("Nome")}
                   placeholder="Nome Completo"
                 />
                 <InputContainer
-                  form={FormST.FormProp("Email", ["email", "required"])}
+                  form={Form.FormProp("Email")}
                   placeholder="xxx@xxx.com"
                   keyboard_type="email-address"
                 />
                 <InputContainer
-                  form={FormST.FormProp("CPF", ["CPF", "required"])}
+                  form={Form.FormProp("CPF")}
                   placeholder="xxx.xxx.xxx-xx"
                   keyboard_type="numeric"
                   format_regex={{
@@ -76,7 +76,7 @@ const Register: React.FC<LR_Props> = ({
                   }}
                 />
                 <InputContainer
-                  form={FormST.FormProp("NúmeroRegistro", ["required"])}
+                  form={Form.FormProp("NúmeroRegistro")}
                   el_text="Número de Registro"
                   placeholder="Seu número de registro na plataforma"
                   keyboard_type="numeric"
@@ -86,7 +86,7 @@ const Register: React.FC<LR_Props> = ({
                   }}
                 />
                 <InputContainer
-                  form={FormST.FormProp("Credencial", ["required"])}
+                  form={Form.FormProp("Credencial")}
                   placeholder="Suas credenciais específicas"
                   keyboard_type="numeric"
                   format_regex={{
@@ -95,44 +95,38 @@ const Register: React.FC<LR_Props> = ({
                   }}
                 />
                 <InputContainer
-                  form={FormST.FormProp(
-                    "Senha",
-                    ["min", "required"],
-                    undefined,
-                    8,
-                  )}
+                  form={Form.FormProp("Senha")}
                   placeholder="Pelo menos 8 dígitos"
                 />
                 <InputContainer
-                  form={FormST.FormProp(
-                    "ConfSenha",
-                    ["equal", "required"],
-                    Form_content.Senha.field,
-                  )}
+                  form={Form.FormProp("ConfSenha")}
                   el_text="Confirmar Senha"
                   placeholder="As senhas devem coincidir"
                 />
+
+                <View
+                    style={styles.btnContainer}
+                >
+                  <BB text="Voltar" width={200} margin={2} action={() => set(elements.Select)} />
+                  <BB
+                    text="Cadastrar"
+                    width={200}
+                    margin={2}
+                    action={() =>
+                      enviar(
+                        Form.getFormValidated(),
+                        Form_content.Email,
+                        Form_content.Senha,
+                        setShowMessage,
+                        setNav,
+                        setMessageTxt,
+                      )
+                    }
+                  />
+                </View>
+                
               </ScrollView>
             </SafeAreaView>
-            <View
-                style={styles.btnContainer}
-            >
-              <BB text="Voltar" width={150} action={() => set(elements.Select)} />
-              <BB
-                text="Cadastrar"
-                width={150}
-                action={() =>
-                  enviar(
-                    FormST.FormValidated(),
-                    Form_content.CPF.field,
-                    Form_content.Email.field,
-                    setShowMessage,
-                    setNav,
-                    setMessageTxt,
-                  )
-                }
-              />
-            </View>
           </View>
       )}
     </>

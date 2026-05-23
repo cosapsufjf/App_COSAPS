@@ -1,8 +1,8 @@
 import { Image, View, Text, Animated} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import { FormState } from "@/app/conf/Form";
-import { useRef,useEffect, useState } from "react";
+import { useForm } from "@/app/conf/FixForm";
+import { useRef, useEffect, useState } from "react";
 
 import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "@react-navigation/native";
@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getAuth, sendPasswordResetEmail } from "@react-native-firebase/auth";
 
 import BB from "@/app/components/crud_components/big_button/BB";
-import InputContainer from "@/app/components/crud_components/input_container/InputContainer";
+import InputContainer from "@/app/components/general_components/fix_Input/InputContainer";
 import styles_comp from "@/app/components/crud_components/login_registro/styles";
 import styles from "./style";
 
@@ -79,14 +79,12 @@ const ForgotPassword: React.FC = () => {
   }, [EmailSent,inputErr]);
 
   const ForgotPassword_insert: React.FC = () => {
-    const FormST = FormState([
-      { field: "Email", validate: true },
-    ]);
+    const Form = useForm(["Email"], { Email: [{ method: "email" }] });
 
     const sendCode = async () => {
-      console.log("Formulário validado: ", FormST.FormValidated());
+      console.log("Formulário validado: ", Form.getFormValidated());
       
-      if (!FormST.FormValidated()){
+      if (!Form.getFormValidated()){
         setMessageTxt("Email inválido");
         setInputErr(true);
         show_pop_up_err();
@@ -98,7 +96,7 @@ const ForgotPassword: React.FC = () => {
       else
       {
         setInputErr(false);
-        sendPasswordResetEmail(getAuth(), FormST.Form.Email.field)
+        sendPasswordResetEmail(getAuth(), Form.Values.Email)
         .then(()=>{
           setMessageTxt("Um código de redefinição de senha foi enviado para o email informado com sucesso");
           setEmailSent(true);
@@ -151,7 +149,7 @@ const ForgotPassword: React.FC = () => {
 
           <Animated.View style={[styles_comp.Inputs, {opacity: value_fade_input}]}>
             <InputContainer
-                form={FormST.FormProp("Email", ["email", "required"])}
+                form={Form.FormProp("Email")}
                 placeholder="Email da sua conta"
                 show_errors={false}
               />
