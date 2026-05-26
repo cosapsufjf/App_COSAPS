@@ -11,6 +11,7 @@ export const Colors = {
     Cor_4: "#4c3780",
     Cor_5: "#616280",
     Cor_6: "#beb5e5",
+    Cor_7: "#37677f",
 }
 
 export const BaseStyles = StyleSheet.create({

@@ -4,11 +4,13 @@ import { Colors as colors } from "@/app/MainStyle";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
+        width: "90%",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start", 
-        backgroundColor: colors.Cor_6
+        backgroundColor: colors.Cor_6,
+        borderRadius: "5%",
+        padding:"5%"
     },
 
     txt: {

@@ -11,14 +11,14 @@ const MainPage: React.FC = () => {
   return(
     <SafeAreaProvider>
       <SafeAreaView edges={["top"]} style={styles.container}>
-        <MainHeader/>
-        <PacientArea/>
+        <MainHeader />
         <Line/>
         <Line/>
-        <PacientInfo/>
-        <Line/>
-        <Line/>
-        <Pacient_Overview/>
+        <PacientArea />
+        <SafeAreaView edges={["top"]} style={styles.infoContainer}>
+          <PacientInfo />
+        </SafeAreaView>
+        <Pacient_Overview />
       </SafeAreaView>
     </SafeAreaProvider>
   )

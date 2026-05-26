@@ -1,4 +1,4 @@
-import { ScrollView,FlatList,View, Text } from "react-native";
+import { ScrollView,View, Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import styles from "./styles";
 const Pacient_Overview = () => {
@@ -24,18 +24,20 @@ const Pacient_Overview = () => {
             </View>
         )
     }
-
+/*                  <FlatList 
+  data={activities} 
+  renderItem={({item})=> <Overview_Item title={item.name}/>}
+  keyExtractor={(item) => item.id.toString()}
+  /> */
     return(
-        <SafeAreaProvider>
-            <SafeAreaView style={styles.container}>
-                <Text style={styles.txt}>Para Hoje</Text>
-                <FlatList 
-                data={activities} 
-                renderItem={({item})=> <Overview_Item title={item.name}/>}
-                keyExtractor={(item) => item.id.toString()}
-                />
-            </SafeAreaView>
-        </SafeAreaProvider>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+          <Text style={styles.txt}>Para Hoje</Text>
+          {activities.map((item) => <Overview_Item key={item.id} title={item.name}/>)}
+        </ScrollView>
+        </SafeAreaView>
+      </SafeAreaProvider>
     )
 }
 

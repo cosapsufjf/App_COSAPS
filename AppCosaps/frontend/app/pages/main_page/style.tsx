@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { BaseStyles, Colors as colors } from "@/app/MainStyle";
+import { Colors as colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
     container:{
@@ -11,7 +11,16 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"flex-start",
         margin:0
-    }
+  },
+  infoContainer: {
+    flexDirection: "row",
+    flex: 0,
+    width: "100%",
+    height: "40%",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    margin: 0,
+  }
 })
 
 export default styles;

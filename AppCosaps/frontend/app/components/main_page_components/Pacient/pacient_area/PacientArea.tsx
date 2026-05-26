@@ -1,6 +1,5 @@
 import { View,Text,Image, TouchableOpacity } from "react-native";
 import styles from "./styles";
-import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@/app/types/navigation";
 
@@ -31,7 +30,7 @@ const PacientArea : React.FC = () => {
                 <Icon iconName="diet"/>
                 <Icon iconName="routine"/>
                 <Icon iconName="calory" onPress={()=>navigation.navigate("FoodSearch")}/>
-                <Icon iconName="messages"/>
+                <Icon iconName="messages" onPress={()=>navigation.navigate("Messages")}/>
             </View>
         )
     }

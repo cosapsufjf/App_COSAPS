@@ -2,12 +2,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { RootStackParamList } from "./types/navigation";
 import { NavigationContainer } from "@react-navigation/native";
 
+import Test from "./pages/test/Test";
+
 import Apresentation from "./pages/apresentation/Apresentation";
 import CRUD from "./pages/crud/CRUD";
 import ForgotPassword from "./pages/forgot_password/ForgotPassword";
+
 import MainPage from "./pages/main_page/MainPage";
 import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
-import Test from "./pages/test/Test";
+import Messages from "./components/main_page_components/Pacient/Messages/Messages";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -19,6 +22,7 @@ function Stacked() {
       <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="FoodSearch" component={FoodSearchScreen} />
+      <Stack.Screen name="Messages" component={Messages} />
     </Stack.Navigator>
   );
 }

@@ -35,17 +35,3 @@ export const ValidationMethodKeys = [
 ] as const;
 
 export type ValidationMethodKey = typeof ValidationMethodKeys[number];
-/*
-export type FormProps = {
-    setFormField:(field:string, value:string)=>void,
-    setValidateField:(field:string, value:boolean)=>void,
-    ValidateField?:((methods: ValidationMethodKey[],field: string, params: { value: string[]; param?: number | RegExp; }) => { result: boolean; message: string;}) | null,
-    field : string,
-    method:ValidationMethodKey[],
-    need_validation:boolean,
-    param?:number | RegExp ,
-    valueC?:string,
-}
-
-*/
-
