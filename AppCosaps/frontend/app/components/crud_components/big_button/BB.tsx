@@ -10,7 +10,10 @@ interface BB_Props{
     borderad?:number,
     text?:string,
     textColor?:string,
-    margin?:number | string
+    margin?: number | string,
+    right?: number | string,
+    position?: "absolute" | "relative",
+    inline?: boolean,
 }
 
 const BB : React.FC<BB_Props> = (
@@ -22,8 +25,12 @@ const BB : React.FC<BB_Props> = (
         textColor="#fff",
         margin=0,
         text,
-        action
-    })=>{
+        action,
+        position="relative",
+        right = 0,
+        inline = false,
+  }) => {
+  
     const styles = StyleSheet.create({
         btn:{
             width: width as DimensionValue,
@@ -34,21 +41,32 @@ const BB : React.FC<BB_Props> = (
             margin:margin as DimensionValue,
             alignItems:"center",
             justifyContent:"center",
-            padding:"5%"
+            padding:"5%",
+            position,
+            right: right as DimensionValue,
         },
         Text:{
             color:textColor, 
             fontWeight:"bold", 
             margin:0,
-        },
+      },
+      inline: {
+        position: "absolute",
+        right: -40,
+        top: 0,
+        bottom: 0,
+        margin: 0,
+        height:70,
+        alignItems: "center",
+        justifyContent: "center",
+        }
+        
     })
 
     return (
-    <View>
-        <TouchableOpacity style={styles.btn} onPress={action}>
+        <TouchableOpacity style={inline ? [styles.btn,styles.inline] : styles.btn} onPress={action}>
           <Text style={styles.Text}>{text}</Text>
         </TouchableOpacity>
-      </View>
     )
 }
 

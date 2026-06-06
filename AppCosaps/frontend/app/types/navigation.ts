@@ -11,6 +11,7 @@ export type RootStackParamList = {
 
   FoodSearch: undefined;
   Messages: undefined;
+  Chat: undefined;
   Routine: undefined;
   Activities: undefined;
   Account: undefined;

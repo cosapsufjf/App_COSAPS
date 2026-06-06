@@ -1,4 +1,4 @@
-import { View, Text, KeyboardTypeOptions } from "react-native";
+import { View, Text, KeyboardTypeOptions, KeyboardAvoidingView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { format_str } from "@/app/utils/regex";
@@ -13,7 +13,8 @@ interface InputContainerProps {
     form?: FormProps,
     get_value_from_storage?: {get: boolean, item: string, field: string},
 
-    extra_component?:any,
+    extra_component?: any,
+    inline_extra_component?: boolean,
     format_regex?:{regex:RegExp,replace:string},
     text_state_setter?: React.Dispatch<React.SetStateAction<string>> | null,
 
@@ -28,26 +29,34 @@ interface InputContainerProps {
     height?:number | string,
     margin?:number | string,
     margin_top?:number | string,
-    background_color?:string,
+    background_color?: string,
+    position?: string,
+    bottom?: number | string,
 }
 
   const InputContainer : React.FC<InputContainerProps> = (
     {
-        form,
-        get_value_from_storage=null,
-        el_text=null, 
-        placeholder="",
-        extra_component=null,
-        format_regex=null,
-        width="100%",
-        height="10%",
-        keyboard_type = "default",
-        secureTextEntry = false,
-        background_color=colors.Fundo_Claro_1,
-        margin=0,
-        margin_top=0,
-        show_errors=false,
-        text_state_setter=null,
+      form,
+      get_value_from_storage=null,
+      el_text=null, 
+      placeholder = "",
+      
+      inline_extra_component = false,
+      extra_component = null,
+      
+      format_regex=null,
+      keyboard_type = "default",
+      secureTextEntry = false,
+      background_color=colors.Fundo_Claro_1,
+      show_errors=false,
+      text_state_setter = null,
+
+      width = "100%",
+      height="10%",
+      position = "relative",
+      bottom = 0,
+      margin=0,
+      margin_top=0,
     }
 ) => {
 
@@ -56,7 +65,7 @@ interface InputContainerProps {
     const [attValue, setAttValue] = useState<string>("");
     const [showPassword, setShowPassword] = useState(false);
     
-    const styles = style(width,height,margin,margin_top,background_color,approved);
+    const styles = style(width,height,margin,margin_top,background_color,approved,position,bottom);
 
     
     const getErrors = () => {
@@ -111,7 +120,7 @@ interface InputContainerProps {
     })
     
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.Text}>{el_text??form?.field}</Text>
         <View style={[styles.container, {flexDirection: "row"}]}>
           <TextInput style={styles.TextInput}
@@ -122,12 +131,13 @@ interface InputContainerProps {
             placeholder={placeholder} 
             placeholderTextColor={"gray"}
           />
+          {inline_extra_component && extra_component && extra_component()}
           {
             secureTextEntry &&
             <MaterialCommunityIcons name={showPassword ? "eye" : "eye-off"} style={styles.eye_icon} size={24} onPress={() => setShowPassword(!showPassword)} />
           } 
         </View>
-        {extra_component && extra_component()}
+        {!inline_extra_component && extra_component && extra_component()}
         {
           show_errors ?
           <View style={styles.ErrorMessage}>
@@ -142,7 +152,7 @@ interface InputContainerProps {
             : null
         }
 
-      </View>
+      </KeyboardAvoidingView>
     );
 }
 

@@ -4,16 +4,16 @@ import { BaseStyles, Colors } from "@/app/MainStyle";
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.Cor_2,
-    flex: 1,
     width: "100%",
+    height: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
   messageTileContainer: {
     flexDirection: "column",
-    width: "100%",
     height: "100%",
+    width: "100%",
   },
   Tile: {
     backgroundColor: Colors.Fundo_Claro_1,

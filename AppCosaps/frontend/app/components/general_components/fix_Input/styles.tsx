@@ -4,7 +4,7 @@ import { Colors as colors } from "../../../MainStyle";
 
 const styles = (
         width : number | string,height:number | string,margin:number | string,
-        marginTop:number | string, background_color:string,approved:boolean
+        marginTop:number | string, background_color:string,approved:boolean,position: string,bottom: number | string,
     )=> StyleSheet.create({
         container:{
             flex:1,
@@ -14,7 +14,9 @@ const styles = (
             alignItems:"flex-start",
             textAlign:"left",
             margin:margin as DimensionValue,
-            marginTop:marginTop as DimensionValue
+            marginTop:marginTop as DimensionValue,
+            position: position as "static" | "relative" | "absolute" | "fixed" | "sticky" | undefined,
+            bottom: bottom as DimensionValue,
         },
       TextInput: {
           color: "black",

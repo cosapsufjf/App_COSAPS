@@ -2,95 +2,29 @@ import { Image,ScrollView, View,TouchableOpacity, Text } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import styles from "./styles";
 import PacientArea from "../pacient_area/PacientArea";
-//As mensagens tem que ser obtidas a partir do back-end e TODAS devem seguir esse padrão no front-end (ou similar)
-type message_type = {
-  user_name: string;
-  last_message: string;
-  last_message_time: string;
-  unread_count: number;
-  current_status: string;
-  chat_id: number;
-}
-
-
+import { message_frontview } from "@/app/types/message";
+import { get_Messages } from "@/app/api/chat";
+import { NavigationProp } from "@/app/types/navigation";
+import { useNavigation } from "@react-navigation/native";
+import ManageStorage from "@/app/conf/AsyncStorage";
 
 const Messages = () => {
   const cosaps_icon = require("@/assets/images/icon.png");
-  const get_Messages = (): message_type[] => {
-    const pacient_messages = /* await chamada mágica pro back-end */ [
-      {
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 1,
-      },
-      {
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 2,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 3,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 4,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 5,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 6,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 7,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 8,
-      },{
-        user_name: "Test_user",
-        last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
-        last_message_time: "00:47",
-        unread_count: 5,
-        current_status: "Offline",
-        chat_id: 9,
-      },
-    ];
-    
-    return pacient_messages;
-  }
+  const navigation: NavigationProp = useNavigation();
+
+  const OpenChat = async (chat_id: string) => {
+    try {
+      await ManageStorage.Save_In_Async_Storage("last_chat", chat_id);
+      navigation.navigate("Chat");
+    } catch (error: any) {
+      console.log("Falha ao salvar no async storage\n");
+      console.error(error.message);
+    }
+  };
   
-  const MessageTile: React.FC<message_type> = (content: message_type) => {
+  const MessageTile: React.FC<message_frontview> = (content: message_frontview) => {
     return (
-      <TouchableOpacity style={styles.Tile}>
+      <TouchableOpacity style={styles.Tile} onPress={()=>OpenChat(content.chat_id)}>
         <View style={styles.emmet_cont}>
           <View style={styles.TileContent}>
             <Image source={cosaps_icon} style={styles.cosaps_icon} />

@@ -28,6 +28,16 @@ const ManageStorage = {
       console.log("Falha ao recuperar do async storage\n");
     }
   },
+  get_From_Async_Storage: async (item_name: string, json:boolean = false) => {
+    try {
+      const value = await AsyncStorage.getItem(item_name);
+      return value ? (json ? JSON.parse(value) : value) : null;
+    }
+    catch
+    {
+      console.log("Falha ao recuperar do async storage\n");
+    }
+  },
   Save_In_Async_Storage: async (item_name: string, Item: any) => {
     try {
       await AsyncStorage.setItem(item_name, Item);
