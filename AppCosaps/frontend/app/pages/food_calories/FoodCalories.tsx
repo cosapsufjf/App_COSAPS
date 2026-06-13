@@ -1,5 +1,3 @@
-import FatSecretAPI from '@/app/api/fat_secret';
-
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, ScrollView} from 'react-native';

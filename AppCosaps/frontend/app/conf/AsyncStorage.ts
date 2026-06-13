@@ -1,13 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { POF_Alimentos } from '../types/POF_trt';
 
-export interface AsyncModel{
-  food_id: string;
-  food_name: string;
-  food_brand: string;
-  food_description: string;
-}
-
 const ManageStorage = {
   get_Parsed_Async_Storage: async (item_name: string) => {
     try {

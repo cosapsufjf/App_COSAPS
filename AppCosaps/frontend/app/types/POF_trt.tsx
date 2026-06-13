@@ -44,13 +44,6 @@ export interface food_item_interface{
   set_function: React.Dispatch<React.SetStateAction<POF_Alimentos[]>>;
 }
 
-export interface AsyncModel{
-  food_CD: string;
-  food_name: string;
-  food_brand: string;
-  food_description: string;
-}
-
 export type FoodData = typeof POF_AlimentosData;
 export type Food = keyof FoodData;
 export const POF_keys = Object.keys(POF_AlimentosData) as Food[];
