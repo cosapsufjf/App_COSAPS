@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Colors as colors } from "@/app/MainStyle";
 
-const styles = StyleSheet.create({
+const styles = (boxbg?:string, textboxbg?:string, textSize?:number) => StyleSheet.create({
   list_item: {
     flexDirection: "column",
     justifyContent: "center",
@@ -30,10 +30,12 @@ const styles = StyleSheet.create({
   text_box: {
     padding: 5,
     margin: 3,
-    fontSize: 18,
-    backgroundColor: colors.Cor_6,
+    textAlign: "center",
+    fontSize: textSize ?? 18,
+    backgroundColor: boxbg ?? colors.Cor_6,
+    color: textboxbg ?? "black",
     borderRadius: 10,
-    width: "100%",
+    width: "95%",
   },
   propertie_text_box: {
     borderRadius: 25,

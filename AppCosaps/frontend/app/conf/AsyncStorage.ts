@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { POF_Alimentos } from '../types/POF_trt';
+import { POF_Alimentos_formatted } from '../types/POF_trt';
 
 const ManageStorage = {
   get_Parsed_Async_Storage: async (item_name: string) => {
@@ -42,7 +42,7 @@ const ManageStorage = {
     }
   },
   
-  Save_List_In_Async_Storage: async (Item_vector: POF_Alimentos[],item_name:string,set_function: React.Dispatch<any[]>, search: any) => {    
+  Save_List_In_Async_Storage: async (Item_vector: POF_Alimentos_formatted[],item_name:string,set_function: React.Dispatch<any[]>, search: any) => {    
     if (Item_vector.map(item => item.CD).includes(search.CD))
     {
       console.log("Bloqueado, já na lista")

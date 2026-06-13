@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import ManageStorage from '@/app/conf/AsyncStorage';
-import styles from "./styles";
+import styles_cr from "./styles";
 
-import { food_item_interface, POF_Alimentos } from '@/app/types/POF_trt';
+import { food_item_interface } from '@/app/types/POF_trt';
+import { Colors } from '@/app/MainStyle';
 
 
 const Food_Item = ({ food, recent_searches, set_function }: food_item_interface) => {  
   const [show_full_content, setShowFullContent] = useState(false);
-  const food_info = [food.Alimentos, food.Gorduras, food.Minerais]
-  
+  const food_info = [
+    { "table": "Informação Nutricional", "data": food.Alimentos},
+    { "table": "Gorduras", "data": food.Gorduras},
+    { "table": "Minerais", "data": food.Minerais}
+  ]
+
+  const styles = styles_cr();
   
   const show_full_description = async () => {
     setShowFullContent(!show_full_content);
@@ -24,7 +30,7 @@ const Food_Item = ({ food, recent_searches, set_function }: food_item_interface)
     <TouchableOpacity style={styles.list_item} onPress={()=>show_full_description()}>
         <View style={styles.propertie_container}>
           <Text>Nome produto:</Text>
-          <Text style={styles.text_box}>{food.Nome}</Text> 
+          <Text style={styles_cr(Colors.Cor_4,Colors.Fundo_Claro_1).text_box}>{food.Nome}</Text> 
         </View>
       
       <Text style={styles.item_description}>
@@ -32,9 +38,20 @@ const Food_Item = ({ food, recent_searches, set_function }: food_item_interface)
           ?
           food_info.map((info, index) => (
             <View style={styles.propertie_text_box} key={index}>
-              <Text style={styles.desc_item}>
-                {Object.entries(info).map(([key, value]) => `${key}: ${value}\n`)}
-              </Text>              
+              <Text style={styles.text_box}>
+                {info.table}:
+              </Text>
+              <View style={styles_cr(Colors.Cor_4).text_box}>
+                {
+                  Object.entries(info.data).map(([key, value]) => (
+                    <Text key={key} style={styles_cr(Colors.Cor_6, "black", 21).text_box}>
+                      {`${key}: ${value["value"]} ${value["unity"]}\n`}
+                    </Text>
+                  ))
+                }
+              </View>
+
+           
             </View>
           ))
           :

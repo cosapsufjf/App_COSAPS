@@ -9,6 +9,7 @@ const PacientArea : React.FC = () => {
         activity: require("@/assets/images/activity_icon.png"),
         diet: require("@/assets/images/diet_icon.png"),
         routine: require("@/assets/images/routine_icon.png"),
+        sleep: require("@/assets/images/sleeping_icon.png"),
         calory: require("@/assets/images/calory_icon.png"),
         messages: require("@/assets/images/messages_icon.png"),
     };
@@ -28,7 +29,7 @@ const PacientArea : React.FC = () => {
             <View style={styles.icon_row}>
                 <Icon iconName="activity"/>
                 <Icon iconName="diet"/>
-                <Icon iconName="routine"/>
+                <Icon iconName="sleep" />
                 <Icon iconName="calory" onPress={()=>navigation.navigate("FoodSearch")}/>
                 <Icon iconName="messages" onPress={()=>navigation.navigate("Messages")}/>
             </View>

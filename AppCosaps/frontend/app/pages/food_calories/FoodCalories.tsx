@@ -10,13 +10,13 @@ import Food_Item from '@/app/components/main_page_components/FoodSearch/Food_Ite
 import ManageStorage from '@/app/conf/AsyncStorage';
 
 import POF_AlimentosData from "@/output/POF_Alimentos.json"
-import { Food, POF_keys, POF_Alimentos } from '@/app/types/POF_trt';
+import { Food, POF_keys, POF_Alimentos, POF_Alimentos_formatted, convertPOFAlimentos } from '@/app/types/POF_trt';
 
 
 export default function FoodSearchScreen() {
   const [foods, setFoods] = useState<Food[]>([]);
   
-  const [recent_searches, setRecentSearches]: [POF_Alimentos[], any] = useState([]);
+  const [recent_searches, setRecentSearches]: [POF_Alimentos_formatted[], any] = useState([]);
   const [search, setSearch] = useState('');
   const [show_recent, setShowRecent] = useState(true);
   
@@ -68,7 +68,8 @@ export default function FoodSearchScreen() {
               :
                 foods.map((food: Food, index: number) => {
                   return <Food_Item recent_searches={recent_searches} set_function={setRecentSearches}
-                    key={index} food={POF_AlimentosData[food] as POF_Alimentos} />
+                    key={index}
+                    food={convertPOFAlimentos(POF_AlimentosData[food] as POF_Alimentos) as POF_Alimentos_formatted} />
                 })
           }
         </ScrollView>
