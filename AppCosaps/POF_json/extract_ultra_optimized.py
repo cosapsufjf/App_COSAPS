@@ -98,7 +98,7 @@ write_lock = Lock()
 
 def setup_directories():
     Path("stream").mkdir(exist_ok=True)
-    Path("temp/json").mkdir(parents=True, exist_ok=True)
+    Path("output").mkdir(exist_ok=True)
     if os.path.exists(SELECTED_INFO["output_file"]):
         os.remove(SELECTED_INFO["output_file"])
 
@@ -121,11 +121,7 @@ def read_csv(table):
         
         return table_df_cleaned
     except Exception as e:
-        temp_table = table.df
-        temp_table = temp_table.iloc[:, :NUM_HEADERS]
-        temp_table.to_csv(f"temp/csv/temp_table{randint(0, 100)}.csv", index=False)
         print(f"⚠️  Erro ao processar tabela: {str(e)}")
-        
         return None
 
 
@@ -204,11 +200,7 @@ def read_optimized_parallel(file_path):
             processed = process_batch(dataframes_batch)
             processed_tables += processed
 
-    total_time = time.time() - process_start
     print("\n✨ Processamento concluído!")
-    print(f"⏱️  Tempo total: {total_time:.2f}s")
-    print(f"📊 Taxa: {processed_tables / total_time:.2f} tabelas/segundo")
-    print(f"💾 Arquivo JSON salvo em: {SELECTED_INFO['output_file']}")
 
     return processed_tables
 
@@ -243,10 +235,10 @@ def unify_food_information():
         json_vitaminas = json.load(f)
 
     jsons = [
-        {"json": json_alimentos,  "section": "alimentos"}, 
-        {"json": json_gorduras,  "section": "gorduras"}, 
-        {"json": json_minerais,  "section": "minerais"}, 
-        {"json": json_vitaminas, "section": "vitaminas"}
+        {"json": json_alimentos,  "section": "Alimentos"}, 
+        {"json": json_gorduras,  "section": "Gorduras"}, 
+        {"json": json_minerais,  "section": "Minerais"}, 
+        {"json": json_vitaminas, "section": "Vitaminas"}
     ]
 
     for json_at in jsons:
@@ -261,7 +253,7 @@ def unify_food_information():
                 unified_json[name] = data_c
                 unified_json[name][json_at["section"]] = data_e
 
-    output_path = "stream/POF_Alimentos.json"
+    output_path = "output/POF_Alimentos.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(unified_json, f, ensure_ascii=False, indent=2)
 
