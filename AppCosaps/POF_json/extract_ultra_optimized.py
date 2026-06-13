@@ -97,25 +97,20 @@ MAX_WORKERS = 8
 write_lock = Lock()
 
 def setup_directories():
-    """Cria diretórios necessários."""
     Path("stream").mkdir(exist_ok=True)
     Path("temp/json").mkdir(parents=True, exist_ok=True)
-    # Limpar arquivo anterior
     if os.path.exists(SELECTED_INFO["output_file"]):
         os.remove(SELECTED_INFO["output_file"])
 
 
 def read_csv(table):
-    """Processa e limpa um dataframe da tabela PDF."""
     NUM_HEADERS = len(SELECTED_INFO["headers"])
     try:
         table_df = table.df
         table_df = table_df.replace("", pd.NA)
         table_df_cleaned = table_df.dropna(subset=[0]).dropna(axis=1, how="all")
         num_cols_collected = len(table_df_cleaned.columns)
-        
-
-        
+                
         if num_cols_collected < NUM_HEADERS:
             missing_cols = range(num_cols_collected, NUM_HEADERS)
             for col in missing_cols:
@@ -136,7 +131,6 @@ def read_csv(table):
 
 def convert_json(desformatted_json):
     NUM_HEADERS = len(SELECTED_INFO["headers"])
-    """Converte lista de registros para dicionário indexado."""
     result = {}
     for obj in desformatted_json:
         nome = obj.get("Nome", "")
@@ -145,7 +139,6 @@ def convert_json(desformatted_json):
     return result
 
 def safe_write_batch(converted_data):
-    """Escreve um lote de dados no arquivo de forma thread-safe."""
     if not converted_data:
         return
 
@@ -157,7 +150,6 @@ def safe_write_batch(converted_data):
 
 
 def process_batch(dataframes_batch):
-    """Processa um lote de dataframes e escreve no JSON final."""
     if not dataframes_batch:
         return 0
 
@@ -175,11 +167,7 @@ def process_batch(dataframes_batch):
 
 
 def read_optimized_parallel(file_path):
-    """Lê PDF e processa com otimizações máximas incluindo paralelização."""
     setup_directories()
-
-    print("🔄 Iniciando leitura do PDF com paralelização...")
-    start_time = time.time()
 
     tables_s = camelot.io.read_pdf(
         file_path,
@@ -190,14 +178,11 @@ def read_optimized_parallel(file_path):
         cpu_count=os.cpu_count(),
     )
 
-    read_time = time.time() - start_time
-    print(f"✅ PDF lido em {read_time:.2f}s | Total de tabelas: {len(tables_s)}")
-
     dataframes_batch = []
     process_start = time.time()
     processed_tables = 0
 
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS):
         for idx, table in enumerate(tables_s):
             df = read_csv(table)
             if df is not None:
@@ -227,12 +212,7 @@ def read_optimized_parallel(file_path):
 
     return processed_tables
 
-
 def create_final_json():
-    """Converte JSONL para JSON único para fácil acesso."""
-    print("\n🔗 Consolidando arquivo JSON final...")
-    start_consolidate = time.time()
-
     final_data = {}
     with open(SELECTED_INFO["output_file"], "r", encoding="utf-8") as f:
         for line in f:
@@ -247,13 +227,43 @@ def create_final_json():
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
-    consolidate_time = time.time() - start_consolidate
-    print(f"✅ JSON final criado com {len(final_data)} alimentos")
-    print(f"📁 Arquivo: {output_path}")
-    print(f"⏱️  Tempo de consolidação: {consolidate_time:.2f}s")
+def unify_food_information():
+    unified_json = {}
+    common = {"CD","Nome","CP","Desc"}
+    with open("stream/alimentos.json","r") as f:
+        json_alimentos = json.load(f)
 
-    file_size = os.path.getsize(output_path) / (1024 * 1024)  # MB
-    print(f"📊 Tamanho do arquivo: {file_size:.2f} MB")
+    with open("stream/gordura.json","r") as f:
+        json_gorduras = json.load(f)
+
+    with open("stream/minerais.json","r") as f:
+        json_minerais = json.load(f)
+            
+    with open("stream/vitaminas.json","r") as f:
+        json_vitaminas = json.load(f)
+
+    jsons = [
+        {"json": json_alimentos,  "section": "alimentos"}, 
+        {"json": json_gorduras,  "section": "gorduras"}, 
+        {"json": json_minerais,  "section": "minerais"}, 
+        {"json": json_vitaminas, "section": "vitaminas"}
+    ]
+
+    for json_at in jsons:
+        json_it = json_at["json"]
+        for name, data in json_it.items():
+            if name in unified_json:
+                data_e = {k: v for k, v in data.items() if k not in common}
+                unified_json[name][json_at["section"]] = data_e
+            else:
+                data_c = {k: v for k, v in data.items() if k in common}
+                data_e = {k: v for k, v in data.items() if k not in common}
+                unified_json[name] = data_c
+                unified_json[name][json_at["section"]] = data_e
+
+    output_path = "stream/POF_Alimentos.json"
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(unified_json, f, ensure_ascii=False, indent=2)
 
 def selected_info(info_type):
     if info_type == "vitaminas":
@@ -307,3 +317,4 @@ if __name__ == "__main__":
     SELECTED_INFO = selected_info("gordacuc")
     processed = read_optimized_parallel("pdf/cortados/SemHeader/GordurasAcucaresSH.pdf")
     create_final_json()
+    unify_food_information()
