@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { POF_Alimentos } from '../types/POF_trt';
 
 export interface AsyncModel{
   food_id: string;
@@ -47,8 +48,9 @@ const ManageStorage = {
       console.log("Falha ao salvar no async storage\n");
     }
   },
-  Save_List_In_Async_Storage: async (Item_vector: AsyncModel[],item_name:string,set_function: React.Dispatch<any[]>, search: any) => {    
-    if (Item_vector.map(item => item.food_id).includes(search.food_id))
+  
+  Save_List_In_Async_Storage: async (Item_vector: POF_Alimentos[],item_name:string,set_function: React.Dispatch<any[]>, search: any) => {    
+    if (Item_vector.map(item => item.CD).includes(search.CD))
     {
       console.log("Bloqueado, já na lista")
       return;

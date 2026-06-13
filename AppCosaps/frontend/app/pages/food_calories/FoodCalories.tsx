@@ -9,27 +9,27 @@ import InputContainer from '@/app/components/general_components/fix_Input/InputC
 import BB from '@/app/components/crud_components/big_button/BB';
 import Food_Item from '@/app/components/main_page_components/FoodSearch/Food_Item';
 
-import ManageStorage, { AsyncModel } from '@/app/conf/AsyncStorage';
+import ManageStorage from '@/app/conf/AsyncStorage';
+
+import POF_AlimentosData from "@/output/POF_Alimentos.json"
+import { Food, POF_keys, POF_Alimentos } from '@/app/types/POF_trt';
+
 
 export default function FoodSearchScreen() {
-  const [foods, setFoods] = useState([]);
+  const [foods, setFoods] = useState<Food[]>([]);
   
-  const [recent_searches, setRecentSearches]: [AsyncModel[], any] = useState([]);
+  const [recent_searches, setRecentSearches]: [POF_Alimentos[], any] = useState([]);
   const [search, setSearch] = useState('');
   const [show_recent, setShowRecent] = useState(true);
-    
+  
   useEffect(() => {
- 
-    const searchFoods = async () => {
+    const searchFoods = () => {
       console.log(search)
+      
       if (show_recent)
         setShowRecent(false);
-      try {
-        const result = await FatSecretAPI.searchFood(search);
-        setFoods(result.foods?.food || []);
-      } catch (error) {
-        console.error('Erro:', error);
-      }
+      
+      setFoods(POF_keys.filter((key) => key.toLocaleUpperCase().includes(search.toLocaleUpperCase())));
     };
     
     if (search.length === 0)
@@ -39,8 +39,9 @@ export default function FoodSearchScreen() {
     }
     else
       searchFoods();
+      
   }, [search, show_recent]);
-    
+  
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -62,13 +63,14 @@ export default function FoodSearchScreen() {
                 </View>
                 {
                   recent_searches.map((search) => (
-                    <Food_Item recent_searches={recent_searches} set_function={setRecentSearches} key={search.food_id} food={search} />
+                    <Food_Item recent_searches={recent_searches} set_function={setRecentSearches} key={search.CD} food={search} />
                   ))  
                 }
               </View>
               :
-                foods.map((food: any) => {
-                  return <Food_Item recent_searches={recent_searches} set_function={setRecentSearches} key={food.food_id} food={food} />
+                foods.map((food: Food, index: number) => {
+                  return <Food_Item recent_searches={recent_searches} set_function={setRecentSearches}
+                    key={index} food={POF_AlimentosData[food] as POF_Alimentos} />
                 })
           }
         </ScrollView>
