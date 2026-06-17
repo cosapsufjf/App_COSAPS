@@ -1,4 +1,4 @@
-import {DimensionValue, StyleSheet } from "react-native";
+import {DimensionValue, StyleSheet, Dimensions } from "react-native";
 
 export const Colors = {
     Fundo_1: "#8d83b6",
@@ -16,19 +16,19 @@ export const Colors = {
 
 export const BaseStyles = StyleSheet.create({
   fullScreen: {
-    width: "100%",
-    height: "100%",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   fullScreenContainer: {
     flex: 0,
-    width: "100%",
-    height: "100%",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
     backgroundColor: Colors.Fundo_3,
   },
   fullScreenFlexContainer: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
     backgroundColor: Colors.Fundo_3,
   },
   row: {
@@ -62,8 +62,8 @@ export const BaseStyles = StyleSheet.create({
     fontWeight: "normal",
   },
   Pressable: {
-    width: "45%",
-    height: "20%",
+    width: Dimensions.get("window").width * 0.45,
+    height: Dimensions.get("window").height * 0.2,
     margin:10,
     borderRadius: 40,
     alignContent: "center",
@@ -93,8 +93,8 @@ export const ContainerStyle = (
   },
   full_sizes: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
 
 });

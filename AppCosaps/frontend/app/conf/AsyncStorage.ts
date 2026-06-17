@@ -32,6 +32,15 @@ const ManageStorage = {
       console.log("Falha ao recuperar do async storage\n");
     }
   },
+  remove_from_Async_Storage: async (item_name: string) => {
+    try {
+      await AsyncStorage.removeItem(item_name);
+    }
+    catch
+    {
+      console.log("Falha ao remover do async storage\n");
+    }
+  },
   Save_In_Async_Storage: async (item_name: string, Item: any) => {
     try {
       await AsyncStorage.setItem(item_name, Item);

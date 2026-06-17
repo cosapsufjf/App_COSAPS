@@ -1,16 +1,16 @@
 import { StyleSheet } from "react-native";
 import { Colors as colors } from "../../../MainStyle";
 
-const styles = StyleSheet.create({
+const styles = (flex_dir: "row" | "column" = "row", txt_size: number = 18, size: number = 25, color: string = "#fff") => StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: flex_dir,
     alignItems: "center",
   },
   checkbox: {
-    borderColor: "#fff",
+    borderColor: color,
     borderWidth: 1,
-    width: 30,
-    height: 30,
+    width: size,
+    height: size,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -18,14 +18,14 @@ const styles = StyleSheet.create({
   checkboxInner: {
     backgroundColor: colors.Cor_4,
     borderRadius:10,
-    width: 25,
-    height: 25,
+    width: size*0.8,
+    height: size*0.8,
   },
   text: {
-    fontSize: 18,
+    fontSize: txt_size,
     fontWeight: "bold",
     marginLeft: 10,
-    color: colors.Fundo_Claro_1,
+    color: color ?? colors.Fundo_Claro_1,
   },
 });
 

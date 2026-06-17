@@ -1,5 +1,4 @@
-import { View, Text, TouchableOpacity, DimensionValue } from "react-native";
-import { StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, DimensionValue,StyleSheet } from "react-native";
 import { Colors as colors} from "../../../MainStyle";
 
 interface BB_Props{
@@ -13,7 +12,8 @@ interface BB_Props{
     margin?: number | string,
     right?: number | string,
     position?: "absolute" | "relative",
-    inline?: boolean,
+  inline?: boolean,
+  fontsize?: number,
 }
 
 const BB : React.FC<BB_Props> = (
@@ -29,7 +29,8 @@ const BB : React.FC<BB_Props> = (
         position="relative",
         right = 0,
         inline = false,
-  }) => {
+        fontsize = 16,
+    }) => {
   
     const styles = StyleSheet.create({
         btn:{
@@ -49,6 +50,7 @@ const BB : React.FC<BB_Props> = (
             color:textColor, 
             fontWeight:"bold", 
             margin:0,
+            fontSize:fontsize,
       },
       inline: {
         position: "absolute",

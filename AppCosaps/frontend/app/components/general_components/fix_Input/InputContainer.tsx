@@ -1,6 +1,7 @@
-import { View, Text, KeyboardTypeOptions, KeyboardAvoidingView } from "react-native";
+import { View, Text, KeyboardTypeOptions, KeyboardAvoidingView, Dimensions } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
+
 import { format_str } from "@/app/utils/regex";
 import style from "./styles";
 import { Colors as colors } from "../../../MainStyle";
@@ -52,7 +53,7 @@ interface InputContainerProps {
       text_state_setter = null,
 
       width = "100%",
-      height="10%",
+      height= "10%",
       position = "relative",
       bottom = 0,
       margin=0,

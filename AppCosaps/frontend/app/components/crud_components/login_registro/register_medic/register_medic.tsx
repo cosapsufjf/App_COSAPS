@@ -1,5 +1,6 @@
 import { NavigationProp } from "@/app/types/navigation";
-import { useNavigation } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
+
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

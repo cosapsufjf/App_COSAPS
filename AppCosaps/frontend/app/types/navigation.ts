@@ -9,6 +9,8 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   MainPage: undefined;
 
+
+  SleepQuality: undefined;
   FoodSearch: undefined;
   Messages: undefined;
   Chat: undefined;
