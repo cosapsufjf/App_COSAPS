@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.get("window").height * 0.02,
   },
   chart: {
-    flex: 1,
     width: Dimensions.get("window").width * 0.8,
     backgroundColor: Colors.Cor_6,
     justifyContent: "flex-start",

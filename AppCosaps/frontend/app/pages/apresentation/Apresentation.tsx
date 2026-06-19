@@ -12,7 +12,7 @@ const Apresentation: React.FC = () => {
     setTimeout(() => {
       navigation.navigate("CRUD");
     }, 2000);
-  }, []);
+  });
 
   return (
     <SafeAreaView style={styles.container}>

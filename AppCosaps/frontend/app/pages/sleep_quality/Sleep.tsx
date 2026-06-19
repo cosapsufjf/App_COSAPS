@@ -1,5 +1,4 @@
-import { BarChart, LineChart } from "react-native-gifted-charts"
-import { View, ScrollView, Text } from "react-native"
+import { View, Text } from "react-native"
 import styles from "./styles"
 
 //components
@@ -10,7 +9,7 @@ import Line from "@/app/components/main_page_components/line/Line";
     const Sleep = () => {
     const lineData = [{value: 0},{value: 20},{value: 18},{value: 40},{value: 36},{value: 60},{value: 54},{value: 85}]
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         <MainHeader />
         <Line />
         <PacientArea />
@@ -20,7 +19,7 @@ import Line from "@/app/components/main_page_components/line/Line";
             Seu sono é bom
           </Text>
         </View>
-      </ScrollView>
+      </View>
     );
 };
 export default Sleep;
