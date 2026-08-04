@@ -3,8 +3,16 @@ import { styles } from "./styles";
 import { useEffect, useState } from "react";
 import ScrollInput from "@/app/components/general_components/ScrollInput/ScrollInput";
 
+import { SleepFormType } from "../../hooks/useSleepForm";
+
 export const HandleScrollInput: React.FC<
-  { txt: string; lenH: number; lenM: number; type: 'time' | 'duration'; setScrollValues: (type: 'time' | 'duration', hour: string, min: string) => void}> = ({ txt, lenH, lenM, type, setScrollValues }) => {
+  {
+    txt: string;
+    lenH: number;
+    lenM: number;
+    type: SleepFormType;
+    setScrollValues: (type: SleepFormType, hour: string, min: string) => void
+  }> = ({ txt, lenH, lenM, type, setScrollValues }) => {
   const [showScrollInput, setShowScrollInput] = useState(false);
   const [selectedHour, setSelectedHour] = useState<string>('');
   const [selectedMin, setSelectedMin] = useState<string>('');

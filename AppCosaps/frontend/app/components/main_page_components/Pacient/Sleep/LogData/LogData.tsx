@@ -1,55 +1,48 @@
 import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
-import { Calendar } from "react-native-calendars";
+import { HandleScrollInput } from "../Inputs/SleepScroll/HandleScrollInput";
+import BB from "@/app/components/crud_components/big_button/BB";
+import styles from "../styles";
+import ChooseDay from "../Inputs/ChooseDay/ChooseDay";
 import { useState } from "react";
 
-import { HandleScrollInput } from "../SleepScroll/HandleScrollInput";
-import BB from "@/app/components/crud_components/big_button/BB";
-import { Colors } from "@/app/MainStyle";
-import styles from "../styles";
+import { useSleepForm, SleepFormType } from "../hooks/useSleepForm";
 
 const LogData: React.FC<{
-  setValues: (type: "time" | "duration", hour: string, min: string) => void,
-  sendData: () => void,
-  quit: () => void,
-  selectedDay: any | undefined,
-  setSelectedDay: React.Dispatch<React.SetStateAction<any | undefined>>,
-  
-}> = ({ setValues, sendData, quit, selectedDay, setSelectedDay }) => {
+  onSaved: () => void;
+  onCancel: () => void;
+}> = ({ onSaved, onCancel }) => {
+  const { 
+    valuesTime, 
+    valuesDuration, 
+    selectedDay, 
+    saving, 
+    error,
+    setValues,
+    setSelectedDay,
+    save,
+  } = useSleepForm();
+
+  const handleSave = async () => {
+    await save();
+    if (!error) onSaved();
+  };
+
   const [showSelectedDay, setShowSelectedDay] = useState(false);
-  
   const Icons = {
     calendar: require("@/assets/images/calendar.png"),
-  };
-  
-  const chooseDay = () => {
-    return (
-      <View>
-        <Calendar
-          onDayPress={(day) => setSelectedDay(day)}
-          markedDates={{
-            [selectedDay?.dateString]: {
-              selected: true,
-              selectedColor: Colors.Cor_2,
-            },
-          }}
-        />
-        <BB
-          action={() => setShowSelectedDay(false)}
-          text="Voltar"
-          width={Dimensions.get("window").width * 0.8}
-        />
-      </View>
-    );
   };
   
   return (
     <View style={styles.log_data}>
       {showSelectedDay ? (
-        chooseDay()
+        <ChooseDay setShowSelectedDay={setShowSelectedDay} setSelectedDay={setSelectedDay} selectedDay={selectedDay} />
       ) : (
         <>
-          <HandleScrollInput txt="Você foi dormir que horas?" lenH={24} lenM={60}
-              type="time" setScrollValues={setValues}
+          <HandleScrollInput 
+              txt="Você foi dormir que horas?" 
+              lenH={24} lenM={60}
+              setScrollValues={setValues}
+              type={SleepFormType.Time}
           />
           <TouchableOpacity
             style={[
@@ -65,14 +58,17 @@ const LogData: React.FC<{
             </Text>
             <Image source={Icons.calendar} style={styles.icon} />
           </TouchableOpacity>
-            <HandleScrollInput txt="Dormiu por quantas horas?" lenH={24} lenM={60}
-              type="duration" setScrollValues={setValues}
+            <HandleScrollInput
+              txt="Dormiu por quantas horas?"
+              lenH={24} lenM={60}
+              type={SleepFormType.Duration}
+              setScrollValues={setValues}
             />
           <View style={{flexDirection:"row",flex:1}}>
-              <BB action={quit} text="Voltar" fontsize={30} margin={2}
+              <BB action={onCancel} text="Voltar" fontsize={30} margin={2}
                 width={Dimensions.get("window").width * 0.4}
                 />
-              <BB action={sendData} text="Salvar" margin={2} fontsize={30}
+              <BB action={handleSave} text="Salvar" margin={2} fontsize={30}
                 width={Dimensions.get("window").width * 0.4}
                 />
           </View>  

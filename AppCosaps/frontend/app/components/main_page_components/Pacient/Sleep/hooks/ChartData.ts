@@ -1,33 +1,39 @@
 import ManageStorage from "@/app/conf/AsyncStorage";
+import { ChartType } from "../Chart";
 
-//TODO: REIMPLEMENTAR A PARTIR DO BACKEND
-export const getData =
-  async (type: "SleepTime" | "SleepDuration", chartType: "bar" | "line", last_week: boolean = false) => {
-  const StorageData = await ManageStorage.get_From_Async_Storage("sleep_log", true,);
-  let data: any[] | null = orderData(StorageData)
+const CHART_TYPE_MAP: Record<ChartType, "bar" | "line"> = {
+  [ChartType.Bar]: "bar",
+  [ChartType.Line]: "line",
+};
+
+export const getData = async (
+  type: "SleepTime" | "SleepDuration", 
+  chartType: ChartType,
+  lastWeek: boolean = false
+) => {
+  const storageData = await ManageStorage.get_From_Async_Storage("sleep_log", true);
   
-  if (StorageData && Array.isArray(StorageData)) {
-    if (last_week) {
-      data = get_last_week(data);
-    }
-    
-    console.log(data)
-    if (data === null || data === undefined || data.length === 0) return null;
-    
-    if (chartType === "bar") {
-      return data?.map((item: any) => ({
-        value: item[type].hour,
-        label: item.SleepDate,
-        barWidth: 16,
-        barBorderRadius: 4,
-      }));
-    } else {
-      return data?.map((item: any) => ({
-        value: parseInt(item[type].hour),
-      }));
-    }
+  if (!storageData || !Array.isArray(storageData)) return null;
+
+  const orderedData = orderData(storageData);
+  const filteredData = lastWeek ? get_last_week(orderedData) : orderedData;
+
+  if (filteredData.length === 0) return null;
+
+  const chartTypeStr = CHART_TYPE_MAP[chartType];
+  
+  if (chartTypeStr === "bar") {
+    return filteredData.map(item => ({
+      value: item[type].hour,
+      label: item.SleepDate,
+      barWidth: 16,
+      barBorderRadius: 4,
+    }));
+  } else {
+    return filteredData.map(item => ({
+      value: parseInt(item[type].hour),
+    }));
   }
-  return null;
 };
 
 const orderData = (StorageData: any[]) => {
@@ -38,15 +44,6 @@ const orderData = (StorageData: any[]) => {
     return (a.SleepDate.substring(2).localeCompare(b.SleepDate.substring(2)))
   })
 };
-
-const getFirstDayOfWeek = (date: Date = new Date()) => {
-  const d = new Date(date);
-  const day = d.getDay();
-  const offset = day === 0 ? -6 : 1 - day
-  d.setDate(d.getDate() - day + offset);
-  return d;
-};
-
 
 const get_last_week = (ordered: any[]) => {
   const current = new Date();
@@ -76,6 +73,7 @@ export const sendData = async (
   );
 
   if (!selectedDay) return;
+  
   const newEntry = {
     SleepTime: ValuesTime,
     SleepDate: `${selectedDay.day.toString().padStart(2, "0")}/${selectedDay.month.toString().padStart(2, "0")}`,
@@ -93,5 +91,5 @@ export const sendData = async (
   );
   
   reset_states();
-  await setData();
+  setData();
 };

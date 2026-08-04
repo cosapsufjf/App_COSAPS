@@ -4,7 +4,7 @@ import { BaseStyles, Colors } from "@/app/MainStyle";
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    width: Dimensions.get("window").width * 0.9,
+    width: Dimensions.get("window").width * 0.97,
     minHeight: Dimensions.get("window").height * 0.7,
     borderRadius: Dimensions.get("window").width * 0.1,
     backgroundColor: Colors.Fundo_1,
@@ -37,21 +37,22 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").width * 0.09,
   },
   charts_container: {
-    flex: 1,
+    padding:"4%",
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor:Colors.Fundo_Claro_1,
-    width: Dimensions.get("window").width * 0.8,
-    height: Dimensions.get("window").height * 0.56,
+    width: Dimensions.get("window").width * 0.95,
+    minHeight: Dimensions.get("window").height * 0.6,
     borderRadius: Dimensions.get("window").width * 0.08,
     marginTop: Dimensions.get("window").height * 0.02,
   },
   chart: {
+    marginBottom: Dimensions.get("window").height * 0.02,
     width: Dimensions.get("window").width * 0.8,
     backgroundColor: Colors.Cor_6,
     justifyContent: "flex-start",
     alignItems: "center",
-    borderRadius: Dimensions.get("window").width * 0.08,
+    borderRadius: Dimensions.get("window").width * 0.03,
   },
   log_data: {
     backgroundColor: Colors.Fundo_Claro_1,

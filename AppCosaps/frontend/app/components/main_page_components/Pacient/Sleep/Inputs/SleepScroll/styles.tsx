@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: Dimensions.get("window").width * 0.75,
-    height: "20%",
+    height: Dimensions.get("window").height * 0.1,
     margin: Dimensions.get("window").width * 0.025,
   },
   inner_inputs: {

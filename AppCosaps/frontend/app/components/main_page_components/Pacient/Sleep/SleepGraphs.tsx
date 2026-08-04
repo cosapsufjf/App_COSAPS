@@ -1,167 +1,74 @@
-import {View,Image,TouchableOpacity,Text,Dimensions,ScrollView} from "react-native";
-
-import styles from "./styles";
-import { BarChart, LineChart } from "react-native-gifted-charts";
-import { useState, useEffect } from "react";
-import { Colors } from "@/app/MainStyle";
+import { View, Text, ScrollView, Image } from "react-native";
+import { useState, useMemo } from "react";
+import { useSleepData } from "./hooks/useSleepData";
+import Chart, { ChartType } from "./Chart";
 import LogData from "./LogData/LogData";
-import { getData, sendData } from "./ManageCharts/ChartData";
+import styles from "./styles";
+import AddButton from "./Inputs/AddButton/AddButton";
+
+const diasDaSemana = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
+const horarios = ["20h","21h","22h","23h","00h","01h","02h","03h","04h","05h","06h"];
+
+const NoData = () => (
+  <View style={styles.chart}>
+    <Text style={[styles.text, { textAlign: "justify" }]}>
+      Ainda não há dados disponíveis. Tente adicionar registros!
+    </Text>
+    <Image source={require("@/assets/images/sleep.png")} style={styles.icon} />
+  </View>
+);
 
 const SleepGraphs = () => {
   const [showLogData, setShowLogData] = useState(false);
-  
-  const [ValuesTime, setValuesTime] = useState({ hour: "", min: "" });
-  const [ValuesDuration, setValuesDuration] = useState({ hour: "", min: "" });
-  
-  const [dataTLW, setDataTLW] = useState<any | null>(null);
-  const [dataDLW, setDataDLW] = useState<any | null>(null);
-  const [selectedDay, setSelectedDay] = useState<any>(null);
-  const [dataTime, setDataTime] = useState<any | null>(null);
-  const [dataDuration, setDataDuration] = useState<any | null>(null);
+  const { rawTime, rawDuration, weeklyTime, weeklyDuration, loading, error, refresh } = useSleepData();
 
-  const setValues = (type: "time" | "duration", hour: string, min: string) => {
-    if (type === "time") {
-      setValuesTime({ hour, min });
-    } else {
-      setValuesDuration({ hour, min });
-    }
-  };
+  const dataDLW = useMemo(() => weeklyDuration, [weeklyDuration]);
+  const dataTLW = useMemo(() => weeklyTime, [weeklyTime]);
+  const dataDuration = useMemo(() => rawDuration, [rawDuration]);
+  const dataTime = useMemo(() => rawTime, [rawTime]);
 
-  const Icons = {
-    sum: require("@/assets/images/plus.png"),
-    sleeping: require("@/assets/images/sleep.png")
-  };
-
-  useEffect(() => {
-    setData();
-  }, []);
-
-
-  const reset_states = () => {
-    setShowLogData(false);
-    setValuesTime({ hour: "", min: "" });
-    setValuesDuration({ hour: "", min: "" });
-    setSelectedDay(null);
-  };
-  
-  const setData = async () => {
-    const time = await getData("SleepTime", "line");
-    const duration = await getData("SleepDuration", "bar");
-    const tlw = await getData("SleepTime", "line", true);
-    const dlw = await getData("SleepDuration", "bar", true);
-    
-    setDataTime(time);
-    setDataDuration(duration);
-    setDataTLW(tlw);
-    setDataDLW(dlw);
+  if (loading) {
+    return <View><Text>Carregando...</Text></View>;
   }
-  
-  const round_button = (action: () => void, icon: any) => {
-    return (
-      <TouchableOpacity style={styles.btn} onPress={action}>
-        <Image source={icon} style={styles.icon} />
-      </TouchableOpacity>
-    );
-  };
-  
-  const no_data = () => {
-    return (
-      <View style={styles.chart}>
-        <Text style={[styles.text,{textAlign:"justify"}]}>Ainda não há dados disponíveis para mostrar os gráficos, tente adicionar registros de sono!</Text>
-        <Image source={Icons.sleeping} style={styles.icon}/>
-      </View>
-    )
+
+  if (error) {
+    return <View><Text>Erro: {error.message}</Text></View>;
   }
+
+
   return (
     <View style={styles.container}>
-      <View style={styles.btn_container}>
-        <Text style={styles.text}>Adicionar novo registro de sono</Text>
-        {round_button(() => setShowLogData(true), Icons.sum)}
-      </View>
-      {showLogData ? (
-        <LogData 
-          setValues={setValues}
-          sendData={() => sendData(selectedDay, ValuesTime, ValuesDuration, reset_states, setData)}
-          quit={()=>setShowLogData(false)}
-          selectedDay={selectedDay}
-          setSelectedDay={setSelectedDay}
-        />
-      ) : (
-        <View style={styles.charts_container}>
-          <ScrollView contentContainerStyle={styles.chart}>
-            <Text style={styles.title}>
-              Horas de sono dormidas na última semana
-            </Text>
-            {dataDuration !== null ? (
-              <BarChart
-                width={Dimensions.get("window").width * 0.6}
-                data={dataDLW}
-                frontColor={Colors.Cor_7}
-                gradientColor={Colors.Cor_1}
-                stepValue={1}
-                noOfSections={10}
-                showGradient
-                showLine
-                xAxisLabelTexts={["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom",]}
-                spacing={25}  
-                lineConfig={{
-                  color: Colors.Cor_2,
-                  thickness: 3,
-                  curved: true,
-                  hideDataPoints: true,
-                  shiftY: 10,
-                  initialSpacing: 15,
-                }}
-              />
-              ) : no_data()}
-              
-            <Text style={styles.title}>
-              Horas em que você foi dormir na última semana
-            </Text>
-
-            {dataTime !== null ? (
-              <LineChart
-                width={Dimensions.get("window").width * 0.6}
-                  data={dataTLW}
-                  
-                yAxisLabelTexts={["20h","21h","22h","23h","00h","01h","02h","03h","04h","05h","06h",]}
-                xAxisLabelTexts={["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom",]}
-                
-                  color={Colors.Cor_1}
-                maxValue={30}
-                stepValue={5}
-              />
-            ) : no_data()}
-            <Text style={styles.title}>
-              Horas de sono dormidas no ano
-            </Text>
-            {dataDuration !== null ? (
-              <BarChart
-                width={Dimensions.get("window").width * 0.6}
-                data={dataDuration}
-                frontColor={Colors.Cor_7}
-                gradientColor={Colors.Cor_1}
-                stepValue={1}
-                noOfSections={10}
-                showGradient
-                showLine
-                xAxisLabelTexts={["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom",]}
-                spacing={25}  
-                lineConfig={{
-                  color: Colors.Cor_2,
-                  thickness: 3,
-                  curved: true,
-                  hideDataPoints: true,
-                  shiftY: 10,
-                  initialSpacing: 15,
-                }}
-              />
-              ) : no_data()}
-          </ScrollView>
-        </View>
-      )}
+      <ScrollView contentContainerStyle={styles.charts_container}>
+        <ChartSection title="Sono na última semana" data={dataDLW} type={ChartType.Bar} xAxisLabels={diasDaSemana} />
+        <ChartSection title="Horário de dormir" data={dataTime} type={ChartType.Line} xAxisLabels={diasDaSemana} yAxisLabels={horarios} />
+        <ChartSection title="Sono no ano" data={dataDuration} type={ChartType.Bar} xAxisLabels={diasDaSemana} />
+      </ScrollView>
     </View>
   );
 };
+
+const ChartSection = ({ 
+  title, 
+  data, 
+  type, 
+  xAxisLabels, 
+  yAxisLabels 
+}: {
+  title: string;
+  data: any;
+  type: ChartType;
+  xAxisLabels?: string[];
+  yAxisLabels?: string[];
+}) => (
+  <View style={styles.chart}>
+    <Text style={styles.title}>{title}</Text>
+    {data ? (
+      <Chart data={data} type={type} xAxisLabelTexts={xAxisLabels} yAxisLabelTexts={yAxisLabels} />
+    ) : (
+      <NoData />
+    )}
+  </View>
+);
+
 
 export default SleepGraphs;

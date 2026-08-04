@@ -3,7 +3,17 @@ import styles from "./styles";
 import { Colors } from "@/app/MainStyle";
 import { useState } from "react";
 
-const ScrollInput = ({len, SelectItem, desc}: {len: number, SelectItem:React.Dispatch<React.SetStateAction<string>>, desc?: boolean}) => {
+const ScrollInput = (
+  { len,
+    SelectItem,
+    desc,
+    nestedScrollParent = true
+  }: {
+      len: number,
+      SelectItem: React.Dispatch<React.SetStateAction<string>>,
+      desc?: boolean,
+      nestedScrollParent?: boolean
+  }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const list = (len: number, desc?: boolean) => {
@@ -39,6 +49,7 @@ const ScrollInput = ({len, SelectItem, desc}: {len: number, SelectItem:React.Dis
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => `${item}-${index}`}
+        nestedScrollEnabled={nestedScrollParent}
         initialScrollIndex={len}
         getItemLayout={(data, index) => ({
           length: ITEM_HEIGHT,
