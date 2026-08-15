@@ -4,7 +4,7 @@ import { Colors, BaseStyles } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    height: "120%",
     backgroundColor: Colors.Cor_2,
     ...BaseStyles.centerContent,
   },

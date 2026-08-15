@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
-import { Colors as colors } from "@/app/MainStyle";
+import { Colors as colors, BaseStyles } from "@/app/MainStyle";
 
-import { BaseStyles } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
     container:{
@@ -21,8 +20,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: 10,
     borderRadius: 30,
-    height: "50%",
-    width: "85%",
+    height: "70%",
+    width: "95%",
     alignSelf: "center",
     margin:0
   },

@@ -28,7 +28,7 @@ const PacientArea : React.FC = () => {
         return(
             <View style={styles.icon_row}>
                 <Icon iconName="activity"/>
-                <Icon iconName="diet"/>
+                <Icon iconName="diet"onPress={()=>navigation.navigate("Diet")}/>
                 <Icon iconName="sleep" onPress={()=>navigation.navigate("SleepQuality")}/>
                 <Icon iconName="calory" onPress={()=>navigation.navigate("FoodSearch")}/>
                 <Icon iconName="messages" onPress={()=>navigation.navigate("Messages")}/>

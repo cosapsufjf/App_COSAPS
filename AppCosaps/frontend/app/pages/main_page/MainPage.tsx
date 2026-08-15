@@ -7,6 +7,12 @@ import Line from "@/app/components/main_page_components/line/Line";
 import PacientInfo from "@/app/components/main_page_components/Pacient/pacient_info/PacientInfo";
 import Pacient_Overview from "@/app/components/main_page_components/Pacient/pacient_overview/Pacient_overview";
 
+
+enum infoSections{
+  Message, 
+  Diet,
+}
+
 const MainPage: React.FC = () => {
   return(
     <SafeAreaProvider>
@@ -17,8 +23,14 @@ const MainPage: React.FC = () => {
         <PacientArea />
         <SafeAreaView edges={["top"]} style={styles.infoContainer}>
           <PacientInfo />
+          <PacientInfo />
         </SafeAreaView>
-        <Pacient_Overview />
+        
+        <SafeAreaView edges={["top"]} style={styles.infoContainer}>
+          <PacientInfo />
+          <PacientInfo />
+        </SafeAreaView>
+        
       </SafeAreaView>
     </SafeAreaProvider>
   )

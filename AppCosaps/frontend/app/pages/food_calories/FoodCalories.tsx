@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, ScrollView} from 'react-native';
+import { View, Text, ScrollView, Dimensions} from 'react-native';
 import styles from './styles';
 
 import InputContainer from '@/app/components/general_components/fix_Input/InputContainer';

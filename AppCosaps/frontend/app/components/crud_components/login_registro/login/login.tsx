@@ -12,7 +12,7 @@ import { useForm } from "@/app/conf/FixForm";
 
 import {
     getAuth,
-    signInWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "@react-native-firebase/auth";
 
 import styles from "../styles";
@@ -63,7 +63,7 @@ const Login: React.FC<LR_Props> = ({
     );
   };
 
-  const enviar = () => {
+  const send = () => {
     if (!Form.getFormValidated())
     {
       setShowErrors(true);
@@ -118,7 +118,7 @@ const Login: React.FC<LR_Props> = ({
           style={styles.btnContainer}
       >
         <BB text="Voltar" width={150} action={() => set(elements.Select)} />
-        <BB text="Login" width={150} action={enviar} />
+        <BB text="Login" width={150} action={send} />
       </View>
     </View>
   );

@@ -13,6 +13,7 @@ import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
 import Messages from "./components/main_page_components/Pacient/Messages/Messages";
 import Chat from "./components/main_page_components/Pacient/Chat/Chat_Pg";
 import Sleep from "./pages/sleep_quality/Sleep";
+import Diet from "./pages/diet/Diet";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -24,6 +25,7 @@ function Stacked() {
       <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="FoodSearch" component={FoodSearchScreen} />
+      <Stack.Screen name="Diet" component={Diet} />
       <Stack.Screen name="SleepQuality" component={Sleep} />
       <Stack.Screen name="Chat" component={Chat}/>
       <Stack.Screen name="Messages" component={Messages} />
