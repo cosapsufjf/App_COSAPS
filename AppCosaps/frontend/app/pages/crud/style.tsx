@@ -1,11 +1,9 @@
 import { StyleSheet } from "react-native";
-import { Colors, BaseStyles } from "@/app/MainStyle";
+import { Colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
   // Container principal com SafeArea
   container: {
-    ...BaseStyles.fullScreenContainer,
-    ...BaseStyles.centerContent,
     backgroundColor: Colors.Cor_6,
   },
 

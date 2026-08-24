@@ -80,7 +80,7 @@ const Login: React.FC<LR_Props> = ({
         ManageStorage.Save_In_Async_Storage("LoginInfo", JSON.stringify(
           { email: Form_content.Email, senha: Form_content.Senha })
         )
-        //TODO PRECISA SER ATUALIZADO
+        //TODO: PRECISA SER ATUALIZADO
         ManageStorage.Save_In_Async_Storage("Logged_user","Test_user1");
         navigation.navigate("MainPage");
       })

@@ -11,12 +11,13 @@ const Select :  React.FC<LR_Props> = (
     elements = null
 }) => {
     const [show_reg, setShowReg] = useState(false);
-    const style = styles();
+  const style = styles();
+  
     const selected_register= ()=>{
         return(
           <View style={[BaseStyles.fullScreenContainer, BaseStyles.border_radius_medium]}>
             <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Selecione o tipo de conta que deseja criar:</Text>
-            <View style={[BaseStyles.fullScreenContainer, BaseStyles.row]}>
+            <View style={[BaseStyles.row]}>
               <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_6 }]} onPress={() => set(elements.Registro)}>
                     <Text style={[BaseStyles.whiteText,{ fontSize: 30 }]}>Paciente</Text>
                 </TouchableOpacity>
@@ -32,7 +33,7 @@ const Select :  React.FC<LR_Props> = (
         return(
             <View style={[BaseStyles.fullScreenContainer, BaseStyles.border_radius_medium]}>
                 <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Selecione o que deseja fazer:</Text>
-                <View style={[BaseStyles.fullScreenContainer, BaseStyles.row]}>
+                <View style={[BaseStyles.row]}>
                     <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_6 }]} onPress={()=>set(elements.Login)}>
                         <Text style={[BaseStyles.whiteText, { fontSize: 30 }]}>Login</Text>
                     </TouchableOpacity>

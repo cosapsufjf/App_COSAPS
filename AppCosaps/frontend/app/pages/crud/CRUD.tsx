@@ -5,6 +5,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import crud_elements from "@/app/components/crud_components/login_registro/props";
 
 import styles from "./style";
+
 const CRUD: React.FC = () => {
   const [Page, setPage] = useState<{
     page: any;
@@ -22,8 +23,8 @@ const CRUD: React.FC = () => {
   };
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
+      <SafeAreaView>
         <Image
           style={styles.imgHeader}
           source={require("../../../assets/images/UFJF_extension_log_transparent.png")}

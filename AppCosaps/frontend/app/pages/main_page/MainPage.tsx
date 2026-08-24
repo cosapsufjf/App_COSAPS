@@ -5,13 +5,7 @@ import MainHeader from "@/app/components/main_page_components/main_header/main_h
 import PacientArea from "@/app/components/main_page_components/Pacient/pacient_area/PacientArea";
 import Line from "@/app/components/main_page_components/line/Line";
 import PacientInfo from "@/app/components/main_page_components/Pacient/pacient_info/PacientInfo";
-import Pacient_Overview from "@/app/components/main_page_components/Pacient/pacient_overview/Pacient_overview";
-
-
-enum infoSections{
-  Message, 
-  Diet,
-}
+import Info_Item from "@/app/components/main_page_components/Pacient/pacient_info/Info_Item";
 
 const MainPage: React.FC = () => {
   return(
@@ -22,13 +16,16 @@ const MainPage: React.FC = () => {
         <Line/>
         <PacientArea />
         <SafeAreaView edges={["top"]} style={styles.infoContainer}>
-          <PacientInfo />
-          <PacientInfo />
+          <PacientInfo content={
+            Array.from([<Info_Item key={1} content="Seu sono é: " />, <Info_Item key={2} content="Horas dormidas nos últimos 7 dias: " />])
+          }
+            title="Últimos dias de sono"
+          />
         </SafeAreaView>
         
         <SafeAreaView edges={["top"]} style={styles.infoContainer}>
-          <PacientInfo />
-          <PacientInfo />
+          <PacientInfo content={[<Info_Item key={3} content="Próxima refeição: " />]} title="Próxima refeição"/>
+          <PacientInfo content={[<Info_Item key={4} content="Próxima atividade: " />]} title="Próxima atividade"/>
         </SafeAreaView>
         
       </SafeAreaView>

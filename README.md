@@ -18,11 +18,8 @@ npx expo run:android
     - ``` sudo {system package manager} install openjdk-17-jdk ``` in linux enviroments
       
 - The execution of the project depends on a android SDK compatible emulator being executed on your machine (Android Studio, Genymotion, etc)
-  
-Other dependencies:
-- Autenticantion Service:
-    - Saas firebase
-- APIs:
-    - Fatsecret (For search nutritional information of food)
+
+dependencies:
+- Saas firebase
 
 All the critical credentials (API Keys, Google Services jsons, and etc) must be collected with the project responsibles

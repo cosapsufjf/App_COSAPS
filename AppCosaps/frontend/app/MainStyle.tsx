@@ -20,7 +20,6 @@ export const BaseStyles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   fullScreenContainer: {
-    flex: 0,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
     backgroundColor: Colors.Fundo_3,

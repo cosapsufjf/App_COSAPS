@@ -3,12 +3,11 @@ import { BaseStyles, Colors as colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
   content: {
-        ...BaseStyles.centerContent,
-        ...BaseStyles.fullScreenContainer,
-        borderTopRightRadius: 30,
-        borderTopLeftRadius: 30,
-        
-    },
+    ...BaseStyles.centerContent,
+    ...BaseStyles.fullScreenContainer,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+  },
   Inputs: {
     position: "absolute",
     top: 0,

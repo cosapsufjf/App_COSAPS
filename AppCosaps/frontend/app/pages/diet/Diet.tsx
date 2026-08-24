@@ -1,6 +1,7 @@
 import { View,ScrollView, Text } from "react-native";
 import styles from "./styles";
-import FoodTile from "@/app/components/main_page_components/Diet/Food_tile";
+import ListItem from "@/app/components/general_components/List_Item/List_Item";
+
 import Line from "@/app/components/main_page_components/line/Line";
 import PacientArea from "@/app/components/main_page_components/Pacient/pacient_area/PacientArea";
 import MainHeader from "@/app/components/main_page_components/main_header/main_header";
@@ -25,25 +26,25 @@ const Diet = () => {
         <Text style={styles.Section}>Café da manhã</Text>
         <Line />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
-          <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
-          <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
-          <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
+          <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
+          <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
+          <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
+          <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
   
         </ScrollView>
         <Line />
         <Text style={styles.Section}>Almoço</Text>
         <Line />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
+          <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
         </ScrollView>
         <Line />
         <Text style={styles.Section}>Jantar</Text>
         <Line />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
+          <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
         </ScrollView>
-        <FoodTile name="Arroz com bacalhau" description={exemplo_desc} repeat={exemplo_repeat} />
+        <ListItem name="Arroz com bacalhau" description={exemplo_desc} extra={exemplo_repeat} minHeight={80} />
         
       </ScrollView>
     </View>  );
