@@ -1,10 +1,10 @@
 import { useState,useEffect } from 'react';
 
-import { useForm } from '@/app/conf/FixForm';
-import FixInput from '@/app/components/general_components/fix_Input/InputContainer';
+import { useForm } from '@/app/hooks/form/FixForm';
+import FixInput from '@/app/components/main_components/InputContainer/InputContainer';
 import { Fields, validate } from '../../types/form';
 import { View, TextInput, Button } from 'react-native';
-import BB from '@/app/components/crud_components/big_button/BB';
+import BB from '@/app/components/main_components/big_button/BB';
 import { cpf_replace, cpf_replace_regex } from '@/app/utils/regex';
 const Test = () => {
   const Fields = ["Nome", "Email", "CPF", "Senha"];

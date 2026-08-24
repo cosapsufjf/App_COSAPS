@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Image } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import crud_elements from "@/app/components/crud_components/login_registro/props";
+import crud_elements from "@/app/pages/crud/sub-components/props";
 
 import styles from "./style";
 

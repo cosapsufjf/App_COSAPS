@@ -2,15 +2,15 @@ import { View, Text } from "react-native"
 import styles from "./styles"
 
 import { useState } from "react";
-import { useSleepData } from "@/app/components/main_page_components/Pacient/Sleep/hooks/useSleepData";
+import { useSleepData } from "@/app/hooks/sleepData/useSleepData";
 
 //components
-import LogData from "@/app/components/main_page_components/Pacient/Sleep/LogData/LogData";
-import AddButton from "@/app/components/main_page_components/Pacient/Sleep/Inputs/AddButton/AddButton";
-import SleepGraphs from "@/app/components/main_page_components/Pacient/Sleep/SleepGraphs";
-import PacientArea from "@/app/components/main_page_components/Pacient/pacient_area/PacientArea";
+import LogData from "./sub-components/Charts/LogData";
+import AddButton from "./sub-components/Elements/AddButton";
+import SleepGraphs from "@/app/pages/sleep_quality/sub-components/Charts/SleepGraphs";
+import PacientArea from "@/app/components/main_page_components/pacient_area/PacientArea";
 import MainHeader from "@/app/components/main_page_components/main_header/main_header";
-import Line from "@/app/components/main_page_components/line/Line";
+import Line from "@/app/components/main_components/line/Line";
 
 const Sleep = () => {
   const [showLogData, setShowLogData] = useState(false);

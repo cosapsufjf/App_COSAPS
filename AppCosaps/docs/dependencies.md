@@ -1,3 +1,0 @@
-- expo
-- express
-- mysql2

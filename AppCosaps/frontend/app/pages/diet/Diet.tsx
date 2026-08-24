@@ -1,9 +1,9 @@
 import { View,ScrollView, Text } from "react-native";
 import styles from "./styles";
-import ListItem from "@/app/components/general_components/List_Item/List_Item";
+import ListItem from "@/app/components/main_components/List_Item/List_Item";
 
-import Line from "@/app/components/main_page_components/line/Line";
-import PacientArea from "@/app/components/main_page_components/Pacient/pacient_area/PacientArea";
+import Line from "@/app/components/main_components/line/Line";
+import PacientArea from "@/app/components/main_page_components/pacient_area/PacientArea";
 import MainHeader from "@/app/components/main_page_components/main_header/main_header";
 
 const exemplo_desc = `Refeição simples de arroz com bacalhau, pode ser servida usando arroz e bacalhau

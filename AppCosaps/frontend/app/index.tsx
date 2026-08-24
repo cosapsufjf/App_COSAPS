@@ -10,8 +10,8 @@ import ForgotPassword from "./pages/forgot_password/ForgotPassword";
 
 import MainPage from "./pages/main_page/MainPage";
 import FoodSearchScreen from "@/app/pages/food_calories/FoodCalories";
-import Messages from "./components/main_page_components/Pacient/Messages/Messages";
-import Chat from "./components/main_page_components/Pacient/Chat/Chat_Pg";
+import Messages from "./pages/chat_pg/sub-components/Messages";
+import Chat from "./pages/chat_pg/Chat_Pg";
 import Sleep from "./pages/sleep_quality/Sleep";
 import Diet from "./pages/diet/Diet";
 

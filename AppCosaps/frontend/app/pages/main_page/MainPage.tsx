@@ -2,10 +2,10 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import styles from "./style";
 
 import MainHeader from "@/app/components/main_page_components/main_header/main_header";
-import PacientArea from "@/app/components/main_page_components/Pacient/pacient_area/PacientArea";
-import Line from "@/app/components/main_page_components/line/Line";
-import PacientInfo from "@/app/components/main_page_components/Pacient/pacient_info/PacientInfo";
-import Info_Item from "@/app/components/main_page_components/Pacient/pacient_info/Info_Item";
+import PacientArea from "@/app/components/main_page_components/pacient_area/PacientArea";
+import Line from "@/app/components/main_components/line/Line";
+import PacientInfo from "./sub-components/PacientInfo";
+import Info_Item from "./sub-components/Info_Item";
 
 const MainPage: React.FC = () => {
   return(

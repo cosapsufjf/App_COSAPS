@@ -1,7 +1,7 @@
 import { Image, View, Text, Animated} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import { useForm } from "@/app/conf/FixForm";
+import { useForm } from "@/app/hooks/form/FixForm";
 import { useRef, useEffect, useState } from "react";
 
 import { NavigationProp } from "@/app/types/navigation";
@@ -9,9 +9,9 @@ import { useNavigation } from "@react-navigation/native";
 
 import { getAuth, sendPasswordResetEmail } from "@react-native-firebase/auth";
 
-import BB from "@/app/components/crud_components/big_button/BB";
-import InputContainer from "@/app/components/general_components/fix_Input/InputContainer";
-import styles_comp from "@/app/components/crud_components/login_registro/styles";
+import BB from "@/app/components/main_components/big_button/BB";
+import InputContainer from "@/app/components/main_components/InputContainer/InputContainer";
+import styles_comp from "@/app/pages/crud/sub-components/styles";
 import styles from "./style";
 
 const ForgotPassword: React.FC = () => {
@@ -76,7 +76,7 @@ const ForgotPassword: React.FC = () => {
         navigation.navigate("CRUD");
       }, navigate_time);
     }
-  }, [EmailSent,inputErr]);
+  });
 
   const ForgotPassword_insert: React.FC = () => {
     const Form = useForm(["Email"], { Email: [{ method: "email" }] });

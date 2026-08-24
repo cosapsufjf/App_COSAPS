@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./style";
@@ -8,12 +8,10 @@ import { useNavigation } from "@react-navigation/native";
 
 const Apresentation: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("CRUD");
-    }, 2000);
-  });
-
+  setTimeout(() => {
+    navigation.navigate("CRUD");
+  }, 2000);
+  
   return (
     <SafeAreaView style={styles.container}>
       <View>

@@ -1,6 +1,11 @@
 # App_COSAPS
 Mobile app for project COSAPS from FACFISIO /UFJF, made with react native
 
+## Screenshots (under production)
+
+## Front-End structure
+
+
 ## Instructions for development build
 ### Frontend
 The actual implementation uses react native with expo, for execute the project is necessary to install de dependencies and build with expo:

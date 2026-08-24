@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, ScrollView, Dimensions} from 'react-native';
+import { View, Text, ScrollView} from 'react-native';
 import styles from './styles';
 
-import InputContainer from '@/app/components/general_components/fix_Input/InputContainer';
-import BB from '@/app/components/crud_components/big_button/BB';
-import Food_Item from '@/app/components/main_page_components/FoodSearch/Food_Item';
+import InputContainer from '@/app/components/main_components/InputContainer/InputContainer';
+import BB from '@/app/components/main_components/big_button/BB';
+import Food_Item from '@/app/pages/food_calories/sub-components/Food_Item';
 
 import ManageStorage from '@/app/conf/AsyncStorage';
 
 import POF_AlimentosData from "@/output/POF_Alimentos.json"
-import { Food, POF_keys, POF_Alimentos, POF_Alimentos_formatted, convertPOFAlimentos } from '@/app/types/POF_trt';
-
+import { Food, POF_keys, convertPOFAlimentos } from '@/app/types/POF_trt';
+import { POF_Alimentos_formatted, POF_Alimentos } from '@/app/interfaces/POF/POF_irt';
 
 export default function FoodSearchScreen() {
   const [foods, setFoods] = useState<Food[]>([]);
@@ -20,26 +20,21 @@ export default function FoodSearchScreen() {
   const [search, setSearch] = useState('');
   const [show_recent, setShowRecent] = useState(true);
   
-  useEffect(() => {
-    const searchFoods = () => {
-      console.log(search)
+  const searchFoods = () => {      
+    if (show_recent)
+      setShowRecent(false);
       
-      if (show_recent)
-        setShowRecent(false);
-      
-      setFoods(POF_keys.filter((key) => key.toLocaleUpperCase().includes(search.toLocaleUpperCase())));
-    };
-    
-    if (search.length === 0)
-    {
-      setShowRecent(true);
-      ManageStorage.loadRecentSearches(setRecentSearches);
-    }
-    else
-      searchFoods();
-      
-  }, [search, show_recent]);
-  
+    setFoods(POF_keys.filter((key) => key.toLocaleUpperCase().includes(search.toLocaleUpperCase())));
+  };
+
+  if (search.length === 0)
+  {
+    setShowRecent(true);
+    ManageStorage.loadRecentSearches(setRecentSearches);
+  }
+  else
+    searchFoods();
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
