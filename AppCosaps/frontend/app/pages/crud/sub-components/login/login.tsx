@@ -2,10 +2,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 import React, {useState, useEffect} from "react";
 import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "@react-navigation/native";
-import BB from "../../../../components/main_components/big_button/BB";
-import LR_Props from "../../../../types/crud";
+import BB from "@/app/components/main_components/big_button/BB";
+import LR_Props from "@/app/types/crud";
 import ManageStorage from "@/app/conf/AsyncStorage";
-import Checkbox from "../../../../components/main_components/checkbox/Checkbox";
+import Checkbox from "@/app/components/main_components/checkbox/Checkbox";
 
 import InputContainer from "@/app/components/main_components/InputContainer/InputContainer";
 import { useForm } from "@/app/hooks/form/FixForm";
@@ -36,25 +36,28 @@ const Login: React.FC<LR_Props> = ({
   const navigation = useNavigation<NavigationProp>();
 
   useEffect(() => {
-    AsyncStorage.getItem("LoginInfo").then((value) => {
-      if (value !== null) {
-        setLoginInfo(JSON.parse(value));
-      }
-    });
-    AsyncStorage.getItem("StoreInfo").then((value) => {
-      if (value !== null) {
-        if (value === "true") {
-          setChecked(value === "true");          
+    if (loginInfo.email === "" && loginInfo.senha === "") {
+      AsyncStorage.getItem("LoginInfo").then((value) => {
+        if (value !== null) {
+          const parsed = JSON.parse(value) 
+          setLoginInfo(parsed);
+          Form.setField("Email", parsed.email);
+          Form.setField("Senha", parsed.senha);
+        }
+      });
+      
+      AsyncStorage.getItem("StoreInfo").then((value) => {
+        if (value !== null && value === "true") {
+          setChecked(true);
         }
         else {
           setChecked(false);
           AsyncStorage.removeItem("LoginInfo");
         }
-      }
-    });
-    
-  }, []);
-  
+      });
+    }
+  }, [loginInfo, Form]);
+
   const forgotPassword = () => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
@@ -77,10 +80,20 @@ const Login: React.FC<LR_Props> = ({
     )
       .then(() => {
         ManageStorage.Save_In_Async_Storage("StoreInfo", checked.toString());
-        ManageStorage.Save_In_Async_Storage("LoginInfo", JSON.stringify(
-          { email: Form_content.Email, senha: Form_content.Senha })
-        )
-        //TODO: PRECISA SER ATUALIZADO
+        if (checked)
+        {
+          ManageStorage.Save_In_Async_Storage("LoginInfo", JSON.stringify(
+            { email: Form_content.Email, senha: Form_content.Senha }
+          ))
+        }
+        else {
+          try {
+            ManageStorage.remove_from_Async_Storage("LoginInfo");            
+          } catch {
+            console.log("Falha ao remover do async storage\n");
+          }
+        }
+        //TODO: APENAS EXEMPLO PRECISA SER ATUALIZADO
         ManageStorage.Save_In_Async_Storage("Logged_user","Test_user1");
         navigation.navigate("MainPage");
       })
@@ -94,14 +107,16 @@ const Login: React.FC<LR_Props> = ({
       <View style={[styles.Inputs, {minHeight:"10%"}]}>
         <InputContainer
           form={Form.FormProp("Email")}
+          value={loginInfo.email}
           get_value_from_storage={{get:checked, item: "LoginInfo", field: "email"}}
-          placeholder=""
+          placeholder="Email da sua conta"
           height={"15%"}
           show_errors={showErrors}
         />
         <InputContainer
           form={Form.FormProp("Senha")}
-          get_value_from_storage={{get:checked, item: "LoginInfo", field: "senha"}}
+          get_value_from_storage={{ get: checked, item: "LoginInfo", field: "senha" }}
+          value={loginInfo.senha}
           placeholder="Senha da sua conta"
           height={"15%"}
           extra_component={forgotPassword}

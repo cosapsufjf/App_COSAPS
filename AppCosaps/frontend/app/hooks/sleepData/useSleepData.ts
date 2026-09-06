@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { getData } from "./ChartData";
 import { ChartType } from "@/app/enum/ChartType";
 
@@ -46,7 +46,9 @@ export const useSleepData: () => UseSleepDataReturn = () => {
     }
   }, []);
 
-  if(!res) fetchAll();
+  useEffect(() => {
+    if(!res) fetchAll();
+  }, [res, fetchAll]);
   
   return {
     rawTime,

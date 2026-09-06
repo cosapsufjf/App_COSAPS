@@ -5,8 +5,9 @@ import  styles from "./styles";
 interface ListItem {
   name: string,
   description: string,
-  extra: string,
+  extra?: string,
   minHeight: number,
+  extraComponent?: React.ReactNode,
 }
 
 enum status{
@@ -14,7 +15,7 @@ enum status{
   closed,
 }
 
-const ListItem = ({ name, description, extra, minHeight=80 }: ListItem) => {
+const ListItem = ({ name, description, extra, minHeight=80, extraComponent }: ListItem) => {
   const [height, setHeight] = useState(minHeight);
   const [showInfo, setShowInfo] = useState(status.closed);
 
@@ -40,6 +41,8 @@ const ListItem = ({ name, description, extra, minHeight=80 }: ListItem) => {
           <View style={{ margin: 10 }}>
             <Text style={styles.text}>{extra}</Text>            
           </View>
+
+          {extraComponent && <View style={{ margin: 10 }}>{extraComponent}</View>}
         </View>
         : null
       }

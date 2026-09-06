@@ -12,8 +12,6 @@ const MainPage: React.FC = () => {
     <SafeAreaProvider>
       <SafeAreaView edges={["top"]} style={styles.container}>
         <MainHeader />
-        <Line/>
-        <Line/>
         <PacientArea />
         <SafeAreaView edges={["top"]} style={styles.infoContainer}>
           <PacientInfo content={

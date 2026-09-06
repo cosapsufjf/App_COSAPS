@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, ScrollView} from 'react-native';
 import styles from './styles';
@@ -8,7 +8,10 @@ import BB from '@/app/components/main_components/big_button/BB';
 import Food_Item from '@/app/pages/food_calories/sub-components/Food_Item';
 
 import ManageStorage from '@/app/conf/AsyncStorage';
+import MainHeader from '@/app/components/main_page_components/main_header/main_header';
+import Line from '@/app/components/main_components/line/Line';
 
+import PacientArea from '@/app/components/main_page_components/pacient_area/PacientArea';
 import POF_AlimentosData from "@/output/POF_Alimentos.json"
 import { Food, POF_keys, convertPOFAlimentos } from '@/app/types/POF_trt';
 import { POF_Alimentos_formatted, POF_Alimentos } from '@/app/interfaces/POF/POF_irt';
@@ -20,28 +23,39 @@ export default function FoodSearchScreen() {
   const [search, setSearch] = useState('');
   const [show_recent, setShowRecent] = useState(true);
   
-  const searchFoods = () => {      
-    if (show_recent)
-      setShowRecent(false);
-      
-    setFoods(POF_keys.filter((key) => key.toLocaleUpperCase().includes(search.toLocaleUpperCase())));
-  };
 
-  if (search.length === 0)
-  {
-    setShowRecent(true);
-    ManageStorage.loadRecentSearches(setRecentSearches);
-  }
-  else
-    searchFoods();
+  
+  useEffect(() => {
+    const searchFoods = () => {      
+      if (show_recent)
+        setShowRecent(false);
+        
+      setFoods(POF_keys.filter((key) => key.toLocaleUpperCase().includes(search.toLocaleUpperCase())));
+    };
+
+    if (search.length === 0)
+    {
+      setShowRecent(true);
+      ManageStorage.loadRecentSearches(setRecentSearches);
+    }
+    else
+      searchFoods();
+  }, [search, show_recent]);
+
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
+        <View>
+          <MainHeader />
+          <PacientArea />
+        </View>
+          
         <Text>Busca de alimentos</Text>
         <InputContainer
         text_state_setter={setSearch}
-        placeholder='Digite para começar a buscar'
+          placeholder='Digite para começar a buscar'
+          width={"105%"}
         />
         <ScrollView style={styles.list_item_container}>
           {

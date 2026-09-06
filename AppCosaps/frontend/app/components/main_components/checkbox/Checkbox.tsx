@@ -1,7 +1,6 @@
 import { View, TouchableOpacity, Text } from "react-native";
 import style from "./styles";
 import ManageStorage from "@/app/conf/AsyncStorage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 import { CheckboxProps } from "@/app/interfaces/checkbox/CheckboxProps";
 
@@ -20,7 +19,6 @@ const Checkbox: React.FC<CheckboxProps> = ({ txt, checked, setChecked, StorageIt
     try {
       if (StorageItem) {
         await ManageStorage.Save_In_Async_Storage(StorageItem, (val).toString());
-        console.log(await AsyncStorage.getItem(StorageItem))
       }
     }
     catch (error) {

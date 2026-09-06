@@ -2,6 +2,7 @@ import { Dimensions } from "react-native";
 import { BarChart, LineChart } from "react-native-gifted-charts";
 import { Colors } from "@/app/MainStyle";
 import { ChartType } from "@/app/enum/ChartType";
+import { ChartProps } from "@/app/interfaces/chart/ChartProps";
 
 const Chart = ({ data, type, xAxisLabelTexts, yAxisLabelTexts }: ChartProps) => {
   const commonProps = {

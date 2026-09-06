@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Image, Text } from "react-native";
 import { styles } from "./styles";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import ScrollInput from "@/app/components/main_components/ScrollInput/ScrollInput";
 
 import { SleepFormType } from "../../../../../hooks/sleepData/useSleepForm";
@@ -49,7 +49,8 @@ export const HandleScrollInput: React.FC<
     verify_selecteds();
   else
       setShowScrollInput(false);
-      
+
+
   
   return (
     <View style={styles.scroll_input_container}>

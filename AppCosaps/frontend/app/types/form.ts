@@ -19,8 +19,8 @@ export type Validation_Methods = {
     max      : {func:(value: string, max: number) => boolean,error:string}
     email    : {func:(value: string) => boolean,error:string}
     tel      : {func:(value: string) => boolean,error:string}
-    CPF      : {func:(value: string) => boolean,error:string}
-    regex    : {func:(value: string, regex: RegExp) => boolean,error:string}
+    CPF      : {func: (value: string) => boolean, error: string }
+    regex    : (regex: RegExp) => {func: (value: string) => boolean, error: string }
 }
 
 export const ValidationMethodKeys = [
@@ -31,7 +31,7 @@ export const ValidationMethodKeys = [
     "email",
     "tel",
     "CPF",
-    "regex"
+    "regex",
 ] as const;
 
 export type ValidationMethodKey = typeof ValidationMethodKeys[number];

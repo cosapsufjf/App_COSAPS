@@ -5,10 +5,11 @@ import { Colors as colors, BaseStyles } from "@/app/MainStyle";
 const styles = StyleSheet.create({
     container:{
         backgroundColor: colors.Cor_2,
-        ...BaseStyles.fullScreen,
-        ...BaseStyles.column,
+        height: "100%",
+        width: "100%",
         ...BaseStyles.centerContent,
-        margin:0
+        margin: 0,
+        justifyContent:"flex-start"
     },
     Input_txt:{
         backgroundColor:"#fff",
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: 10,
     borderRadius: 30,
-    height: "70%",
+    height: "55%",
     width: "95%",
     alignSelf: "center",
     margin:0

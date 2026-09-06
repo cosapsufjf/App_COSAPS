@@ -3,30 +3,97 @@ import validateCPF from "@/app/utils/cpfValidator";
 import { cpf_regex, emailRegex, PhoneRegex } from "@/app/utils/regex";
 
 
+const test_string = (error_message: string) => {
+  return {
+    func: (value: string) => {
+      try {
+        return value.length > 0;
+      } catch(e) {
+        console.error(e);
+        return false;
+      }
+    },
+    error: error_message,
+  };
+}
+const test_regex = (regex: RegExp,error_message: string) => {
+  return {
+    func: (value: string) => {
+      try {
+        return regex.test(value);
+      } catch {
+        return false;
+      }
+    },
+    error: error_message,
+  };
+}
+const test_cpf = (error_message: string) => {
+  return {
+    func: (value: string) => {
+      try {
+        return cpf_regex.test(value) && validateCPF(value);
+      } catch {
+        return false;
+      }
+    },
+    error: error_message,
+  };
+}
+const test_compare_string = (error_message: string) => {
+  return {
+    func: (value1: string, value2: string) => {
+      try {
+        return value1.trim() === value2.trim();
+      } catch {
+        return false;
+      }
+    },
+    error: error_message,
+  };
+}
+const test_compare_value = (error_message: string, type: "leq" | "geq") => {
+  return {
+    func: (value: string, number: number) => {
+      try {
+        return type === "leq" ? value.length <= number : value.length >= number;
+      } catch {
+        return false;
+      }
+    },
+    error: error_message,
+  };
+}
+
 const useValidateForm = (fields: Fields, methods: { [key: keyof Fields]: validate[] }) => {
   const METHODS: Validation_Methods = {
-    regex: {func: (value: string, regex: RegExp) => regex.test(value),error: "Formato inválido",},
-    min: {func: (value: string, min: number) => value.length >= min,error: "Caracteres insuficientes",},
-    max: {func: (value: string, max: number) => value.length <= max,error: "Caracteres Excedentes",},
-    equal: { func: (value1: string, value2: string) => value1.trim() === value2.trim(), error: "Os campos devem ser iguais", },
-    required: {func: (value: string) => value.length > 0,error: "Campo obrigatório",},
-    email: { func: (value: string) => emailRegex.test(value), error: "Email inválido", },
-    tel: {func: (value: string) => PhoneRegex.test(value),error: "Telefone inválido",},
-    CPF: {func: (value: string) => cpf_regex.test(value) && validateCPF(value),error: "CPF inválido",},
+    min: test_compare_value("Caracteres insuficientes", "geq"),
+    max: test_compare_value("Caracteres Excedentes", "leq"),
+    equal: test_compare_string("Os campos devem ser iguais"),
+    required: test_string("Campo obrigatório"),
+    email: test_regex(emailRegex,"Email inválido"),
+    tel: test_regex(PhoneRegex,"Telefone inválido"),
+    CPF: test_cpf("CPF inválido"),
+    regex: (regex: RegExp) => test_regex(regex, "Regex inválido"),
   };
 
   
-  const ValidateMethod = (method: ValidationMethodKey, field_name: string, param: number | RegExp | string
-    ) => {
+  const ValidateMethod = (method: ValidationMethodKey, field_name: string, param: number | RegExp | string) => {
     const value_validate = fields[field_name];
-    if(method === "equal") return METHODS[method].func(value_validate, fields[param as string]);
 
-    return (method !== "min" && method !== "max" && method !== "regex")
-        ?
-        METHODS[method].func(value_validate)
-        :
-        METHODS[method].func(value_validate, param as never);
+    switch(method) {
+      case "equal":
+        return METHODS[method].func(value_validate, fields[param as string]);
+      case "regex":
+        return METHODS[method](param as RegExp).func(value_validate);
+      default:
+        return (method !== "min" && method !== "max")
+            ?
+            METHODS[method].func(value_validate)
+            :
+            METHODS[method].func(value_validate, param as never);
     }
+  }
   
   const ValidateFormFields = (): ValidationState => {
     const size = Object.keys(fields).length;
@@ -41,6 +108,7 @@ const useValidateForm = (fields: Fields, methods: { [key: keyof Fields]: validat
         let validated_method = ValidateMethod(m.method, field_name, m.param);
         validatedFields[field_name] = {
           ...validatedFields[field_name],
+          //se der erro atribui o log de erro no método referente
           [m.method]: validated_method ? "" : METHODS[m.method].error
         };
       }

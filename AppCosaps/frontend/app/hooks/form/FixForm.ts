@@ -14,10 +14,10 @@ export const useForm = (fields: string[], methods?: Record<string, validate[]>) 
   const { ValidateFormFields, ValidateForm } = useValidateForm(Values, methods ?? {});
   
   const setField = (field_name: string, value: string) => {
-    setValues({
-      ...Values,
+    setValues(prev => ({
+      ...prev,
       [field_name]: value
-    });
+    }));
   }
 
   const getFormValidated = () => {

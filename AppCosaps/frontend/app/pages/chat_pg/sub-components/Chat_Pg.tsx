@@ -6,10 +6,12 @@ import ManageStorage from "@/app/conf/AsyncStorage";
 import InputContainer from "@/app/components/main_components/InputContainer/InputContainer";
 import BB from "@/app/components/main_components/big_button/BB";
 
+import MainHeader from "@/app/components/main_page_components/main_header/main_header";
+import PacientArea from "@/app/components/main_page_components/pacient_area/PacientArea";
 import { Message } from "@/app/types/message";
 import { add_message, get_Conversations } from "@/app/api/chat";
 
-import style from "./styles";
+import style from "../styles";
 
 
 const Chat_Pg: React.FC = () => {
@@ -59,6 +61,7 @@ const Chat_Pg: React.FC = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={style.container}>
+
         <ScrollView>
           {messages.map((message, index) => (
             <View key={index}>

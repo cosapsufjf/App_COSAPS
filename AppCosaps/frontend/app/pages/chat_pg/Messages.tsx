@@ -1,12 +1,13 @@
 import { Image,ScrollView, View,TouchableOpacity, Text } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import styles from "./styles";
+import styles from "./sub-components/styles";
 import PacientArea from "@/app/components/main_page_components/pacient_area/PacientArea";
 import { message_frontview } from "@/app/types/message";
 import { get_Messages } from "@/app/api/chat";
 import { NavigationProp } from "@/app/types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import ManageStorage from "@/app/conf/AsyncStorage";
+import MainHeader from "@/app/components/main_page_components/main_header/main_header";
 
 const Messages = () => {
   const cosaps_icon = require("@/assets/images/icon.png");
@@ -54,7 +55,10 @@ const Messages = () => {
     return (
         <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
+          <View>
+            <MainHeader />
             <PacientArea />
+          </View>
               <ScrollView style={styles.messageTileContainer}>
                 {get_Messages().map((message) => (
                   <MessageTile key={message.chat_id} {...message} />
