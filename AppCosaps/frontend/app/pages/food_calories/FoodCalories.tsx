@@ -9,7 +9,6 @@ import Food_Item from '@/app/pages/food_calories/sub-components/Food_Item';
 
 import ManageStorage from '@/app/conf/AsyncStorage';
 import MainHeader from '@/app/components/main_page_components/main_header/main_header';
-import Line from '@/app/components/main_components/line/Line';
 
 import PacientArea from '@/app/components/main_page_components/pacient_area/PacientArea';
 import POF_AlimentosData from "@/output/POF_Alimentos.json"

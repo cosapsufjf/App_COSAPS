@@ -3,7 +3,8 @@ import { BaseStyles, Colors as colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
   container: {
-    ...BaseStyles.fullScreenFlexContainer,
+    width:"100%",
+    height:"100%",
     backgroundColor: "#beb5e5",
     
   },
@@ -13,7 +14,8 @@ const styles = StyleSheet.create({
     margin:20,
   },
   content: {
-    ...BaseStyles.fullScreenFlexContainer,
+    width: "90%",
+    height:"90%",
     ...BaseStyles.column,
     backgroundColor: "#f1f0f7",
     borderRadius:30,
@@ -24,20 +26,26 @@ const styles = StyleSheet.create({
     minHeight:"40%",
     height:"auto",
   },
-  MessageContainer:{
-    position:"absolute",
-    borderRadius:30,
-    backgroundColor:colors.Fundo_Claro_1,
-    transform: [{translateY: -100}],
-    width:"90%",  
-    minHeight:"30%",
-    height:"auto",
-    padding:10,
-    flexDirection:"column",
-    alignItems:"flex-start",
-    justifyContent:"flex-start",
-    textAlign:"justify"
-    },
+  popUpOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "flex-end", 
+    alignItems: "center",      
+    paddingBottom: 40,
+    pointerEvents: "none",       
+  },
+  MessageContainer: {
+    borderRadius: 30,
+    backgroundColor: colors.Fundo_Claro_1,
+    width: "90%",
+    minHeight: 80,
+    padding: 15,
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
         Text:{
         color:"black", 
         fontWeight:"bold", 

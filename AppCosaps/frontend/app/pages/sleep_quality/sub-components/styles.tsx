@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Dimensions.get("window").width * 0.045,
   },
+  strong_txt: {
+    fontSize: 17,
+    fontWeight: "bold",
+  },
   title: {
     fontSize: Dimensions.get("window").width * 0.03,
     fontWeight:"bold"

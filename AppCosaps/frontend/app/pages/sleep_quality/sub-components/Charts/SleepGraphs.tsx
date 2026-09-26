@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, Image } from "react-native";
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { useSleepData } from "../../../../hooks/sleepData/useSleepData";
 import Chart  from "./Chart";
 import { ChartType } from "@/app/enum/ChartType";
 import styles from "../styles";
-
+import { getData } from "@/app/hooks/sleepData/ChartData";
+import ManageStorage from "@/app/conf/AsyncStorage";
 const diasDaSemana = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
-const horarios = ["20h","21h","22h","23h","00h","01h","02h","03h","04h","05h","06h"];
 
 const NoData = () => (
   <View style={styles.chart}>
@@ -17,22 +17,39 @@ const NoData = () => (
   </View>
 );
 
+const mean_sleep = (data: number[]) => {
+  return data.reduce((a, b) => Number(a) + Number(b), 0) / data.length;
+}
+
+const get_mean_sleep = async (week: boolean) => {
+    let dmean = await ManageStorage.get_From_Async_Storage(week ? "dmeanlw" : "dmean");
+    if (dmean) return Number(dmean);
+    else
+    {
+      dmean = await getData("SleepDuration", ChartType.Bar, week, true).then(val => mean_sleep(val as number[]))
+      await ManageStorage.Save_In_Async_Storage(week ? "dmeanlw" : "dmean", String(dmean));
+      return dmean;
+    }
+}
+
 const SleepGraphs = () => {
-  const { rawTime, rawDuration, weeklyTime, weeklyDuration } = useSleepData();
+  const {weeklyDuration, rawDuration} = useSleepData();
 
   const dataDLW = useMemo(() => weeklyDuration, [weeklyDuration]);
-  const dataTLW = useMemo(() => weeklyTime, [weeklyTime]);
-  const dataDuration = useMemo(() => rawDuration, [rawDuration]);
-  const dataTime = useMemo(() => rawTime, [rawTime]);
+  const [dataDMeanDLW, setDataDMeanDLW] = useState(get_mean_sleep(true));
+  const [dataDMeanRaw, setDataDMeanRaw] = useState(get_mean_sleep(false));
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
+
       <ScrollView contentContainerStyle={styles.charts_container}>
         <ChartSection title="Sono na última semana" data={dataDLW} type={ChartType.Bar} xAxisLabels={diasDaSemana} />
-        <ChartSection title="Horário de dormir" data={dataTLW} type={ChartType.Line} xAxisLabels={diasDaSemana} yAxisLabels={horarios} />
-        {/*<ChartSection title="Sono no ano" data={dataDuration} type={ChartType.Bar} xAxisLabels={diasDaSemana} />*/}
+        <Text style={styles.strong_txt}>Seu sono médio na última semana é de {dataDMeanDLW} Horas</Text>
+        <ChartSection title="Sono ao longo do tempo" data={rawDuration} type={ChartType.Bar} xAxisLabels={diasDaSemana} />
+        <Text style={styles.strong_txt}>Seu sono médio ao longo do tempo é de {dataDMeanRaw} Horas</Text>
+
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 };
 

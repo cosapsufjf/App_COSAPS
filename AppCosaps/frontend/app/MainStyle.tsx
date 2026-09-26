@@ -25,7 +25,6 @@ export const BaseStyles = StyleSheet.create({
     backgroundColor: Colors.Fundo_3,
   },
   fullScreenFlexContainer: {
-    flex: 1,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
     backgroundColor: Colors.Fundo_3,

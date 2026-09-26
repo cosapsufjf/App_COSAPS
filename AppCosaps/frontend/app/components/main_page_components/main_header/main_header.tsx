@@ -3,7 +3,6 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@/app/types/navigation";
 
-
 const MainHeader: React.FC = () => {
     const navigation = useNavigation<NavigationProp>();
     

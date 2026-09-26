@@ -19,7 +19,7 @@ export const useSleepData: () => UseSleepDataReturn = () => {
   const [rawDuration, setRawDuration] = useState<RawData>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [res, setRes] = useState<{ time: RawData; duration: RawData; tlw: RawData; dlw: RawData } | null>(null);
+  const [res, setRes] = useState<{ time: RawData; duration: RawData; tlw: RawData; dlw: RawData;} | null>(null);
   
   const fetchAll = useCallback(async () => {
     setLoading(true);

@@ -3,13 +3,11 @@ import { Colors as colors } from "../../../MainStyle";
 
 
 const styles = (
-        width : number | string,height:number | string,margin:number | string,
-        marginTop:number | string, background_color:string,approved:boolean,position: string,bottom: number | string,
+        width?: number | string,height?: number | string,margin:number|string=8,
+        marginTop?:number | string, background_color?:string,approved?:boolean,position?: string,bottom?: number | string,
     )=> StyleSheet.create({
         container:{
-            flex:1,
-            width:"95%",
-            height:"10%",
+            width: "95%",
             flexDirection:"column",
             alignItems:"flex-start",
             textAlign:"left",
@@ -22,10 +20,9 @@ const styles = (
           color: "black",
           backgroundColor: background_color,
           width: width as DimensionValue,
-          minHeight:height as DimensionValue,
-          height:"auto",
-          borderRadius:30,
-          margin:margin as DimensionValue,
+          height:48,
+          borderRadius: 30,
+          margin: margin as DimensionValue,
           borderWidth:1.5,
           borderColor:approved ? "green" : colors.Fundo_Claro_1,
         },

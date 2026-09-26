@@ -2,24 +2,23 @@ import { StyleSheet } from "react-native";
 import { BaseStyles, Colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
-  container:{
-      backgroundColor: Colors.Cor_2,
-      ...BaseStyles.column,
-      ...BaseStyles.centerContent,
-    margin: 0,
-    height: "100%",
+  container: {
+    backgroundColor: Colors.Cor_2,
+    ...BaseStyles.column,
+    flex: 1,
     justifyContent: "flex-start",
+    margin: 0,
   },
-  diet_container:{
+  diet_container: {
     backgroundColor: Colors.Cor_2,
     ...BaseStyles.column,
     ...BaseStyles.centerContent,
-    margin:0
+    margin: 0,
   },
   Section: {
     fontSize: 35,
     fontWeight: "bold",
-  }
+  },
 });
 
 export default styles;

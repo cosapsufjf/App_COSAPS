@@ -32,7 +32,7 @@ export const get_Conversations = (id: number): Message[] => {
     },{
       sender: "Test_user2",
       receiver:"Test_user1",
-      content: "Teste",
+      content: "Lorem Ipsum",
       status: true,
       timestamp:"23:15", 
       date:"27/10/2026"
@@ -46,7 +46,7 @@ export const get_Conversations = (id: number): Message[] => {
     },{
       sender: "Test_user2",
       receiver:"Test_user1",
-      content: "Testando",
+      content: "Lorem Ipsum",
       status: true,
       timestamp: "00:50",
       date: "27/10/2026"
@@ -54,7 +54,7 @@ export const get_Conversations = (id: number): Message[] => {
       ,{
         sender: "Test_user2",
         receiver:"Test_user1",
-        content: "Testando Exemplo",
+        content: "Lorem Ipsum",
         status: true,
         timestamp: "00:50",
         date: "27/10/2026"
@@ -86,70 +86,70 @@ export const get_Messages = (): message_frontview[] => {
   const pacient_messages = /* await chamada mágica pro back-end */ [
     {
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '1',
     },
     {
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '2',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '3',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '4',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '5',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '6',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '7',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '8',
     },{
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '9',
     },
     {
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '10',
     },
     {
       user_name: "Test_user",
-      last_message: "Conteúdo da última mensagem nsandalsndaadnashnfasfnlasn",
+      last_message: "Conteúdo da última mensagem",
       last_message_time: "00:47",
       current_status: "Offline",
       chat_id: '11',

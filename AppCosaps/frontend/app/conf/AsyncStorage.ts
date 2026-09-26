@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { POF_Alimentos_formatted } from '../types/POF_trt';
+import { POF_Alimentos_formatted } from '../interfaces/POF/POF_irt';
 
 const ManageStorage = {
   get_Parsed_Async_Storage: async (item_name: string) => {

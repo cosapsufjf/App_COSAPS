@@ -104,7 +104,7 @@ const Login: React.FC<LR_Props> = ({
 
   return (
     <View style={styles.content}>
-      <View style={[styles.Inputs, {minHeight:"10%"}]}>
+      <View style={[styles.Inputs]}>
         <InputContainer
           form={Form.FormProp("Email")}
           value={loginInfo.email}

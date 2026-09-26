@@ -1,7 +1,6 @@
 // hooks/useSleepForm.ts
 import { useState, useCallback } from "react";
 import { sendData as sendToBackend } from "./ChartData";
-
 export enum SleepFormType {
   Time = "time",
   Duration = "duration",
@@ -57,7 +56,7 @@ export function useSleepForm(): UseSleepFormReturn {
 
     setSaving(true);
     setError(null);
-
+    
     try {
       await sendToBackend(
         selectedDay,

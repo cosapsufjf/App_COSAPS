@@ -1,51 +1,53 @@
 import { useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
-import  styles from "./styles";
+import { TouchableOpacity, View, Text, DimensionValue } from "react-native";
+import styles from "./styles";
 
-interface ListItem {
-  name: string,
-  description: string,
-  extra?: string,
-  minHeight: number,
-  extraComponent?: React.ReactNode,
+interface ListItemInter {
+  name: string;
+  description?: string;
+  extra?: string;
+  minHeight?: DimensionValue;
+  maxHeight?: DimensionValue;
+  extraComponent?: React.ReactNode;
 }
 
-enum status{
-  open,
-  closed,
-}
+const ListItem = ({
+  name,
+  description,
+  extra,
+  minHeight = "25%" as DimensionValue,
+  maxHeight = "70%" as DimensionValue,
+  extraComponent,
+}: ListItemInter) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const ListItem = ({ name, description, extra, minHeight=80, extraComponent }: ListItem) => {
-  const [height, setHeight] = useState(minHeight);
-  const [showInfo, setShowInfo] = useState(status.closed);
+  const onPress = () => setIsOpen((prev) => !prev);
 
-  const onPress = () => {
-    setHeight(showInfo === status.closed ? 400:80);
-    setShowInfo(showInfo === status.closed ? status.open : status.closed);
-  }
-  
   return (
-    <TouchableOpacity style={[styles.container, { height: height }]} onPress={onPress}>
-      <View style={{flexDirection: "row", justifyContent: "space-between", margin:0}}>
+    <TouchableOpacity
+      style={[styles.container, { minHeight, maxHeight }]}
+      onPress={onPress}
+    >
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <View style={styles.side}>
           <Text style={styles.text}>{name}</Text>
         </View>
-        <View style={styles.side}>
-        </View>  
+        <View style={styles.side} />
       </View>
-      {showInfo === status.open ? 
-        <View style={{ margin: 20 }}>
-          <View style={{ margin: 10 }}>
-            <Text style={styles.text}>{description}</Text>     
-          </View>
-          <View style={{ margin: 10 }}>
-            <Text style={styles.text}>{extra}</Text>            
-          </View>
 
-          {extraComponent && <View style={{ margin: 10 }}>{extraComponent}</View>}
+      {isOpen && (
+        <View>
+          <View style={{ margin: 10 }}>
+            <Text style={styles.text}>{description}</Text>
+            {extraComponent && (
+              <View style={styles.component}>{extraComponent}</View>
+            )}
+          </View>
+          <View style={{ margin: 10 }}>
+            <Text style={styles.text}>{extra}</Text>
+          </View>
         </View>
-        : null
-      }
+      )}
     </TouchableOpacity>
   );
 };

@@ -1,48 +1,54 @@
-import { StyleSheet } from "react-native"
-import { BaseStyles, Colors as colors } from "@/app/MainStyle";
+import { StyleSheet } from "react-native";
+import { Colors as colors } from "@/app/MainStyle";
 
 const styles = StyleSheet.create({
   content: {
-    ...BaseStyles.centerContent,
-    ...BaseStyles.fullScreenContainer,
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
+      backgroundColor: colors.Fundo_3,
+      height: "90%",
+      width: "100%",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      paddingHorizontal: 20,
+      borderTopRightRadius: 30,
+      borderTopLeftRadius: 30,
   },
   Inputs: {
-    position: "absolute",
-    top: 0,
-    left: "5%",
-    width: "100%",
-    minHeight:"80%",
-    height:"auto",
-    flexDirection:"column",
+      width: "100%",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "stretch",
+      gap: 12,
   },
-  forgotPassword:{
-    fontSize:14,
-    fontWeight:"bold",
-    color:"#0003c9ff"  
+  forgotPassword: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#0003c9ff",
+    alignSelf: "center",
   },
-  btn:{
-    width:250,
-    height:"30%",
-    backgroundColor:colors.Cor_4,
-    borderRadius:30,
-    padding:"5%"
+  btn: {
+    flex: 1,                
+    height: 50,       
+    backgroundColor: colors.Cor_4,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 8,
   },
   btnContainer: {
-    marginTop:"10%",
-    width: "80%",
+    marginTop: 30,
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  passwordStrength:{
+  passwordStrength: {
     alignSelf: "center",
     padding: 3,
     width: 150,
     height: 25,
-    borderRadius:5,
+    borderRadius: 5,
     backgroundColor: colors.Cor_6,
-  }
-})
+  },
+});
 
 export default styles;

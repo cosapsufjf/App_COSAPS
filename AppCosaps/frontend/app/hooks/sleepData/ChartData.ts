@@ -9,7 +9,8 @@ const CHART_TYPE_MAP: Record<ChartType, "bar" | "line"> = {
 export const getData = async (
   type: "SleepTime" | "SleepDuration", 
   chartType: ChartType,
-  lastWeek: boolean = false
+  lastWeek: boolean = false,
+  values:boolean = false
 ) => {
   const storageData = await ManageStorage.get_From_Async_Storage("sleep_log", true);
   
@@ -19,6 +20,7 @@ export const getData = async (
   const filteredData = lastWeek ? get_last_week(orderedData) : orderedData;
 
   if (filteredData.length === 0) return null;
+  if (values) return filteredData.map(item => item[type].hour);
 
   const chartTypeStr = CHART_TYPE_MAP[chartType];
   
@@ -34,6 +36,7 @@ export const getData = async (
       value: parseInt(item[type].hour),
     }));
   }
+  
 };
 
 const orderData = (StorageData: any[]) => {
@@ -54,7 +57,6 @@ const get_last_week = (ordered: any[]) => {
     const current_month = current.getMonth() + 1;
     const current_day = current.getDate();
     const calc = (Number(current_month*30 + current_day) - Number((item_month)*30 + item_day))
-    console.log(calc)
     return calc <= 7 && calc >= 0;
   });
 };
@@ -85,10 +87,17 @@ export const sendData = async (
       ? [...StorageData, newEntry]
       : [newEntry];
 
-  await ManageStorage.Save_In_Async_Storage(
-    "sleep_log",
-    JSON.stringify(updatedData),
-  );
+  try {
+    await ManageStorage.Save_In_Async_Storage(
+      "sleep_log",
+      JSON.stringify(updatedData),
+    );
+  
+  }
+  catch
+  {
+    console.log("Erro recuperando os dados de sono recentes")
+  }
   
   reset_states();
   setData();

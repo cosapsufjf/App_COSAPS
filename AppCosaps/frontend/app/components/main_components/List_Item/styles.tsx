@@ -31,6 +31,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
     fontWeight: "bold",
+  },
+  component: {
+    width: "100%",
+    height: "auto",
+    alignSelf: "center",
+    flexDirection:"row",
   }
 });
 

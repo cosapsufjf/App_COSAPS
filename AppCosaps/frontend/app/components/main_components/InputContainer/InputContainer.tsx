@@ -38,7 +38,7 @@ import { InputContainerProps } from "@/app/interfaces/input_container/InputConta
 
     const [approved, setApproved] = useState(false);
     const [attValue, setAttValue] = useState<string>("");
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(secureTextEntry);
     
     const styles = style(width,height,margin,margin_top,background_color,approved,position,bottom);
 
@@ -82,7 +82,7 @@ import { InputContainerProps } from "@/app/interfaces/input_container/InputConta
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.Text}>{el_text??form?.field}</Text>
-        <View style={[styles.container, {flexDirection: "row"}]}>
+        <View style={[{flexDirection: "row", alignItems:"center",width:"100%"}]}>
           <TextInput style={styles.TextInput}
             secureTextEntry={showPassword}
             keyboardType={keyboard_type} 

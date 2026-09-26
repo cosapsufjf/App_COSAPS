@@ -24,12 +24,12 @@ const Register: React.FC<LR_Props> = ({
   const [messageTxt, setMessageTxt] = useState("");
   const [nav, setNav] = useState(false);
 
-  const Form = useForm(["Nome", "Email", "CPF", "NúmeroRegistro", "Credencial", "Senha", "ConfSenha"], {
+  const Form = useForm(["Nome", "Email", "CPF", "NúmeroRegistro", "CRM", "Senha", "ConfSenha"], {
     Nome: [{ method: "required" }],
     Email: [{ method: "required" }, { method: "email" }],
     CPF: [{ method: "required" }, { method: "CPF" }],
     NúmeroRegistro: [{ method: "required" }],
-    Credencial: [{ method: "required" }],
+    CRM: [{ method: "required" }],
     Senha: [{ method: "required" }],
     ConfSenha: [{ method: "required" }],
   });
@@ -81,28 +81,22 @@ const Register: React.FC<LR_Props> = ({
                   el_text="Número de Registro"
                   placeholder="Seu número de registro na plataforma"
                   keyboard_type="numeric"
-                  format_regex={{
-                    regex: cpf_replace_regex,
-                    replace: cpf_replace,
-                  }}
                 />
                 <InputContainer
-                  form={Form.FormProp("Credencial")}
-                  placeholder="Suas credenciais específicas"
+                  form={Form.FormProp("CRM")}
+                  placeholder="Seu CRM"
                   keyboard_type="numeric"
-                  format_regex={{
-                    regex: cpf_replace_regex,
-                    replace: cpf_replace,
-                  }}
                 />
                 <InputContainer
                   form={Form.FormProp("Senha")}
-                  placeholder="Pelo menos 8 dígitos"
+                  placeholder="8 dígitos, letras minúsculas, maiúsculas e números"
+                  secureTextEntry={true}
                 />
                 <InputContainer
                   form={Form.FormProp("ConfSenha")}
                   el_text="Confirmar Senha"
                   placeholder="As senhas devem coincidir"
+                  secureTextEntry={true}
                 />
 
                 <View

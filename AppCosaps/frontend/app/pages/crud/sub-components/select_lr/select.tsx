@@ -22,7 +22,7 @@ const Select :  React.FC<LR_Props> = (
                     <Text style={[BaseStyles.whiteText,{ fontSize: 30 }]}>Paciente</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[BaseStyles.Pressable, { backgroundColor: Colors.Cor_4 }]} onPress={()=>set(elements.Medico)}>
-                    <Text style={[BaseStyles.whiteText,{ fontSize: 30 }]}>Médico</Text>
+                    <Text style={[BaseStyles.whiteText,{ fontSize: 30 }]}>Profissional de saúde</Text>
                 </TouchableOpacity>
             </View>
             </View>

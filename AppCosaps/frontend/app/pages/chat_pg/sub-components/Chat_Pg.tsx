@@ -6,8 +6,6 @@ import ManageStorage from "@/app/conf/AsyncStorage";
 import InputContainer from "@/app/components/main_components/InputContainer/InputContainer";
 import BB from "@/app/components/main_components/big_button/BB";
 
-import MainHeader from "@/app/components/main_page_components/main_header/main_header";
-import PacientArea from "@/app/components/main_page_components/pacient_area/PacientArea";
 import { Message } from "@/app/types/message";
 import { add_message, get_Conversations } from "@/app/api/chat";
 
@@ -75,7 +73,7 @@ const Chat_Pg: React.FC = () => {
             </View>
           ))}
         </ScrollView>
-        <InputContainer position="absolute" bottom={30} width={463} height={70}
+        <InputContainer position="absolute" bottom={55} width={463} height={70}
         extra_component={sendBtn}
         inline_extra_component={true}
         text_state_setter={setInput}

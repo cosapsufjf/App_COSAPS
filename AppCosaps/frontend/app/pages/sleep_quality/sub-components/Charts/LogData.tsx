@@ -22,6 +22,9 @@ const LogData: React.FC<{
 
   const handleSave = async () => {
     await save();
+
+    
+    
     if (!error) onSaved();
   };
 
